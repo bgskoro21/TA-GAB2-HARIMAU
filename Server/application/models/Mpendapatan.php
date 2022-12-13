@@ -6,8 +6,10 @@ class Mpendapatan extends CI_Model {
 
 	// buat method untuk tampil data
     public function get_data(){
-        $this->db->select('');
+        $this->db->select('tbl_transaksi.*,user.nama_lengkap');
         $this->db->from('tbl_transaksi');
+        $this->db->join('user','tbl_transaksi.user_id = user.id');
+        $this->db->where('pemasukan > 0');
         $query = $this->db->get()->result();
 
          return $query;
