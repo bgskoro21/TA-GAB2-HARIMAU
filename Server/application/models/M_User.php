@@ -50,7 +50,7 @@ class M_User extends CI_Model{
         $this->db->select('username');
         $this->db->from("user");
         // teknik enkripsi
-        $this->db->where("username = '$username'");
+        $this->db->where('username',$username);
         // eksekusi query delete data
         $query = $this->db->get()->result();
         // jika npm tidak ditemukan
@@ -85,9 +85,9 @@ class M_User extends CI_Model{
         // Conditional agar menghasilkan nilai 0
         $this->db->where("username = '$token'");
         // eksekusi query delete data
-        $query = $this->db->count_all_results();
+        $query = $this->db->get()->result();
 
-        if($query == 1){
+        if(count($query) == 1){
              // proses memasukkan data ke dalam array
              $data = array(
                 'username' => $username,
