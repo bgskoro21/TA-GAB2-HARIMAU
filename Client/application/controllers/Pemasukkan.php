@@ -42,6 +42,30 @@ class Pemasukkan extends CI_Controller{
             redirect('pemasukkan');
         }
     }
+
+    public function getPemasukkanById($id){
+        $data = json_decode($this->client->simple_get(APIPEMASUKAN.'?id='.$id),true);
+        echo json_encode($data[0]);
+    }
+
+    public function edit_pemasukkan($id){
+        $data = [
+            'waktu_transaksi' => $this->input->post('waktu_transaksi'),
+            'pemasukkan' => $this->input->post('pemasukkan'),
+            'perincian' => $this->input->post('perincian'),
+            'id' => $id,
+            'user_id' => 2
+        ];
+
+        $hasil = json_decode($this->client->simple_put(APIPEMASUKAN,$data),true);
+        if($hasil){
+            $this->session->set_flashdata('success',$hasil['status']);
+            redirect('pemasukkan');
+        }else{
+            $this->session->set_flashdata('success',$hasil['status']);
+            redirect('pemasukkan');
+        }
+    }
 }
 
 

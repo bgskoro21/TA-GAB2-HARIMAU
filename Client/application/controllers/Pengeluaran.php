@@ -43,6 +43,30 @@ class Pengeluaran extends CI_Controller{
             redirect('pengeluaran');
         }
     }
+
+    public function getPengeluaranById($id){
+        $data = json_decode($this->client->simple_get(APIPENGELUARAN.'?id='.$id),true);
+        echo json_encode($data[0]);
+    }
+
+    public function edit_pengeluaran($id){
+        $data = [
+            'waktu_transaksi' => $this->input->post('waktu_transaksi'),
+            'pengeluaran' => $this->input->post('pengeluaran'),
+            'perincian' => $this->input->post('perincian'),
+            'id' => $id,
+            'user_id' => 2
+        ];
+
+        $hasil = json_decode($this->client->simple_put(APIPENGELUARAN,$data),true);
+        if($hasil){
+            $this->session->set_flashdata('success',$hasil['status']);
+            redirect('pengeluaran');
+        }else{
+            $this->session->set_flashdata('success',$hasil['status']);
+            redirect('pengeluaran');
+        }
+    }
 }
 
 
