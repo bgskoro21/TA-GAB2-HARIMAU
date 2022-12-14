@@ -229,7 +229,6 @@
 .home-section {
   position: relative;
   background: #e4e9f7;
-  height: 100vh;
   left: 260px;
   width: calc(100% - 260px);
   transition: all 0.5s ease;
@@ -275,10 +274,4 @@
     width: 100%;
     left: 0;
   }
-}
-
-.login-background {
-  height: 100vh;
-  background-color: red;
-  /* background-image: url("http://localhost:8080/DearSerenity/assets/img/DearSerenity/Season\ I/The\ Doll/The\ Doll(1).png"); */
 }

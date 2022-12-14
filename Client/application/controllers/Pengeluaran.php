@@ -15,6 +15,34 @@ class Pengeluaran extends CI_Controller{
         // echo "</pre>";
         $this->template->load('content/pengeluaran/vw_pengeluaran',$data);
     }
+
+    public function setDelete(){
+        // buat variabel json
+        $json = file_get_contents("php://input");
+        $hasil = json_decode($json, true);
+        $delete = json_decode($this->client->simple_delete(APIPENGELUARAN.'/'.$hasil['idnya']));
+
+        echo json_encode(array('statusnya' => $delete->status));
+    }
+
+    public function add_pengeluaran(){
+        $data = [
+            'waktu_transaksi' => $this->input->post('waktu_transaksi'),
+            'pengeluaran' => $this->input->post('pengeluaran'),
+            'perincian' => $this->input->post('perincian'),
+            'user_id' => 2
+        ];
+
+        $hasil = json_decode($this->client->simple_post(APIPENGELUARAN,$data),true);
+        if($hasil){
+            $this->session->set_flashdata('success',$hasil['status']);
+            redirect('pengeluaran');
+        }else{
+            // var_dump($hasil['status']);
+            $this->session->set_flashdata('success',$hasil['status']);
+            redirect('pengeluaran');
+        }
+    }
 }
 
 
