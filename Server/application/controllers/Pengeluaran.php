@@ -13,8 +13,8 @@ class Pengeluaran extends Server {
 	}
 
 	function service_get(){
-        $hasil = $this->mdl->get_data();
-
+        $id = $this->get('id');
+        $hasil = $this->mdl->get_data($id);
         if($hasil > 0){
             $this->response($hasil,200);
         }else{
