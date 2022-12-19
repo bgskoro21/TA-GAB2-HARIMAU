@@ -5,15 +5,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Mpengeluaran extends CI_Model {
 
 	// buat method untuk tampil data
-    public function get_data(){
+    public function get_data($id=null){
         $this->db->select('tbl_transaksi.*,user.nama_lengkap');
         $this->db->from('tbl_transaksi');
         $this->db->join('user','tbl_transaksi.user_id = user.id');
-        $this->db->where('pengeluaran > 0');
+        if($id != null){
+            $this->db->where('tbl_transaksi.id',$id);
+            $this->db->where('pengeluaran > 0');
+        }else{
+            $this->db->where('pengeluaran > 0');
+        }
         $query = $this->db->get()->result();
 
          return $query;
     }
+
+    public function getBulan(){
+        $this->db->select('SUM(pengeluaran) AS Total_bulan');
+        $this->db->from('tbl_transaksi');
+        $this->db->where('month(waktu_transaksi)', date('m'));
+        $query = $this->db->get()->result();
+        return $query;
+    }
+
 
     public function delete_data($id){
         $this->db->select('id');

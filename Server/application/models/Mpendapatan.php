@@ -5,14 +5,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Mpendapatan extends CI_Model {
 
 	// buat method untuk tampil data
-    public function get_data(){
+    public function get_data($id=null){
         $this->db->select('tbl_transaksi.*,user.nama_lengkap');
         $this->db->from('tbl_transaksi');
         $this->db->join('user','tbl_transaksi.user_id = user.id');
-        $this->db->where('pemasukan > 0');
+        if($id != null){
+            $this->db->where('tbl_transaksi.id',$id);
+            $this->db->where('pemasukan > 0');
+        }else{
+            $this->db->where('pemasukan > 0');
+        }
         $query = $this->db->get()->result();
 
          return $query;
+    }
+
+    // menampilkan bulan
+    public function getBulans(){
+        $this->db->select('month(waktu_transaksi) as bulan');
+        $this->db->from('tbl_transaksi');
+        $this->db->group_by('month(waktu_transaksi)');
+       $query = $this->db->get()->result();
+       return $query;
+    }
+
+    public function getKeuntungan(){
+        $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS Keuntungan');
+        $this->db->from('tbl_transaksi');
+        $this->db->group_by('month(waktu_transaksi)');
+       $query = $this->db->get()->result();
+       return $query;
+    }
+
+    // menampilkan jumlah pemasukan dalam bulan
+    public function getBulan(){
+        $this->db->select('SUM(pemasukan) AS Total_bulan');
+        $this->db->from('tbl_transaksi');
+        $this->db->where('month(waktu_transaksi)', date('m'));
+        $query = $this->db->get()->result();
+        return $query;
     }
 
     public function delete_data($id){
