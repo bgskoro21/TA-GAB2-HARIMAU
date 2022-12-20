@@ -3,15 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_User extends CI_Model{
 
-    public function get_data($search=null){
-        if($search==null){
-            $query = $this->db->get('user')->result();
-        }else{
+    public function get_data(){
+        
             $this->db->from('user');
             $this->db->like('username',$search);
             $this->db->or_like('level',$search);
             $query = $this->db->get()->result();
-        }
+        
         return $query;
     }
 

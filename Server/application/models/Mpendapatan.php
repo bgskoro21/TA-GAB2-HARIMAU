@@ -12,11 +12,38 @@ class Mpendapatan extends CI_Model {
         if($id != null){
             $this->db->where('tbl_transaksi.id',$id);
             $this->db->where('pemasukan > 0');
+        }else{
+            $this->db->where('pemasukan > 0');
         }
-        $this->db->where('pemasukan > 0');
         $query = $this->db->get()->result();
 
          return $query;
+    }
+
+    // menampilkan bulan
+    public function getBulans(){
+        $this->db->select('month(waktu_transaksi) as bulan');
+        $this->db->from('tbl_transaksi');
+        $this->db->group_by('month(waktu_transaksi)');
+       $query = $this->db->get()->result();
+       return $query;
+    }
+
+    public function getKeuntungan(){
+        $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS Keuntungan');
+        $this->db->from('tbl_transaksi');
+        $this->db->group_by('month(waktu_transaksi)');
+       $query = $this->db->get()->result();
+       return $query;
+    }
+
+    // menampilkan jumlah pemasukan dalam bulan
+    public function getBulan(){
+        $this->db->select('SUM(pemasukan) AS Total_bulan');
+        $this->db->from('tbl_transaksi');
+        $this->db->where('month(waktu_transaksi)', date('m'));
+        $query = $this->db->get()->result();
+        return $query;
     }
 
     public function delete_data($id){
