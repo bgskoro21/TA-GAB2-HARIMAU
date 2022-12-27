@@ -1,25 +1,28 @@
-<?php
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH."libraries/Server.php";
 
-class Laporan extends Server {
+class Laporan extends Server{
 
-    public function __construct()
-	{
-		parent::__construct();
-		// panggil model Mmahasiswa
-		$this->load->model("Mlaporan","mdl",TRUE);
-	}
+    function __construct(){
+        parent::__construct();
+        $this->load->model('Mpendapatan', 'mdl', TRUE);
+    }
 
     function service_get(){
-        $hasil = $this->mdl->getSaldo();
-
-        if($hasil > 0){
+        $tanggal = $this->get('tanggal');
+        $bulan = $this->get('bulan');
+        if(!empty($tanggal)){
+            $hasil = $this->mdl->getHarian($tanggal);
+        }else{
+            $hasil = $this->mdl->getBulanan($bulan);
+        }
+        if($hasil){
             $this->response($hasil,200);
         }else{
             $this->response([
-                'status' => 'Data Tidak Ditemukan'
+                "saldo" => "Tidak Ada Saldo!"
             ],200);
         }
     }

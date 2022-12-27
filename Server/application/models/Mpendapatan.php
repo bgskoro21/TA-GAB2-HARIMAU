@@ -46,6 +46,14 @@ class Mpendapatan extends CI_Model {
         return $query;
     }
 
+    public function getHari(){
+        $this->db->select('waktu_transaksi');
+        $this->db->from('tbl_transaksi');
+        $this->db->group_by('waktu_transaksi');
+        $query = $this->db->get()->result();
+        return $query;
+    }
+
     public function delete_data($id){
         $this->db->select('id');
         $this->db->from('tbl_transaksi');
@@ -106,10 +114,25 @@ class Mpendapatan extends CI_Model {
 
     function getSaldo(){
         $this->db->select('SUM(saldo) as saldo');
-        $this->db->from('tb_transaksi');
+        $this->db->from('tbl_transaksi');
         $query = $this->db->get()->result();
         return $query;
     }
+
+    public function getHarian($tanggal){
+        $this->db->from('tbl_transaksi');
+        $this->db->where('waktu_transaksi',$tanggal);
+        $query = $this->db->get()->result();
+        return $query;
+    }
+
+    public function getBulanan($bulan){
+        $this->db->from('tbl_transaksi');
+        $this->db->where('monthname(waktu_transaksi)',$bulan);
+        $query = $this->db->get()->result();
+        return $query;
+    }
+
 
     
 

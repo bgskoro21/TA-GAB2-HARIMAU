@@ -10,4 +10,8 @@ class Mlaporan extends CI_Model {
         $query = $this->db->get()->result();
         return $query;
     }
+
+    public function get
+
+
 }
