@@ -3,13 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH."libraries/Server.php";
 
-class Laporan extends Server {
+class saldo extends Server {
 
     public function __construct()
 	{
 		parent::__construct();
 		// panggil model Mmahasiswa
-		$this->load->model("Mlaporan","mdl",TRUE);
+		$this->load->model("Msaldo","mdl",TRUE);
 	}
 
     function service_get(){

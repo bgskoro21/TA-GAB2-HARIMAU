@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-class Mlaporan extends CI_Model {
+class Msaldo extends CI_Model {
 
     public function getSaldo(){
         $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS Saldo');

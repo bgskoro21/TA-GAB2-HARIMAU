@@ -22,9 +22,9 @@ class Mpendapatan extends CI_Model {
 
     // menampilkan bulan
     public function getBulans(){
-        $this->db->select('month(waktu_transaksi) as bulan');
+        $this->db->select('monthname(waktu_transaksi) as bulan');
         $this->db->from('tbl_transaksi');
-        $this->db->group_by('month(waktu_transaksi)');
+        $this->db->group_by('monthname(waktu_transaksi)');
        $query = $this->db->get()->result();
        return $query;
     }
@@ -45,6 +45,8 @@ class Mpendapatan extends CI_Model {
         $query = $this->db->get()->result();
         return $query;
     }
+
+    
 
     public function delete_data($id){
         $this->db->select('id');
