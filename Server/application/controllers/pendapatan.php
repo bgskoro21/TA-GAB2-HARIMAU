@@ -9,7 +9,7 @@ class Pendapatan extends Server {
 	{
 		parent::__construct();
 		// panggil model Mmahasiswa
-		$this->load->model("Mpendapatan","mdl",TRUE);
+		$this->load->model("M_Transaksi","mdl",TRUE);
 	}
 
 	function service_get(){
@@ -26,10 +26,15 @@ class Pendapatan extends Server {
 
 
         if($hasil > 0){
-            $this->response($hasil,200);
+            $this->response([
+                'status' => true,
+                'message' => 'Berhasil',
+                'pendapatan' => $hasil
+        ],200);
         }else{
             $this->response([
-                'status' => 'Data Tidak Ditemukan'
+                'status' => false,
+                'message' => 'Gagal',
             ],200);
         }
     }
@@ -39,12 +44,14 @@ class Pendapatan extends Server {
 
         if($hasil == 1){
             $this->response([
-                "status" => 'Data Berhasil Dihapus!'
-            ]);
+                'status' => true,
+                'message' => 'Data Pendapatan Berhasil Dihapus!',
+        ],200);
         }else{
             $this->response([
-                "status" => 'Data Gagal Dihapus!'
-            ]);
+                'status' => false,
+                'message' => 'Data Pendapatan Gagal dihapus!',
+            ],200);
         }
     }
 
@@ -58,12 +65,16 @@ class Pendapatan extends Server {
 
         if($hasil == 1){
             $this->response([
-                "status" => "Data Berhasil Ditambahkan"
-            ]);
+                'status' => true,
+                'message' => 'Data Pendapatan Berhasil Ditambahkan!',
+        ],200);
         }else{
-            $this->response(["status" => "Data Gagal Ditambahkan"]);
-        }
+            $this->response([
+                'status' => false,
+                'message' => 'Data Pendapatan Gagal Ditambahkan!',
+            ],200);
     }
+}
 
     function service_put(){
         $data = [
@@ -78,12 +89,16 @@ class Pendapatan extends Server {
 
         if($hasil==1){
             $this->response([
-                "status" => "Data Berhasil Diubah!"
-            ]);
+                'status' => true,
+                'message' => 'Data Pendapatan Berhasil Diubah!',
+        ],200);
         }else{
-            $this->response(["status" => "Data Gagal Diubah!"]);
-        }
+            $this->response([
+                'status' => false,
+                'message' => 'Data Pendapatan Gagal Diubah!',
+            ],200);
     }
 
     
+    }
 }

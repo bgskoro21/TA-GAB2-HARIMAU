@@ -2,24 +2,40 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_User extends CI_Model{
-
-    public function get_data(){
+    public function get_data($username=null){
         
             $this->db->from('user');
-            $this->db->like('username',$search);
-            $this->db->or_like('level',$search);
+            if($username != null){
+                $this->db->where('username', $username);
+            }
             $query = $this->db->get()->result();
         
         return $query;
     }
 
+    public function get_current($current){
+        $this->db->select('id,nama_lengkap,level,no_hp,profile_picture,username,email');
+        $this->db->from('user');
+        $this->db->where('username',$current );
+        $query = $this->db->get()->row_array();
+
+        if(!empty($query)){
+            $hasil = $query;
+        }else{
+            $hasil = null;
+        }
+        return $hasil;
+    
+
+    }
+
     public function login($username,$password ){
-        $this->db->select('username');
+        $this->db->select('nama_lengkap,level,profile_picture,username');
         $this->db->from('user');
         $this->db->where("username = '$username' AND password = '$password' ");
-        $query = $this->db->get()->result();
+        $query = $this->db->get()->row_array();
 
-        if(count($query) == 1){
+        if(!empty($query)){
             $hasil = $query;
         }else{
             $hasil = null;
@@ -108,7 +124,7 @@ class M_User extends CI_Model{
     }
 
     public function add_photo($username, $gambar){
-        $this->db->select('profile_picture');
+        $this->db->select('username');
         $this->db->from('user');
         $this->db->where("username = '$username'");
         $query = $this->db->get()->result();
@@ -126,6 +142,34 @@ class M_User extends CI_Model{
 
     function getGambarLama($username){
         $this->db->select('profile_picture');
-        return $this->db->get_where('user',['username' => $username])->result_array();
+        return $this->db->get_where('user',['username' => $username])->row_array();
+    }
+
+    function cekPassword($username, $password){
+        $this->db->select('password');
+        $this->db->from('user');
+        $this->db->where("username = '$username' AND password = '$password' ");
+        $query = $this->db->get()->row_array();
+        if(!empty($query)){
+            $hasil = 1;
+        }else {
+            $hasil = 0;
+        }
+        return $hasil;
+    }
+
+    function changePassword($username,$password){
+        $this->db->from('user');
+        $this->db->where('username',$username);
+        $query = $this->db->get()->result();
+        if(count($query) == 1){
+            $data['password'] = $password;
+            $this->db->where('username',$username);
+            $this->db->update('user',$data);
+            $hasil = 1;
+        }else{
+            $hasil = 0;
+        }
+        return $hasil;
     }
 }

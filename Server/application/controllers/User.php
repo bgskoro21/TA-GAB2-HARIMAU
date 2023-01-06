@@ -13,12 +13,34 @@ class User extends Server {
 
 	// buat function get, untuk mengambil data
 	function service_get(){
-		// // panggil model Mmahasiswa, parameter kedua sebagai alias bersifat opsional
-		// $this->load->model("M_User","model",TRUE);
-		// panggil function get_data yang ada pada model yang sudah diinstance dengan perintah diatas
-		$hasil = $this->model->get_data();
-		// memanggil function response ketika data berhasil diambil
-		$this->response(array("User" => $hasil),200);
+		$username = $this->get('username');
+		$current = $this->get('current');
+		if(!empty($username)){
+			$hasil = $this->model->get_data($username);
+
+		}else if(!empty($current)){
+			$hasil = $this->model->get_current($current);
+
+		}
+		else{
+			$hasil = $this->model->get_data();
+		}
+
+		if($hasil != null){
+			$this->response([
+				"status" => true,
+				"user" => $hasil,
+				"massages" => "Berhasil"
+			]);
+		}else{
+			$this->response([
+				"status" => false,
+				"massages" => "Gagal"
+			]);
+
+		}
+		
+		
 	}
 
 	// buat function put, untuk mengupdate data
@@ -93,12 +115,17 @@ class User extends Server {
 		// untuk mengamanka data npm
 		$hasil = $this->model->delete_data($token);
 		// jika proses hapus berhasil terhapus
-		if($hasil == 1){
-			$this->response(array("status"=> "Data Userberhasil dihapus"),200 );
-		}
-		// jika proses hapus gagal
-		else{
-			$this->response(array("status"=> "Data User Gagal dihapus"),200 );
+		if($hasil != nulll){
+			$this->response([
+				"status" => true,
+				"user" => $hasil,
+				"massages" => "Berhasil"
+			]);
+		}else{
+			$this->response([
+				"status" => false,
+				"massages" => "Gagal"
+			]);
 		}
 	}
     
