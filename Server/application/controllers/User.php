@@ -119,12 +119,12 @@ class User extends Server {
 			$this->response([
 				"status" => true,
 				"user" => $hasil,
-				"massages" => "Berhasil"
+				"massages" => "Data Berhasil Dihapus!"
 			]);
 		}else{
 			$this->response([
 				"status" => false,
-				"massages" => "Gagal"
+				"massages" => "Data Gagal Dihapus!"
 			]);
 		}
 	}
