@@ -106,11 +106,11 @@ class Mpendapatan extends CI_Model {
         return $hasil;
 }
 
-    function getSaldo(){
-        $this->db->select('SUM(saldo) as saldo');
-        $this->db->from('tb_transaksi');
-        $query = $this->db->get()->result();
-        return $query;
+    public function getSaldo(){
+    $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS Saldo');
+    $this->db->from('tbl_transaksi');
+    $query = $this->db->get()->result();
+    return $query;
     }
 
     
