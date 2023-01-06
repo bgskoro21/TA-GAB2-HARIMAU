@@ -4,7 +4,7 @@ require APPPATH."libraries/Server.php";
 class Keuntungan extends Server{
     public function __construct(){
         parent::__construct();
-        $this->load->model('Mpendapatan','mdl',TRUE);
+        $this->load->model('M_Transaksi','mdl',TRUE);
     }
 
     
@@ -12,10 +12,15 @@ class Keuntungan extends Server{
         $hasil = $this->mdl->getKeuntungan();
 
         if($hasil > 0){
-            $this->response($hasil,200);
+            $this->response([
+                'status' => true,
+                'message' => 'Berhasil',
+                'keuntungan' => $hasil
+        ],200);
         }else{
             $this->response([
-                'status' => 'Data Tidak Ditemukan'
+                'status' => false,
+                'message' => 'Gagal',
             ],200);
         }
     }

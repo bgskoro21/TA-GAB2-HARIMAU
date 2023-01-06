@@ -14,12 +14,12 @@ class M_User extends CI_Model{
     }
 
     public function login($username,$password ){
-        $this->db->select('username');
+        $this->db->select('nama_lengkap,level,profile_picture,username');
         $this->db->from('user');
         $this->db->where("username = '$username' AND password = '$password' ");
-        $query = $this->db->get()->result();
+        $query = $this->db->get()->row_array();;
 
-        if(count($query) == 1){
+        if(!empty($query)){
             $hasil = $query;
         }else{
             $hasil = null;

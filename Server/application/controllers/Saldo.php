@@ -9,17 +9,22 @@ class Saldo extends Server {
 	{
 		parent::__construct();
 		// panggil model Mmahasiswa
-		$this->load->model("Mlaporan","mdl",TRUE);
+		$this->load->model("M_Transaksi","mdl",TRUE);
 	}
 
     function service_get(){
         $hasil = $this->mdl->getSaldo();
 
         if($hasil > 0){
-            $this->response($hasil,200);
+            $this->response([
+                'status' => true,
+                'message' => 'Berhasil',
+                'saldo' => $hasil
+        ],200);
         }else{
             $this->response([
-                'status' => 'Data Tidak Ditemukan'
+                'status' => false,
+                'message' => 'Gagal',
             ],200);
         }
     }
