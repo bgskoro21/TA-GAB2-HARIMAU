@@ -15,13 +15,13 @@ class Pengeluaran extends Server {
 	function service_get(){
         $id = $this->get('id');
 
-        $hasil = $this->mdl->get_data($id);
+        $hasil = $this->mdl->getPengeluaran($id);
 
 
         if($id != null){
-            $hasil = $this->mdl->get_data($id);
+            $hasil = $this->mdl->getPengeluaran($id);
         }else{
-            $hasil = $this->mdl->get_data();
+            $hasil = $this->mdl->getPengeluaran();
         }
 
 
@@ -35,20 +35,23 @@ class Pengeluaran extends Server {
             $this->response([
                 'status' => false,
                 'message' => 'Gagal',
-            ],200);
+            ]);
         }
     }
 
 	function service_delete($id){
-        $hasil = $this->mdl->delete_data($id);
+        $hasil = $this->mdl->deletePengeluaran($id);
 
         if($hasil == 1){
             $this->response([
-                "status" => 'Data Berhasil Dihapus!'
-            ]);
+                'status' => true,
+                'message' => 'Data Pengeluaran Berhasil Dihapus',
+                'pengeluaran' => $hasil
+        ],200);
         }else{
             $this->response([
-                "status" => 'Data Gagal Dihapus!'
+                'status' => false,
+                'message' => 'Data Pengeluaran Gagal Dihapus',
             ]);
         }
     }
@@ -59,7 +62,7 @@ class Pengeluaran extends Server {
         $perincian = $this->post('perincian');
         $pengeluaran = $this->post('pengeluaran');
 
-        $hasil = $this->mdl->add_data($user_id, $waktu, $perincian, $pengeluaran);
+        $hasil = $this->mdl->addPengeluaran($user_id, $waktu, $perincian, $pengeluaran);
 
         if($hasil == 1){
             $this->response([
@@ -70,7 +73,7 @@ class Pengeluaran extends Server {
             $this->response([
                 'status' => false,
                 'message' => 'Data Pengeluaran Gagal Ditambahkan!',
-            ],200);
+            ]);
         }
     }
 
@@ -83,7 +86,7 @@ class Pengeluaran extends Server {
             "id" => $this->put('id')
         ];
 
-        $hasil = $this->mdl->update_data($data['user_id'], $data['waktu_transaksi'],$data['perincian'],$data['pengeluaran'],$data['id']);
+        $hasil = $this->mdl->updatePengeluaran($data['user_id'], $data['waktu_transaksi'],$data['perincian'],$data['pengeluaran'],$data['id']);
 
         if($hasil==1){
             $this->response([
@@ -94,7 +97,7 @@ class Pengeluaran extends Server {
             $this->response([
                 'status' => false,
                 'message' => 'Data Pengeluaran Gagal Diubah!',
-            ],200);
+            ]);
         }
     }
 }

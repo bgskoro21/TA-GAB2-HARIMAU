@@ -22,14 +22,31 @@ class M_Transaksi extends CI_Model {
 
     // menampilkan bulan
     public function getBulans(){
-        $this->db->select('month(waktu_transaksi) as bulan');
+        $this->db->select('monthname(waktu_transaksi) as bulan');
         $this->db->from('tbl_transaksi');
         $this->db->where('year(waktu_transaksi)',date('Y'));
-        $this->db->group_by('month(waktu_transaksi)');
+        $this->db->group_by('monthname(waktu_transaksi)');
        $query = $this->db->get()->result();
        return $query;
     }
 
+    // menampilkan semua Transaksi
+    public function getAllTransaksi()
+    {
+        $this->db->select('tbl_transaksi.*,user.nama_lengkap');
+        $this->db->from('tbl_transaksi');
+        $this->db->join('user','tbl_transaksi.user_id = user.id');
+        $query = $this->db->get()->result();
+        if (count($query) > 0){
+            $hasil = $query;
+        }else{
+            $hasil = null;
+        }
+
+        return $hasil;
+    }
+
+    // Menampilkan Jumlah Sebagai Keuntungan
     public function getKeuntungan(){
         $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS Keuntungan');
         $this->db->from('tbl_transaksi');
@@ -47,7 +64,7 @@ class M_Transaksi extends CI_Model {
         $query = $this->db->get()->row_array();
         return $query;
     }
-
+    // Untuk Mencari Hari
     public function getHari(){
         $this->db->select('waktu_transaksi');
         $this->db->from('tbl_transaksi');
@@ -55,7 +72,7 @@ class M_Transaksi extends CI_Model {
         $query = $this->db->get()->result();
         return $query;
     }
-
+    // Untuk Menghapus Controller Pendapatan
     public function delete_data($id){
         $this->db->select('id');
         $this->db->from('tbl_transaksi');
@@ -72,7 +89,7 @@ class M_Transaksi extends CI_Model {
         return $hasil;
     }
 
-
+    // Untuk Menambahkan Controller Pendapatan
     public function add_data($user_id, $waktu, $perincian, $pemasukkan){
 
         $data=[
@@ -92,7 +109,7 @@ class M_Transaksi extends CI_Model {
 
         return $hasil;
     }
-
+    // Untuk Mengedit Controller Pendapatan
     function update_data($user_id, $waktu_transaksi, $perincian, $pemasukkan,$id){
         $this->db->from('tbl_transaksi');
         $this->db->where("id = $id");
@@ -114,20 +131,21 @@ class M_Transaksi extends CI_Model {
         return $hasil;
 }
 
+// Untuk Menampilkan Seluruh Saldo
 public function getSaldo(){
     $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS Saldo');
     $this->db->from('tbl_transaksi');
     $query = $this->db->get()->result();
     return $query;
 }
-
+    // Untuk Mendapatakan Tanggal Digunakan pada Laporan
     public function getHarian($tanggal){
         $this->db->from('tbl_transaksi');
         $this->db->where('waktu_transaksi',$tanggal);
         $query = $this->db->get()->result();
         return $query;
     }
-
+    // Untuk Mendapatkan Bulan Digunakan pada Laporan
     public function getBulanan($bulan){
         $this->db->from('tbl_transaksi');
         $this->db->where('monthname(waktu_transaksi)',$bulan);
@@ -136,7 +154,7 @@ public function getSaldo(){
     }
 
     // pengeluaran
-        // buat method untuk tampil data
+        // buat method untuk tampil data Pengeluaran
         public function getPengeluaran($id=null){
             $this->db->select('tbl_transaksi.*,user.nama_lengkap');
             $this->db->from('tbl_transaksi');
@@ -151,7 +169,7 @@ public function getSaldo(){
     
              return $query;
         }
-    
+        // Untuk Mendapatkan Pengeluaran Per bulan
         public function getPengBulan(){
             $this->db->select('SUM(pengeluaran) AS Total_bulan');
             $this->db->from('tbl_transaksi');
@@ -160,7 +178,7 @@ public function getSaldo(){
             return $query;
         }
     
-    
+        // Untuk Menghapus Controller Pengeluaran
         public function deletePengeluaran($id){
             $this->db->select('id');
             $this->db->from('tbl_transaksi');
@@ -177,7 +195,7 @@ public function getSaldo(){
             return $hasil;
         }
     
-    
+        // Untuk Menambahkan Controller Pengeluaran
         public function addPengeluaran($user_id, $waktu, $perincian, $pengeluaran){
     
             $data=[
@@ -197,7 +215,7 @@ public function getSaldo(){
     
             return $hasil;
         }
-    
+        // Untuk Mengedite Controller Pengeluaran
         function updatePengeluaran($user_id, $waktu_transaksi, $perincian, $pengeluaran,$id){
             $this->db->from('tbl_transaksi');
             $this->db->where("id = $id");

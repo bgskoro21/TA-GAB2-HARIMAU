@@ -172,4 +172,19 @@ class M_User extends CI_Model{
         }
         return $hasil;
     }
+    
+    public function Verif($email,$APIKEY ){
+        $this->db->select('nama_lengkap,level,profile_picture,username');
+        $this->db->from('user');
+        $this->db->where("username = '$username' AND password = '$password' ");
+        $query = $this->db->get()->row_array();
+
+        if(!empty($query)){
+            $hasil = $query;
+        }else{
+            $hasil = null;
+        }
+        return $hasil;
+    }
+    
 }

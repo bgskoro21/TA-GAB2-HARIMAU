@@ -21,7 +21,7 @@ class Bulan extends Server{
             $this->response([
                 'status' => false,
                 'message' => 'Gagal',
-            ],200);
+            ]);
         }
     }
 
