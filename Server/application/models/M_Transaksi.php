@@ -25,6 +25,7 @@ class M_Transaksi extends CI_Model {
         $this->db->select('monthname(waktu_transaksi) as bulan');
         $this->db->from('tbl_transaksi');
         $this->db->where('year(waktu_transaksi)',date('Y'));
+        $this->db->order_by('month(waktu_transaksi)','ASC');
         $this->db->group_by('monthname(waktu_transaksi)');
        $query = $this->db->get()->result();
        return $query;
