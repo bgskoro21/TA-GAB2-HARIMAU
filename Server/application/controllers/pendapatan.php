@@ -35,7 +35,7 @@ class Pendapatan extends Server {
             $this->response([
                 'status' => false,
                 'message' => 'Gagal',
-            ],200);
+            ]);
         }
     }
 
@@ -51,7 +51,7 @@ class Pendapatan extends Server {
             $this->response([
                 'status' => false,
                 'message' => 'Data Pendapatan Gagal dihapus!',
-            ],200);
+            ]);
         }
     }
 
@@ -72,7 +72,7 @@ class Pendapatan extends Server {
             $this->response([
                 'status' => false,
                 'message' => 'Data Pendapatan Gagal Ditambahkan!',
-            ],200);
+            ]);
     }
 }
 
@@ -96,7 +96,7 @@ class Pendapatan extends Server {
             $this->response([
                 'status' => false,
                 'message' => 'Data Pendapatan Gagal Diubah!',
-            ],200);
+            ]);
     }
 
     

@@ -52,7 +52,7 @@ class User extends Server {
 		$data = [
 			"username" => $this->put("username"),
 			"email" => $this->put("email"),
-			"password" => $this->put("password"),
+			"password" => password_hash($this->post("password"),PASSWORD_DEFAULT),
 			"nama_lengkap" => $this->put("nama_lengkap"),
             "no_hp" => $this->put("no_hp"),
             "level" => $this->put("level"),
@@ -64,11 +64,17 @@ class User extends Server {
 
 		// jika hasil = 0, kenapa 0 karena kita akan memasukkan data yang belum ada di dalam database
 		if($hasil==1){
-			$this->response(array("status" => "Data Mahasiswa Berhasil Diubah"),200);
+			$this->response([
+				"status" => true,
+				"massages" => "Data User Berhasil Diubah"
+			]);
 		}
-		// jika hasil tidak sama dengan 0
 		else{
-			$this->response(array("status" => "Data Mahasiswa Gagal Diubah"),200);
+			$this->response([
+				"status" => false,
+				"massages" => "Data User Gagal Diubah"
+			]);
+
 		}
 		
 	}
@@ -82,24 +88,34 @@ class User extends Server {
 		$data = [
 			"username" => $this->post("username"),
 			"email" => $this->post("email"),
-			"password" => base64_encode($this->post("password")),
+			"password" => password_hash($this->post("password"),PASSWORD_DEFAULT),
 			"nama_lengkap" => $this->post("nama_lengkap"),
             "no_hp" => $this->post("no_hp"),
             "level" => $this->post("level"),
 			"token" => ($this->post('username'))
 		];
+
+		
         
 
 		// panggil method save_data, dengan memasukkan argumen berupa array
 		$hasil = $this->model->save_data($data['username'] ,$data['email'],$data['password'],$data['nama_lengkap'],$data['no_hp'],$data['level'],$data['token']);
 
+		//send email
+		$this->_sendEmail($token,'verify');
 		// jika hasil = 0, kenapa 0 karena kita akan memasukkan data yang belum ada di dalam database
-		if($hasil){
-			$this->response(array("status" => "Data User Berhasil Disimpan"),200);
+		if($hasil==1){
+			$this->response([
+				"status" => true,
+				"massages" => "Data User Berhasil Ditambahan!"
+			]);
 		}
-		// jika hasil tidak sama dengan 0
 		else{
-			$this->response(array("status" => "Data User Gagal Disimpan"),200);
+			$this->response([
+				"status" => false,
+				"massages" => "Data User Gagal Ditambahkan!"
+			]);
+
 		}
 
 	}
@@ -115,18 +131,16 @@ class User extends Server {
 		// untuk mengamanka data npm
 		$hasil = $this->model->delete_data($token);
 		// jika proses hapus berhasil terhapus
-		if($hasil != nulll){
+		if($hasil==1){
 			$this->response([
 				"status" => true,
-				"user" => $hasil,
-				"massages" => "Data Berhasil Dihapus!"
+				"massages" => "Data User Berhasil Dihapus!"
 			]);
 		}else{
 			$this->response([
 				"status" => false,
-				"massages" => "Data Gagal Dihapus!"
+				"massages" => "Data User Gagal Dihapus!"
 			]);
 		}
-	}
-    
+	}    
 }

@@ -22,7 +22,7 @@ class Password extends Server{
         }else{
             $this->response([
                 "status" => false
-            ],200);
+            ]);
         }
     }
 

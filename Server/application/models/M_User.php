@@ -29,19 +29,30 @@ class M_User extends CI_Model{
 
     }
 
-    public function login($username,$password ){
-        $this->db->select('nama_lengkap,level,profile_picture,username');
-        $this->db->from('user');
-        $this->db->where("username = '$username' AND password = '$password' ");
-        $query = $this->db->get()->row_array();
-
-        if(!empty($query)){
+    public function checkLogin($email){
+        $query = $this->db->get_where('user',['email' => $email])->row_array();
+        if($query){
             $hasil = $query;
         }else{
-            $hasil = null;
+            $hasil = 0;
         }
+
         return $hasil;
     }
+
+    // public function login($username,$password ){
+    //     $this->db->select('nama_lengkap,level,profile_picture,username');
+    //     $this->db->from('user');
+    //     $this->db->where("username = '$username' AND password = '$password' ");
+    //     $query = $this->db->get()->row_array();
+
+    //     if(!empty($query)){
+    //         $hasil = $query;
+    //     }else{
+    //         $hasil = null;
+    //     }
+    //     return $hasil;
+    // }
 
     public function delete_data($username){
         $this->db->select('username');
@@ -81,11 +92,11 @@ class M_User extends CI_Model{
 
             // melakukan query simpan
             $this->db->insert('user',$data);
-            $hasil = 0;
+            $hasil = 1;
         }
         // jika npm ditemukan artinya data sudah ada 
         else{
-            $hasil = 1;
+            $hasil = 0;
         }
 
         return $hasil;
@@ -123,14 +134,24 @@ class M_User extends CI_Model{
         return $hasil;
     }
 
-    public function add_photo($username, $gambar){
-        $this->db->select('username');
+    public function add_photo($username, $nama_lengkap, $no_hp, $profile_picture=null){
         $this->db->from('user');
         $this->db->where("username = '$username'");
         $query = $this->db->get()->result();
 
         if(count($query) == 1){
-            $data = array('profile_picture' => $gambar);
+            if($profile_picture != null){
+                $data = array(
+                    'nama_lengkap' => $nama_lengkap,
+                    'no_hp' => $no_hp,
+                    'profile_picture' => $profile_picture
+                );
+            }else{
+                $data = array(
+                    'nama_lengkap' => $nama_lengkap,
+                    'no_hp' => $no_hp,
+                );
+            }
             $this->db->where("username = '$username'");
             $this->db->update("user",$data);
             $hasil = 1;
@@ -172,4 +193,6 @@ class M_User extends CI_Model{
         }
         return $hasil;
     }
+
+    
 }
