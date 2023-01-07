@@ -28,6 +28,7 @@ class Updateprofile extends Server{
             $hasil = $this->mdl->add_photo($data['username'],$data['nama_lengkap'],$data['no_hp']);
         }else{
             $gambarLama = $this->mdl->getGambarLama($this->post('token'));
+            // var_dump($gambarLama);die;
             if($gambarLama['profile_picture'] != null){
                 $pecah = explode('/', $gambarLama['profile_picture']);
                 unlink("./assets/images/$pecah[7]");

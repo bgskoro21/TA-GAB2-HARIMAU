@@ -9,7 +9,6 @@ class User extends Server {
 		parent::__construct();
 		// panggil model M_User
 		$this->load->model("M_User","model",TRUE);
-		$this->load->model("M_UserToken","mdl",TRUE);
 	}
 
 	// buat function get, untuk mengambil data
@@ -81,7 +80,7 @@ class User extends Server {
 	}
 
 	private function _sendEmail($token,$type){
-		$config = [
+		$config = [	
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_user' => 'mahardikaakbar9090@gmail.com',
@@ -120,7 +119,6 @@ class User extends Server {
 			"nama_lengkap" => $this->post("nama_lengkap"),
             "no_hp" => $this->post("no_hp"),
             "level" => $this->post("level"),
-			"is_active" => $this->post("is_active"),
 			"token" => ($this->post('username'))
 		];
 
