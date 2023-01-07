@@ -28,7 +28,7 @@ class Laporan extends Server{
             $this->response([
                 'status' => false,
                 'message' => 'Gagal',
-            ],200);
+            ]);
         }
     }
 }

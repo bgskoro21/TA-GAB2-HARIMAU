@@ -21,7 +21,7 @@ class Hari_transaksi extends Server{
             $this->response([
                 'status' => false,
                 'message' => 'Gagal',
-            ],200);
+            ]);
         }
     }
 
