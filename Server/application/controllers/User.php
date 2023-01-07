@@ -53,7 +53,7 @@ class User extends Server {
 		$data = [
 			"username" => $this->put("username"),
 			"email" => $this->put("email"),
-			"password" => $this->put("password"),
+			"password" => password_hash($this->post("password"),PASSWORD_DEFAULT),
 			"nama_lengkap" => $this->put("nama_lengkap"),
             "no_hp" => $this->put("no_hp"),
             "level" => $this->put("level"),
@@ -65,11 +65,17 @@ class User extends Server {
 
 		// jika hasil = 0, kenapa 0 karena kita akan memasukkan data yang belum ada di dalam database
 		if($hasil==1){
-			$this->response(array("status" => "Data Mahasiswa Berhasil Diubah"),200);
+			$this->response([
+				"status" => true,
+				"massages" => "Data User Berhasil Diubah"
+			]);
 		}
-		// jika hasil tidak sama dengan 0
 		else{
-			$this->response(array("status" => "Data Mahasiswa Gagal Diubah"),200);
+			$this->response([
+				"status" => false,
+				"massages" => "Data User Gagal Diubah"
+			]);
+
 		}
 		
 	}
@@ -92,20 +98,13 @@ class User extends Server {
 		$this->email->to($this->post('email'));
 		if($type == 'verify'){
 			$this->email->subject('Account Verification');
-			$this->email->message('Click this link to verify your account : <a href="'. base_url(). 'auth/verify?email='.$this->post('email').'&token='.urlencode($token).'">Verify</a>');
+			$this->email->message('Click this link to verify your account : <a href="'. base_url(). 'index.php/verifikasi?email='.$this->post('email').'&token='.urlencode($token).'">Verify</a>');
 		}
 		if($this->email->send()){
 			return true;
 		}else{
 			echo $this->email->print_debugger();
 		}
-	}
-
-	public function verify(){
-		$email = $this->get('email');
-		$token = $this->get('token');
-
-		$query;
 	}
 
 	// buat function POST, untuk menambahkan data
@@ -125,7 +124,7 @@ class User extends Server {
 			"token" => ($this->post('username'))
 		];
 
-		$token = base64_encode(random_bytes(32));
+		$token = base64_encode('bagaskara');
 		$user_token = [
 			'email' => $data['email'],
 			'token' => $token,
@@ -141,12 +140,18 @@ class User extends Server {
 		$this->_sendEmail($token,'verify');
 
 		// jika hasil = 0, kenapa 0 karena kita akan memasukkan data yang belum ada di dalam database
-		if($hasil){
-			$this->response(array("status" => "Data User Berhasil Disimpan"),200);
+		if($hasil==1){
+			$this->response([
+				"status" => true,
+				"massages" => "Data User Berhasil Ditambahan!"
+			]);
 		}
-		// jika hasil tidak sama dengan 0
 		else{
-			$this->response(array("status" => "Data User Gagal Disimpan"),200);
+			$this->response([
+				"status" => false,
+				"massages" => "Data User Gagal Ditambahkan!"
+			]);
+
 		}
 
 	}
@@ -162,18 +167,16 @@ class User extends Server {
 		// untuk mengamanka data npm
 		$hasil = $this->model->delete_data($token);
 		// jika proses hapus berhasil terhapus
-		if($hasil != nulll){
+		if($hasil==1){
 			$this->response([
 				"status" => true,
-				"user" => $hasil,
-				"massages" => "Data Berhasil Dihapus!"
+				"massages" => "Data User Berhasil Dihapus!"
 			]);
 		}else{
 			$this->response([
 				"status" => false,
-				"massages" => "Data Gagal Dihapus!"
+				"massages" => "Data User Gagal Dihapus!"
 			]);
 		}
-	}
-    
+	}    
 }
