@@ -32,7 +32,7 @@
                 <td>{{ $user->level }}</td>
                 <td>
                     <button class="btn btn-success btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ $user->username }}"><i class='bx bx-edit'></i></button>
-                    <button type="submit" onclick="setDelete('{{ $user->username }}')" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i></button>
+                    <button type="submit" onclick="setDelete('{{ $user->email }}')" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i></button>
                 </td>
             </tr>
             @endforeach

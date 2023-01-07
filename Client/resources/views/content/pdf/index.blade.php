@@ -9,7 +9,7 @@
 <body>
     <div class="row d-flex">
         <h1 style="text-align: center;">Arus Kas Keluar Masuk</h1>
-        <p style="text-align: center;">Periode : {{ \Custom::format_indo($waktu) }}</p>
+        <p style="text-align: center;">Periode : {{ $waktu }}</p>
         <table width="100%" border="1" cellspacing="0" cellpadding="15">
             <thead>
                 <tr>

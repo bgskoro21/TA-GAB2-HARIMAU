@@ -79,32 +79,32 @@ class User extends Server {
 		
 	}
 
-	private function _sendEmail($token,$type){
-		$config = [	
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'mahardikaakbar9090@gmail.com',
-            'smtp_pass' => 'ghgojxuddibxpozu',
-            'smtp_port' => 465,
-            'mailtype' => 'html',
-            'charset' => 'utf-8',
-            'newline' => "\r\n"
-        ];
+	// private function _sendEmail($token,$type){
+	// 	$config = [	
+    //         'protocol' => 'smtp',
+    //         'smtp_host' => 'ssl://smtp.googlemail.com',
+    //         'smtp_user' => 'mahardikaakbar9090@gmail.com',
+    //         'smtp_pass' => 'ghgojxuddibxpozu',
+    //         'smtp_port' => 465,
+    //         'mailtype' => 'html',
+    //         'charset' => 'utf-8',
+    //         'newline' => "\r\n"
+    //     ];
 
-		$this->load->library('email',$config);
-		$this->email->initialize($config);
-		$this->email->from('mahardikaakbar9090@gmail.com','Eyzel');
-		$this->email->to($this->post('email'));
-		if($type == 'verify'){
-			$this->email->subject('Account Verification');
-			$this->email->message('Click this link to verify your account : <a href="'. base_url(). 'index.php/verifikasi?email='.$this->post('email').'&token='.urlencode($token).'">Verify</a>');
-		}
-		if($this->email->send()){
-			return true;
-		}else{
-			echo $this->email->print_debugger();
-		}
-	}
+	// 	$this->load->library('email',$config);
+	// 	$this->email->initialize($config);
+	// 	$this->email->from('mahardikaakbar9090@gmail.com','Eyzel');
+	// 	$this->email->to($this->post('email'));
+	// 	if($type == 'verify'){
+	// 		$this->email->subject('Account Verification');
+	// 		$this->email->message('Click this link to verify your account : <a href="'. base_url(). 'index.php/verifikasi?email='.$this->post('email').'&token='.urlencode($token).'">Verify</a>');
+	// 	}
+	// 	if($this->email->send()){
+	// 		return true;
+	// 	}else{
+	// 		echo $this->email->print_debugger();
+	// 	}
+	// }
 
 	// buat function POST, untuk menambahkan data
 	function service_post(){
@@ -129,13 +129,13 @@ class User extends Server {
 			'date_created' => time()
 		];
 
-		$this->mdl->add_token($user_token['email'],$user_token['token'],$user_token['date_created']);
+		//$this->mdl->add_token($user_token['email'],$user_token['token'],$user_token['date_created']);
 
 		// panggil method save_data, dengan memasukkan argumen berupa array
 		$hasil = $this->model->save_data($data['username'] ,$data['email'],$data['password'],$data['nama_lengkap'],$data['no_hp'],$data['level'],$data['token']);
 
 		// Send Email
-		$this->_sendEmail($token,'verify');
+		//$this->_sendEmail($token,'verify');
 
 		// jika hasil = 0, kenapa 0 karena kita akan memasukkan data yang belum ada di dalam database
 		if($hasil==1){

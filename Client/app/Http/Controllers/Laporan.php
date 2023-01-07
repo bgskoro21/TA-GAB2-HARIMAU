@@ -31,15 +31,15 @@ class Laporan extends Controller
     public function pdf(Request $request){
         if(!empty($request->tanggal)){
             $transaksi = Http::get(Custom::APISEARCHTRANSAKSI, [
-                'tanggal' => $request->tanggal
+                'tanggal' => $request->tanggal 
             ])->json()['laporan'];
             // var_dump($transaksi);die;
-            $waktu = $request->tanggal;
+            $waktu = Custom::format_indo($request->tanggal);
         }else{
             $transaksi = Http::get(Custom::APISEARCHTRANSAKSI, [
                 'bulan' => $request->bulan
-            ])->json();
-            var_dump($transaksi);die;
+            ])->json()['laporan'];
+            // var_dump($transaksi);die;
             $waktu = $request->bulan;
         }
 
@@ -63,7 +63,7 @@ class Laporan extends Controller
 
         $image = QrCode::format('png')
         ->size(300)->errorCorrection('H')
-        ->generate($waktu);
+        ->generate("Laporan : $waktu");
         Storage::disk('public')->put($output_file, $image);
 
         return view('content.qrcode.index',[

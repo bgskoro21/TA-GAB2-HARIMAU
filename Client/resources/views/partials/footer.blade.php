@@ -6,6 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+  jQuery(document).ready(function($){ $('.sidebar').height($(document).outerHeight()); });
   @if(Session::has('message'))
   toastr.options =
   {

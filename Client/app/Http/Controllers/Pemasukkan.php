@@ -24,14 +24,15 @@ class Pemasukkan extends Controller
             'waktu_transaksi' => $request->waktu_transaksi,
             'pemasukkan' =>$request->pemasukkan,
             'perincian' =>$request->perincian,
-            'user_id' => session('id')
+            'user_id' => 14
         ];
 
         $tambah = Http::post(Custom::APIPEMASUKKAN,$data)->object();
-        var_dump($tambah);die;
-        if($tambah->success){
-            Session::flash('message',$tambah->success);
-            return redirect('/pemasukkan');
+        // var_dump($tambah);die;
+        if($tambah->status == true){
+            return redirect('/pemasukkan')->with('message', $tambah->message);
+        }else{
+            return redirect('/pemasukkan')->with('error', $tambah->message);
         }
     }
 
@@ -55,7 +56,7 @@ class Pemasukkan extends Controller
             'pemasukkan' =>$request->pemasukkan,
             'perincian' =>$request->perincian,
             'id' => $request->id,
-            'user_id' => 2
+            'user_id' => 14
         ];
         
         $edit = Http::put(Custom::APIPEMASUKKAN, $data)->object();

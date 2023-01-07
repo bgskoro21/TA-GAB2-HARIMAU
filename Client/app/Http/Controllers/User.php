@@ -31,17 +31,22 @@ class User extends Controller
             'password' => $request->password,
         ];
         $tambah = Http::post(Custom::APIUSER, $data)->object();
-        var_dump($tambah);die;
+        // var_dump($tambah);die;
         if($tambah->status == true){
-            return redirect('/user')->with('message',$tambah->messages);
+            return redirect('/user')->with('message',$tambah->massages);
         }else{
-            return redirect('/user')->with('error',$tambah->messages);
+            return redirect('/user')->with('error',$tambah->massages);
         }
     }
 
     public function hapus_data($username){
         $delete = Http::asForm()->delete(Custom::APIUSER,["username" => $username])->object();
-        return redirect('/user')->with('message',$delete->status);
+        // var_dump($delete);
+        if($delete->status == true){
+            return redirect('/user')->with('message',$delete->massages);
+        }else{
+            return redirect('/user')->with('error',$delete->massages);
+        }
     }
 
     public function dataByUsername($username){
@@ -59,7 +64,11 @@ class User extends Controller
             'token' => $request->token,
         ];
 
-        Http::put(Custom::APIUSER, $data);
-        return redirect('/user');
+        $edit = Http::put(Custom::APIUSER, $data)->object();
+        if($edit->status == true){
+            return redirect('/user')->with('message',$edit->massages);
+        }else{
+            return redirect('/user')->with('error',$edit->massages);
+        }
     }
 }

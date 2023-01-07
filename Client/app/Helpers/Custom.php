@@ -7,8 +7,9 @@ Class Custom {
     // const APISALDO = Custom::API.'/index.php/pemasukkan';
     const APIPENDAPATANBULANINI = Custom::API.'/index.php/pendapatan_bulan';
     const APIPENGELUARANBULANINI = Custom::API.'/index.php/pengeluaran_bulan';
+    const APISALDO = Custom::API.'/index.php/saldo';
     const APIKEUNTUNGAN = Custom::API.'/index.php/keuntungan';
-    const APITRANSAKSI = Custom::API.'/index.php/trans';
+    const APITRANSAKSI = Custom::API.'/index.php/transaksi';
     const APIBULAN = Custom::API.'/index.php/bulan';
     const APIUSER = Custom::API.'/index.php/user';
     const APIPEMASUKKAN = Custom::API.'/index.php/pendapatan';

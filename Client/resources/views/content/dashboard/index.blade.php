@@ -7,13 +7,13 @@
 <section class="mt-3 mx-3">
     <div class="row">
         <div class="col-md-4">
-        {{-- <div class="card text-white bg-white mb-3">
+        <div class="card text-white bg-white mb-3">
             <div class="card-body d-flex justify-content-center text-dark flex-column">
                 <h5 class="card-title">Saldo</h5>
                 <h2>@currency($saldo->saldo)</h2>
                 <p>{{ \Custom::format_indo(date('Y-m-d')) }}</p>
             </div>
-        </div> --}}
+        </div>
         </div>
         <div class="col-md-4">
             <div class="card text-white bg-white mb-3">
@@ -42,7 +42,7 @@
         </div>
     </div>
 </section>
-{{-- <section class="m-3 bg-white p-4 overflow-auto radius">
+<section class="m-3 bg-white p-4 overflow-auto radius">
     <h4 class="mb-2">Transaksi Terakhir</h4>
     <table class="table table-bordered table-responsive border" id="table_transaksi">
             <thead>
@@ -64,14 +64,14 @@
                     <td class="text-center">{{ $loop->iteration }}</td>
                     <td>{{  \Custom::format_indo($t->waktu_transaksi) }}</td>
                     <td>{{ $t->perincian }}</td>
-                    <td>@currency($t->pemasukkan)</td>
+                    <td>@currency($t->pemasukan)</td>
                     <td>@currency($t->pengeluaran)</td>
-                    <td>@currency($saldo += $t->pemasukkan - $t->pengeluaran)</td>
+                    <td>@currency($saldo += $t->pemasukan - $t->pengeluaran)</td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-</section> --}}
+</section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endsection

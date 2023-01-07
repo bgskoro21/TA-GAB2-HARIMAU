@@ -10,7 +10,7 @@ class Pengeluaran extends Controller
 {
     public function index(){
         $pengeluaran = Http::get(Custom::APIPENGELUARAN)->object();
-        var_dump($pengeluaran);die;
+        // var_dump($pengeluaran);die;
         return view('content.pengeluaran.index',[
             'title' => 'Daftar Pengeluaran',
             'pengeluaran' => $pengeluaran
@@ -22,16 +22,24 @@ class Pengeluaran extends Controller
             'waktu_transaksi' => $request->waktu_transaksi,
             'pengeluaran' =>$request->pengeluaran,
             'perincian' =>$request->perincian,
-            'user_id' => 38
+            'user_id' => 14
         ];
 
         $tambah = Http::post(Custom::APIPENGELUARAN,$data)->object();
-        return redirect('/pengeluaran')->with('message',$tambah->status);
+        if($tambah->status == true){
+            return redirect('/pengeluaran')->with('message', $tambah->message);
+        }else{
+            return redirect('/pengeluaran')->with('error', $tambah->message);
+        }
     }
 
     public function hapus_data($id){
         $delete = Http::delete(Custom::APIPENGELUARAN.'/'.$id)->object();
-        return redirect('/pengeluaran')->with('message',$delete->status);
+        if($delete->status == true){
+            return redirect('/pengeluaran')->with('message', $delete->message);
+        }else{
+            return redirect('/pengeluaran')->with('error', $delete->message);
+        }
     }
 
     public function getPengeluaranById($id){
@@ -45,10 +53,14 @@ class Pengeluaran extends Controller
             'pengeluaran' =>$request->pengeluaran,
             'perincian' =>$request->perincian,
             'id' => $request->id,
-            'user_id' => 38
+            'user_id' => 14
         ];
 
         $edit = Http::put(Custom::APIPENGELUARAN, $data)->object();
-        return redirect('/pengeluaran')->with('message',$edit->status);
+        if($edit->status == true){
+            return redirect('/pengeluaran')->with('message', $edit->message);
+        }else{
+            return redirect('/pengeluaran')->with('error', $edit->message);
+        }
     }
 }
