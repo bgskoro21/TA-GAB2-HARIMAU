@@ -11,20 +11,41 @@ class Login extends Server{
 
     public function service_post(){
         $data = [
-        'username' => $this->post('username'),
-            'password' => $this->post('password')
+        'email' => $this->post('email'),
+         'password' => $this->post('password')
         ];
 
-        $hasil = $this->mdl->login($data['username'], $data['password']);
-
-        if($hasil){
+        $cekLogin = $this->mdl->checkLogin($data['email']);
+        if($cekLogin){
+            if($cekLogin['is_active']){
+                // cek password
+                // var_dump($cekLogin['password']);die;
+                if(password_verify($data['password'], $cekLogin['password'])){
+                    $data = [
+                        'email' => $cekLogin['email'],
+                        'level' => $cekLogin['level']
+                    ];
+                    $this->response([
+                        "status" => 1,
+                        'userdata' => $data,
+                        'message' => 'Berhasil Login!'
+                    ]);
+                }else{
+                    $this->response([
+                        "status" => 0,
+                        'message' => 'Password salah!'
+                    ]);
+                }
+            }else{
+                $this->response([
+                    "status" => 0,
+                    'message' => 'Email belum diaktivasi!'
+                ]);
+            }
+        }else{
             $this->response([
-                "status" => "Berhasil Login",
-                "data" => $hasil,
-            ]);
-        }else if ($hasil == null){
-            $this->response([
-                "status" => "Login Gagal",
+                "status" => 0,
+                'message' => 'Email tidak terdaftar!'
             ]);
         }
     }
