@@ -101,8 +101,8 @@ class User extends Server {
 		// panggil method save_data, dengan memasukkan argumen berupa array
 		$hasil = $this->model->save_data($data['username'] ,$data['email'],$data['password'],$data['nama_lengkap'],$data['no_hp'],$data['level'],$data['token']);
 
-		//send email
-		$this->_sendEmail($token,'verify');
+		// //send email
+		// $this->_sendEmail($token,'verify');
 		// jika hasil = 0, kenapa 0 karena kita akan memasukkan data yang belum ada di dalam database
 		if($hasil==1){
 			$this->response([
