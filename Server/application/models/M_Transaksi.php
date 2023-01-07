@@ -134,7 +134,7 @@ class M_Transaksi extends CI_Model {
 
 // Untuk Menampilkan Seluruh Saldo
 public function getSaldo(){
-    $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS Saldo');
+    $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS saldo');
     $this->db->from('tbl_transaksi');
     $query = $this->db->get()->row_array();
     if($query){
@@ -142,7 +142,7 @@ public function getSaldo(){
     }else {
         $hasil = null;
     }
-    return $query;
+    return $hasil;
 }
     // Untuk Mendapatakan Tanggal Digunakan pada Laporan
     public function getHarian($tanggal){
