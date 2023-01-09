@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('container')
-<section class="m-3 bg-white radius p-4 overflow-auto">
+<section class="m-3 bg-dark text-white radius p-4 overflow-auto">
     <div class="row">
         <div class="col-10">
             <h2 class="mb-4">{{ $title }}</h2>

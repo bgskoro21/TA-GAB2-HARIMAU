@@ -21,27 +21,27 @@ class Login extends Controller
     public function authenticate(Request $request){
         $request->validate(
             [
-            'username' => 'required',
+            'email' => 'required',
             'password' => 'required'
             ],
             [
-                'username.required' => 'Username harus diisi!',
+                'email.required' => 'Email harus diisi!',
                 'password.required' => 'Password harus diisi!',
             ]
     );
 
         $login = Http::post(Custom::APILOGIN,[
-            'username' => $request->username,
+            'email' => $request->email,
             'password' => $request->password
         ])->json();
-        if(isset($login['user'])){
-            Session::put($login['user']);
+        if($login['status'] == 1){
+            Session::put($login['userdata']);
             return redirect()->intended('/');
         }
 
         // Jika autentikasi gagal maka jalankan perintah dibawah
         return back()->with('loginError','<div class="alert alert-danger text-center" role="alert">
-        '.$login['status'].'
+        '.$login['message'].'
         </div>');
 
 

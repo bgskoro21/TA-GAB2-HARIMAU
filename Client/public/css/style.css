@@ -8,7 +8,7 @@
 }
 
 .body-admin {
-    background: #aaaaaa;
+    background: #181616;
 }
 
 .sidebar {
@@ -19,7 +19,7 @@
     width: 260px;
     z-index: 100;
     transition: all 0.5s ease;
-    background: black;
+    background: rgb(22, 21, 21);
     box-sizing: border-box;
 }
 
@@ -329,4 +329,17 @@ button {
 .bg-login {
     background-color: rgb(116, 143, 116);
     overflow-x: hidden;
+}
+
+#btn_tambah {
+    background-color: black;
+    transition: 0.1s;
+}
+
+#btn_tambah:hover {
+    background-color: #201e1e;
+}
+
+.bx-plus-medical {
+    color: white;
 }

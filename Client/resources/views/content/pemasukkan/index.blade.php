@@ -3,16 +3,16 @@
 {{-- @php
     var_dump($pemasukkan->pendapatan)
 @endphp --}}
-<section class="m-3 bg-white radius p-4 overflow-auto">
+<section class="m-3 bg-dark text-white radius p-4 overflow-auto">
     <div class="row d-flex justify-content-center align-items-center mb-3">
         <div class="col-10">
             <h2>{{ $title }}</h2>
         </div>
         <div class="col-2 text-end">
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btn_tambah"><i class='bx bx-plus-medical'></i></button>
+            <button class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btn_tambah"><i class='bx bx-plus-medical'></i></button>
         </div>
     </div>
-    <table class="table table-bordered table-responsive border overflow-hidden" id="table_pemasukkan">
+    <table class="table table-bordered table-responsive border overflow-hidden text-white" id="table_pemasukkan">
         <thead>
                 <tr>
                     <th scope="col" class="text-center">No</th>
@@ -48,10 +48,10 @@
 </section>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content bg-dark text-white">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Tambah Pemasukkan</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
            <form action="/pemasukkan/add_data" method="post" id="form_pemasukkan">   
@@ -59,15 +59,15 @@
             @csrf    
               <div class="form-floating mb-3">
                   <input type="date" class="form-control" id="input_waktu" placeholder="Waktu Transaksi" name="waktu_transaksi">
-                  <label for="input_waktu">Waktu Transaksi</label>
+                  <label for="input_waktu"  class="text-dark">Waktu Transaksi</label>
               </div>
               <div class="form-floating mb-3">
                   <input type="number" class="form-control" placeholder="pemasukan" name="pemasukkan" id="input_pemasukkan">
-                  <label for="input_pemasukkan">Pemasukkan</label>
+                  <label for="input_pemasukkan" class="text-dark">Pemasukkan</label>
               </div>
               <div class="form-floating mb-3">
                   <input type="text" class="form-control" placeholder="perincian" name="perincian" id="input_perincian">
-                  <label for="input_perincian">Perincian</label>
+                  <label for="input_perincian" class="text-dark">Perincian</label>
               </div>
         </div>
         <div class="modal-footer">

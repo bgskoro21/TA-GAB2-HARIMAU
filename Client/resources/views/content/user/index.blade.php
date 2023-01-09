@@ -1,15 +1,15 @@
 @extends('layout.main')
 @section('container')
-<section class="m-3 bg-white radius p-4 overflow-auto">
+<section class="m-3 bg-dark text-white radius p-4 overflow-auto">
     <div class="row d-flex justify-content-center align-items-center mb-3">
         <div class="col-10">
             <h2>{{ $title }}</h2>
         </div>
         <div class="col-2 text-end">
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btn_tambah"><i class='bx bx-plus-medical'></i></button>
+            <button class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btn_tambah"><i class='bx bx-plus-medical'></i></button>
         </div>
     </div>
-    <table class="table table-bordered table-responsive border overflow-hidden" id="table_user">
+    <table class="table table-bordered table-responsive border overflow-hidden text-white" id="table_user">
         <thead>
                 <tr>
                     <th scope="col" class="text-center">No</th>
@@ -30,7 +30,7 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->no_hp }}</td>
                 <td>{{ $user->level }}</td>
-                <td>
+                <td class="text-center">
                     <button class="btn btn-success btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ $user->username }}"><i class='bx bx-edit'></i></button>
                     <button type="submit" onclick="setDelete('{{ $user->email }}')" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i></button>
                 </td>
@@ -41,10 +41,10 @@
 </section>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content bg-dark text-white">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Tambah User</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
            <form action="/user/add_data" method="post" id="form_user">   
@@ -52,30 +52,30 @@
               @csrf
               <div class="form-floating mb-3">
                   <input type="text" class="form-control" placeholder="pemasukan" name="nama_lengkap" id="nama_lengkap">
-                  <label for="nama_lengkap">Nama Lengkap</label>
+                  <label for="nama_lengkap" class="text-dark">Nama Lengkap</label>
               </div>
               <div class="form-floating mb-3">
                   <input type="text" class="form-control" placeholder="username" name="username" id="username">
-                  <label for="username">Username</label>
+                  <label for="username" class="text-dark">Username</label>
               </div>
               <div class="form-floating mb-3">
                   <input type="email" class="form-control" placeholder="email" name="email" id="email">
-                  <label for="email">Email</label>
+                  <label for="email" class="text-dark">Email</label>
               </div>
               <div class="form-floating mb-3">
                   <input type="text" class="form-control" placeholder="no_hp" name="no_hp" id="no_hp">
-                  <label for="no_hp">Nomor HP</label>
+                  <label for="no_hp" class="text-dark">Nomor HP</label>
               </div>
               <div class="form-floating mb-3">
                   <select class="form-select" id="floatingSelect" aria-label="Level" name="level">
                       <option value="Admin">Admin</option>
                       <option value="Bendahara">Bendahara</option>
                   </select>
-                  <label for="floatingSelect">Pilih Level</label>
+                  <label for="floatingSelect" class="text-dark">Pilih Level</label>
               </div>
               <div class="form-floating mb-3 float-password">
                   <input type="password" class="form-control" placeholder="password" name="password" id="password">
-                  <label for="password">Password</label>
+                  <label for="password" class="text-dark">Password</label>
               </div>
         </div>
         <div class="modal-footer">

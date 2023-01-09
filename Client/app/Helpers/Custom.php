@@ -38,6 +38,11 @@ Class Custom {
     
         return $result;
       }
+
+
+      public function Current(){
+        
+      }
 }
 
 

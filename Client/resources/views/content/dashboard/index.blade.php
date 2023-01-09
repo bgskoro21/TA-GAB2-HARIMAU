@@ -6,45 +6,124 @@
 @endphp --}}
 <section class="mt-3 mx-3">
     <div class="row">
-        <div class="col-md-4">
-        <div class="card text-white bg-white mb-3">
-            <div class="card-body d-flex justify-content-center text-dark flex-column">
-                <h5 class="card-title">Saldo</h5>
-                <h2>@currency($saldo->saldo)</h2>
-                <p>{{ \Custom::format_indo(date('Y-m-d')) }}</p>
-            </div>
-        </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-white mb-3">
-                <div class="card-body d-flex justify-content-center text-dark flex-column">
-                    <h5 class="card-title">Pemasukkan</h5>
-                    <h2>@currency($pemasukkan_bulan->Total_bulan)</h2>
-                    <p>Bulan Ini</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-white mb-3">
-                <div class="card-body d-flex justify-content-center text-dark flex-column">
-                    <h5 class="card-title">Pengeluaran</h5>
-                    <h2>@currency($pengeluaran_bulan->Total_bulan)</h2>
-                    <p>Bulan Ini</p>
-                </div>
-            </div>
-        </div>
+                   <!-- Sales Card -->
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card info-card sales-card bg-dark text-white">
+                      <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h5 class="card-title">Saldo <span>| Today</span></h5>
+                            </div>
+                            <div class="col-4">
+                                <div class="filter d-flex justify-content-end">
+                                    <a class="text-white" href="#" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                      <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                      </li>
+                                      <li><a class="dropdown-item" href="#">Today</a></li>
+                                      <li><a class="dropdown-item" href="#">This Month</a></li>
+                                      <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    </ul>
+                                  </div>
+                            </div>
+                        </div>
+      
+                        <div class="d-flex align-items-center">
+                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center p-2" style="background-color: rgb(187, 190, 190)">
+                            <i class='bx bx-cart fs-1' ></i>
+                          </div>
+                          <div class="ps-3">
+                            <h3>@currency($saldo->saldo)</h3>
+                            <span class="text-success small pt-1 fw-bold">12%</span> <span class="small pt-2 ps-1 text-white">increase</span>
+                          </div>
+                        </div>
+                      </div>
+      
+                    </div>
+                  </div><!-- End Sales Card -->
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card info-card sales-card bg-dark text-white">
+                      <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h5 class="card-title">Masuk <span>| Today</span></h5>
+                            </div>
+                            <div class="col-4">
+                                <div class="filter d-flex justify-content-end">
+                                    <a class="text-white" href="#" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                      <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                      </li>
+                                      <li><a class="dropdown-item" href="#">Today</a></li>
+                                      <li><a class="dropdown-item" href="#">This Month</a></li>
+                                      <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    </ul>
+                                  </div>
+                            </div>
+                        </div>
+      
+                        <div class="d-flex align-items-center">
+                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center p-2" style="background-color: rgb(187, 190, 190)">
+                            <i class='bx bx-dollar fs-1' ></i>
+                          </div>
+                          <div class="ps-3">
+                            <h3>@currency($pemasukkan_bulan->Total_bulan)</h3>
+                            <span class="text-success small pt-1 fw-bold">12%</span> <span class="small pt-2 ps-1 text-white">increase</span>
+                          </div>
+                        </div>
+                      </div>
+      
+                    </div>
+                  </div><!-- End Sales Card -->
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card info-card sales-card bg-dark text-white">
+                      <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h5 class="card-title">Keluar <span>| Today</span></h5>
+                            </div>
+                            <div class="col-4">
+                                <div class="filter d-flex justify-content-end">
+                                    <a class="text-white" href="#" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                      <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                      </li>
+                                      <li><a class="dropdown-item" href="#">Today</a></li>
+                                      <li><a class="dropdown-item" href="#">This Month</a></li>
+                                      <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    </ul>
+                                  </div>
+                            </div>
+                        </div>
+      
+                        <div class="d-flex align-items-center">
+                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center p-2" style="background-color: rgb(187, 190, 190)">
+                            <i class='bx bx-cart fs-1' ></i>
+                          </div>
+                          <div class="ps-3">
+                            <h3>@currency($pengeluaran_bulan->Total_bulan)</h3>
+                            <span class="text-success small pt-1 fw-bold">12%</span> <span class="small pt-2 ps-1 text-white">increase</span>
+                          </div>
+                        </div>
+                      </div>
+      
+                    </div>
+                  </div><!-- End Sales Card -->
     </div>
 </section>
-<section class="mb-3 mx-3 p-3">
+<section class="mx-3 p-3">
     <div class="row">
-        <div class="col-md-12 bg-white p-3 radius">
+        <div class="col-md-12 bg-dark p-3 radius">
             <canvas id="grafik"></canvas>
         </div>
     </div>
 </section>
-<section class="m-3 bg-white p-4 overflow-auto radius">
+<section class="mb-3 mx-3 bg-dark p-4 overflow-auto radius text-white">
     <h4 class="mb-2">Transaksi Terakhir</h4>
-    <table class="table table-bordered table-responsive border" id="table_transaksi">
+    <table class="table table-bordered table-responsive border text-white" id="table_transaksi">
             <thead>
                     <tr>
                         <th scope="col" class="text-center">No</th>
@@ -96,14 +175,14 @@
         labels: bulan,
         datasets: [{
           label: 'Keuntungan Perbulan',
-          backgroundColor: 'black',
-          borderColor: 'black',
+          backgroundColor: 'white',
+          borderColor: 'white',
           data: pemasukkanBulan
         }]
       };
   
       const config = {
-        type: 'bar',
+        type: 'line',
         data: data,
         options: {
           plugins: {
@@ -126,20 +205,12 @@
                     bottom: 30
                 },
                 font: {
-                        size: 22
+                        size: 22,
+                        color: 'white'
                 },
                 align: 'start'
             }
         },
-          animations: {
-          tension: {
-            duration: 1000,
-            easing: 'linear',
-            from: 1,
-            to: 0,
-            loop: true
-          }
-        }
         },
       };
 

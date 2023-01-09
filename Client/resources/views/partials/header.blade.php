@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <i class="bx bx-menu fs-2" style="cursor: pointer"></i>
+      <i class="bx bx-menu fs-2 text-white" style="cursor: pointer"></i>
       <div class="{{ Request::is('profile*') ? 'bg-dark' : '' }} p-1">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown"> 

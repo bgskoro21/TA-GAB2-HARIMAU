@@ -1,11 +1,11 @@
 @extends('layout.main')
 @section('container')
-<section class="m-3 bg-white radius p-4 overflow-auto">
+<section class="m-3 bg-dark text-white radius p-4 overflow-auto">
     <h2 class="mb-3">{{ $title }}</h2>
-    <table class="table table-bordered table-responsive border overflow-hidden" id="table_waktu">
+    <table class="table table-bordered table-responsive border overflow-hidden text-white" id="table_waktu">
         <thead>
                 <tr>
-                    <th scope="col" class="text-center">No</th>
+                    <th scope="col" class="text-center" style="width: 10%">No</th>
                     <th scope="col" class="text-center">Waktu</th>
                     <th scope="col" class="text-center">Laporan</th>
                 </tr>
