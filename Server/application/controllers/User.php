@@ -51,7 +51,6 @@ class User extends Server {
 
 		// membuat data array untuk mengambil parameter data yang akan diisi
 		$data = [
-			"username" => $this->put("username"),
 			"email" => $this->put("email"),
 			"password" => password_hash($this->post("password"),PASSWORD_DEFAULT),
 			"nama_lengkap" => $this->put("nama_lengkap"),
@@ -61,7 +60,7 @@ class User extends Server {
 		];
 
 		// panggil method update_data, dengan memasukkan argumen berupa array
-		$hasil = $this->model->update_data($data['username'] ,$data['email'],$data['password'],$data['nama_lengkap'],$data['no_hp'],$data['level'],$data['token']);
+		$hasil = $this->model->update_data($data['email'],$data['password'],$data['nama_lengkap'],$data['no_hp'],$data['level'],$data['token']);
 
 		// jika hasil = 0, kenapa 0 karena kita akan memasukkan data yang belum ada di dalam database
 		if($hasil==1){
@@ -114,7 +113,6 @@ class User extends Server {
 
 		// membuat data array untuk mengambil parameter data yang akan diisi
 		$data = [
-			"username" => $this->post("username"),
 			"email" => $this->post("email"),
 			"password" => password_hash($this->post("password"),PASSWORD_DEFAULT),
 			"nama_lengkap" => $this->post("nama_lengkap"),
@@ -133,7 +131,7 @@ class User extends Server {
 		$this->mdl->add_token($user_token['email'],$user_token['token'],$user_token['date_created']);
 
 		// panggil method save_data, dengan memasukkan argumen berupa array
-		$hasil = $this->model->save_data($data['username'] ,$data['email'],$data['password'],$data['nama_lengkap'],$data['no_hp'],$data['level'],$data['token']);
+		$hasil = $this->model->save_data($data['email'],$data['password'],$data['nama_lengkap'],$data['no_hp'],$data['level'],$data['token']);
 
 		// Send Email Untuk Verifikasi
 		$this->_sendEmail($token,'verify');

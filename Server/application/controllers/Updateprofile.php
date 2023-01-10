@@ -10,7 +10,7 @@ class Updateprofile extends Server{
 
     function service_post(){
         
-        $gambarLama = $this->mdl->getGambarLama($this->post('username'));
+        $gambarLama = $this->mdl->getGambarLama($this->post('token'));
         // var_dump($gambarLama);
         // var_dump($pecah);die;
 
@@ -22,10 +22,10 @@ class Updateprofile extends Server{
         if(!$this->upload->do_upload('photo')){
             $data = [
                 "nama_lengkap" => $this->post('nama_lengkap'),
-                "username" => $this->post('token'),
+                "email" => $this->post('token'),
                 'no_hp' => $this->post('no_hp')
             ];
-            $hasil = $this->mdl->add_photo($data['username'],$data['nama_lengkap'],$data['no_hp']);
+            $hasil = $this->mdl->add_photo($data['email'],$data['nama_lengkap'],$data['no_hp']);
         }else{
             $gambarLama = $this->mdl->getGambarLama($this->post('token'));
             // var_dump($gambarLama);die;
@@ -37,11 +37,11 @@ class Updateprofile extends Server{
             $doc_url = base_url("/assets/images/". $namaGambar);
             $data = [
                 "profile_picture" => $doc_url,
-                "username" => $this->post('token'),
+                "email" => $this->post('token'),
                 "nama_lengkap" => $this->post('nama_lengkap'),
                 'no_hp' => $this->post('no_hp'),
             ];
-            $hasil = $this->mdl->add_photo($data['username'],$data['nama_lengkap'],$data['no_hp'],$data['profile_picture']);
+            $hasil = $this->mdl->add_photo($data['email'],$data['nama_lengkap'],$data['no_hp'],$data['profile_picture']);
         }
 
         if($hasil == 1 ){
