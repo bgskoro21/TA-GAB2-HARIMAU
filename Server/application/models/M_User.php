@@ -121,7 +121,7 @@ class M_User extends CI_Model{
         return $hasil;
     }
 
-    public function add_photo($username, $nama_lengkap, $no_hp, $profile_picture=null){
+    public function add_photo($email, $nama_lengkap, $no_hp, $profile_picture=null){
         $this->db->from('user');
         $this->db->where("email = '$email'");
         $query = $this->db->get()->result();
@@ -178,7 +178,21 @@ class M_User extends CI_Model{
         }else{
             $hasil = 0;
         }
-        return $hasil;
+        return $query;
+    }
+
+    function forgotpassword($email,$password,$is_active){
+        $this->db->select('email');
+        $this->db->from('user');
+        $this->db->where('email',$email);
+        $this->db->where('is_active',1);
+        $query = $this->db->get()->row_array();
+        if($query){
+            $this->db->update('password',$password);
+            $hasil = 1;
+        } else {
+            $hasil = 0;
+        }
     }
     
     public function aktivasi_akun($is_active,$email){

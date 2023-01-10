@@ -110,7 +110,7 @@ class User extends Server {
 	// buat function POST, untuk menambahkan data
 	function service_post(){
 		// // panggil model M_user
-		// $this->load->model("M_User","model",TRUE);
+		$this->load->model("M_User","model",TRUE);
 
 		// membuat data array untuk mengambil parameter data yang akan diisi
 		$data = [
@@ -120,10 +120,10 @@ class User extends Server {
 			"nama_lengkap" => $this->post("nama_lengkap"),
             "no_hp" => $this->post("no_hp"),
             "level" => $this->post("level"),
-			"token" => ($this->post('username'))
+			"token" => ($this->post('email'))
 		];
 
-		$token = base64_encode(random_bytes("32"));
+		$token = base64_encode(random_bytes(32));
 		$user_token = [
 			'email' => $data['email'],
 			'token' => $token,
@@ -135,7 +135,7 @@ class User extends Server {
 		// panggil method save_data, dengan memasukkan argumen berupa array
 		$hasil = $this->model->save_data($data['username'] ,$data['email'],$data['password'],$data['nama_lengkap'],$data['no_hp'],$data['level'],$data['token']);
 
-		// Send Email
+		// Send Email Untuk Verifikasi
 		$this->_sendEmail($token,'verify');
 
 		// jika hasil = 0, kenapa 0 karena kita akan memasukkan data yang belum ada di dalam database
@@ -179,5 +179,7 @@ class User extends Server {
 		}
 	}
 	
-	
+	public function forgotpassword(){
+
+	}
 }
