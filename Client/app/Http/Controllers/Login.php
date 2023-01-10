@@ -70,6 +70,29 @@ class Login extends Controller
         }
     }
 
+    public function sendForgot(Request $request){
+       $forgot = Http::post(Custom::APIFORGOTPASSWORD,['email' => $request->email, 'url' => 'http://127.0.0.1:8000/changepassword'])->object();
+       if($forgot->status == true){
+            return redirect('/forgotpassword')->with('loginError','<div class="alert alert-success text-center" role="alert">
+            '.$forgot->massages.'
+            </div>');
+       }else{
+            return redirect('/forgotpassword')->with('loginError','<div class="alert alert-danger text-center" role="alert">
+            '.$forgot->massages.'
+            </div>');
+       }
+    }
+
+    public function changePassword(Request $request){
+        $email = $request->email;
+        $token = $request->token;
+        $reset = Http::get(Custom::APIRESETPASSWORD, ['email' => $email, 'token' => $token])->object();
+        var_dump($reset);die;
+        // if($reset->status == true){
+
+        // }
+    }
+
     public function logout(Request $request){
         $request->session()->flush();
         return redirect('/login');

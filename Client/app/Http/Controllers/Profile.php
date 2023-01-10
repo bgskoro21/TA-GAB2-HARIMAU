@@ -11,7 +11,7 @@ class Profile extends Controller
 {
 
     public function index(){
-        $user = Http::get(Custom::APIUSER,['current' => session('username')])->object();
+        $user = Http::get(Custom::APIUSER,['current' => session('email')])->object();
         return view('content.profiles.index',[
             'title' => 'User Profile',
             'current_user' => $user->user
@@ -21,7 +21,7 @@ class Profile extends Controller
     public function edit_profile(Request $request){
         $profile_picture = $request->file('profile_picture');
         if($request->hasFile('profile_picture')){
-            $update = Http::attach('photo', file_get_contents($profile_picture),session('username').'-picture.jpg')->post(Custom::APIEDITPROFILE,[
+            $update = Http::attach('photo', file_get_contents($profile_picture),session('nama_lengkap').'-picture.jpg')->post(Custom::APIEDITPROFILE,[
                     'nama_lengkap' => $request->nama_lengkap,
                     'no_hp' => $request->no_hp,
                     'token' => $request->token,
@@ -35,10 +35,10 @@ class Profile extends Controller
         }
         // var_dump($update);die;
         if($update->status == true){
-            $user = Http::get(Custom::APIUSER,['current' => session('username')])->object();
+            $user = Http::get(Custom::APIUSER,['current' => session('email')])->object();
             session()->put([
                 'nama_lengkap' => $user->user->nama_lengkap,
-                'username' => $user->user->username,
+                'email' => $user->user->email,
                 'profile_picture' => $user->user->profile_picture,
                 'level' => $user->user->level,
             ]);
@@ -49,13 +49,13 @@ class Profile extends Controller
     public function change_password(Request $request){
         $cekPassword = Http::post(Custom::APICEKPASSWORD,[
             'password' => $request->password,
-            'username' => session('username')
+            'email' => session('email')
         ])->object();
         // var_dump($cekPassword);die;
         if($cekPassword->status == true){
             $data = [
-                'newpassword' => $request->newpassword,
-                'username' => session('username')
+                'password' => $request->newpassword,
+                'email' => session('email')
             ];
 
             $password = Http::put(Custom::APICEKPASSWORD,$data)->object();

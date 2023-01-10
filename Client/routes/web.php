@@ -46,5 +46,7 @@ Route::get('/logout',[Login::class, 'logout']);
 Route::get('/profile',[Profile::class, 'index']);
 Route::post('/profile/edit_profile',[Profile::class, 'edit_profile']);
 Route::post('/profile/change_password',[Profile::class, 'change_password']);
-Route::get('/login/verifikasi', [User::class, 'verifikasi']);
+Route::post('/forgotpassword',[Login::class, 'sendForgot']);
+Route::get('/login/verifikasi', [Login::class, 'verifikasi']);
 Route::get('/forgotpassword', [Login::class, 'forgotPassword']);
+Route::get('/changepassword', [Login::class, 'changePassword']);

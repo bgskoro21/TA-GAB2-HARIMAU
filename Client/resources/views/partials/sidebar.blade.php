@@ -58,13 +58,13 @@
             <div class="d-flex justify-content-evenly profile-details">
                 <div class="col-md-3">
                     <div class="profile-content">
-                        <img src="https://akcdn.detik.net.id/community/media/visual/2023/01/04/cristiano-ronaldo-15.jpeg?w=700&q=90" alt="Profile" class="img-fluid img-thumbnail rounded-circle">
+                        <img src="{{ session('profile_picture') }}" alt="Profile" class="img-fluid img-thumbnail rounded-circle">
                     </div>
                 </div>
                 <div class="col-md-6 ms-1">
                     <div class="name-job">
-                        <div class="profile_name">Bagaskara</div>
-                        <div class="job">Admin</div>
+                        <div class="profile_name">{{ session('nama_lengkap') }}</div>
+                        <div class="job">{{ session('level') }}</div>
                     </div>
                 </div>
                 <div class="col-md-3">

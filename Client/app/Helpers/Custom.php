@@ -19,9 +19,11 @@ Class Custom {
     const APIWAKTU = Custom::API.'/index.php/hari_transaksi';
     const APILOGIN = Custom::API.'/index.php/login';
     const APISEARCHTRANSAKSI = Custom::API.'/index.php/laporan';
-    const APIEDITPROFILE = Custom::API.'/index.php/uploadfoto';
+    const APIEDITPROFILE = Custom::API.'/index.php/updateprofile';
     const APICEKPASSWORD = Custom::API.'/index.php/password';
     const APIVERIFIKASI =  Custom::API.'/index.php/verifikasi';
+    const APIFORGOTPASSWORD =  Custom::API.'/index.php/forgotpassword';
+    const APIRESETPASSWORD =  Custom::API.'/index.php/resetpassword';
     
 
 

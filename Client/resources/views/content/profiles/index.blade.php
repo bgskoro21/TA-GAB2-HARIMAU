@@ -49,11 +49,6 @@
                 </div>
 
                 <div class="row mb-2">
-                  <div class="col-lg-3 col-md-4 text-muted">Username</div>
-                  <div class="col-lg-9 col-md-8">{{ $current_user->username }}</div>
-                </div>
-
-                <div class="row mb-2">
                   <div class="col-lg-3 col-md-4 text-muted">Email</div>
                   <div class="col-lg-9 col-md-8">{{ $current_user->email }}</div>
                 </div>
@@ -74,7 +69,7 @@
                 <!-- Profile Edit Form -->
                 <form action="/profile/edit_profile" method="post" enctype="multipart/form-data">
                   @csrf
-                  <input type="hidden" value="{{ $current_user->username }}" name="token">
+                  <input type="hidden" value="{{ $current_user->email }}" name="token">
                   <div class="row mb-3">
                     <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                     <div class="col-md-8 col-lg-9">

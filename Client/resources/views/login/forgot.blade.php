@@ -7,7 +7,7 @@
             @php
                 echo session('loginError')
             @endphp
-            <form action="/login" method="post" class="mt-2">
+            <form action="/forgotpassword" method="post" class="mt-2">
                 @csrf
                 <div class="form-floating mb-4">
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Psername" value="{{ old('email') }}" autofocus>
