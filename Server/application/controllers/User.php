@@ -9,6 +9,7 @@ class User extends Server {
 		parent::__construct();
 		// panggil model M_User
 		$this->load->model("M_User","model",TRUE);
+		$this->load->model("M_UserToken","mdl",TRUE);
 	}
 
 	// buat function get, untuk mengambil data
@@ -79,37 +80,37 @@ class User extends Server {
 		
 	}
 
-	// private function _sendEmail($token,$type){
-	// 	$config = [	
-    //         'protocol' => 'smtp',
-    //         'smtp_host' => 'ssl://smtp.googlemail.com',
-    //         'smtp_user' => 'mahardikaakbar9090@gmail.com',
-    //         'smtp_pass' => 'ghgojxuddibxpozu',
-    //         'smtp_port' => 465,
-    //         'mailtype' => 'html',
-    //         'charset' => 'utf-8',
-    //         'newline' => "\r\n"
-    //     ];
+	private function _sendEmail($token,$type){
+		$config = [	
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_user' => 'dikamahardika3020@gmail.com',
+            'smtp_pass' => 'iknvrdphrukfpfwe',
+            'smtp_port' => 465,
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n"
+        ];
 
-	// 	$this->load->library('email',$config);
-	// 	$this->email->initialize($config);
-	// 	$this->email->from('mahardikaakbar9090@gmail.com','Eyzel');
-	// 	$this->email->to($this->post('email'));
-	// 	if($type == 'verify'){
-	// 		$this->email->subject('Account Verification');
-	// 		$this->email->message('Click this link to verify your account : <a href="'. base_url(). 'index.php/verifikasi?email='.$this->post('email').'&token='.urlencode($token).'">Verify</a>');
-	// 	}
-	// 	if($this->email->send()){
-	// 		return true;
-	// 	}else{
-	// 		echo $this->email->print_debugger();
-	// 	}
-	// }
+		$this->load->library('email',$config);
+		$this->email->initialize($config);
+		$this->email->from('dikamahardika3020@gmail.com','Eyzel');
+		$this->email->to($this->post('email'));
+		if($type == 'verify'){
+			$this->email->subject('Account Verification');
+			$this->email->message('Click this link to verify your account : <a href="'. $this->post('url'). '?email='.$this->post('email').'&token='.urlencode($token).'">Verify</a>');
+		}
+		if($this->email->send()){
+			return true;
+		}else{
+			echo $this->email->print_debugger();
+		}
+	}
 
 	// buat function POST, untuk menambahkan data
 	function service_post(){
 		// // panggil model M_user
-		// $this->load->model("M_User","model",TRUE);
+		$this->load->model("M_User","model",TRUE);
 
 		// membuat data array untuk mengambil parameter data yang akan diisi
 		$data = [
@@ -122,20 +123,20 @@ class User extends Server {
 			"token" => ($this->post('username'))
 		];
 
-		$token = base64_encode('bagaskara');
+		$token = base64_encode(random_bytes(32));
 		$user_token = [
 			'email' => $data['email'],
 			'token' => $token,
 			'date_created' => time()
 		];
 
-		//$this->mdl->add_token($user_token['email'],$user_token['token'],$user_token['date_created']);
+		$this->mdl->add_token($user_token['email'],$user_token['token'],$user_token['date_created']);
 
 		// panggil method save_data, dengan memasukkan argumen berupa array
 		$hasil = $this->model->save_data($data['username'] ,$data['email'],$data['password'],$data['nama_lengkap'],$data['no_hp'],$data['level'],$data['token']);
 
-		// Send Email
-		//$this->_sendEmail($token,'verify');
+		// Send Email Untuk Verifikasi
+		$this->_sendEmail($token,'verify');
 
 		// jika hasil = 0, kenapa 0 karena kita akan memasukkan data yang belum ada di dalam database
 		if($hasil==1){
@@ -176,5 +177,9 @@ class User extends Server {
 				"massages" => "Data User Gagal Dihapus!"
 			]);
 		}
-	}    
+	}
+	
+	public function forgotpassword(){
+
+	}
 }

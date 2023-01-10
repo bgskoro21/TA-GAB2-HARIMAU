@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH."libraries/Server.php";
 
-class Verifikasi extends Server{
+class Resetpassword extends Server{
     public function __construct()
 	{
 		parent::__construct();
@@ -23,24 +23,25 @@ class Verifikasi extends Server{
             // var_dump($user_token);die;
 			if($user_token){
 				if(time()-$user_token['date_created'] < (60 * 60 * 24)){
-					$this->model->aktivasi_akun(1,$email);
+                    $this->model->delete_data($email);
 					$this->mdl->del_email($email);
 					$this->response([
 						"status" => true,
-						"massages" => "$email Sudah Diaktivasi! Silahkan Login",
+						"massages" => "Berhasil",
+                        "email" => $email
 					]);
 				}else{
 					$this->model->delete_data($email);
 					$this->mdl->del_email($email);
 					$this->response([
 						"status" => false,
-						"massages" => "Aktivasi Akun Gagal! Token Expired"
+						"massages" => "Reset Password Gagal! Token Salah"
 					]);
 				}
 			}else{
                 $this->response([
                     "status" => false,
-                    "massages" => "Aktivasi Akun Gagal! Token Invalid"
+                    "massages" => "Reset Password Gagal! Email Salah"
                 ]);
             }
 			
@@ -51,4 +52,24 @@ class Verifikasi extends Server{
 			]);
 		}
 	}
+
+    public function service_put()
+    {
+        $email = $this->put('email');
+        $password = password_hash($this->put('password'),PASSWORD_DEFAULT);
+        
+        $hasil = $this->model->changePassword($email,$password);
+        var_dump($hasil);die;
+        if ($hasil == 1){
+            $this->response([
+                "status" => true,
+                "massages" => "Password Berhasil Dirubah!"
+            ]);
+        } else {
+            $this->response([
+                "status" => false,
+                "massages" => "Password Gagal Dirubah!"
+            ]);
+        }
+    }
 }
