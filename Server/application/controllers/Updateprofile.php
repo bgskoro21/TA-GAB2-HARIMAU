@@ -11,6 +11,7 @@ class Updateprofile extends Server{
     function service_post(){
         
         $gambarLama = $this->mdl->getGambarLama($this->post('token'));
+        
         // var_dump($gambarLama);
         // var_dump($pecah);die;
 
@@ -34,7 +35,7 @@ class Updateprofile extends Server{
                 unlink("./assets/images/$pecah[7]");
             }
             $namaGambar = $this->upload->data('file_name');
-            $doc_url = base_url("/assets/images/". $namaGambar);
+            $doc_url = "http://localhost/TA-GAB2-HARIMAU/Server/assets/images/". $namaGambar;
             $data = [
                 "profile_picture" => $doc_url,
                 "email" => $this->post('token'),
