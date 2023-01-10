@@ -16,7 +16,7 @@ class User extends Server {
 	function service_get(){
 		$email = $this->get('email');
 		$current = $this->get('current');
-		if(!empty($username)){
+		if(!empty($email)){
 			$hasil = $this->model->get_data($email);
 
 		}else if(!empty($current)){
