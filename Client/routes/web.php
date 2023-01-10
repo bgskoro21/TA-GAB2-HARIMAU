@@ -50,3 +50,5 @@ Route::post('/forgotpassword',[Login::class, 'sendForgot']);
 Route::get('/login/verifikasi', [Login::class, 'verifikasi']);
 Route::get('/forgotpassword', [Login::class, 'forgotPassword']);
 Route::get('/changepassword', [Login::class, 'changePassword']);
+Route::get('/resetpassword', [Login::class, 'view_reset']);
+Route::post('/resetpassword', [Login::class, 'resetPassword']);

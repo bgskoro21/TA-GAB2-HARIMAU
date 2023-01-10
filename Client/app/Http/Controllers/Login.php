@@ -86,11 +86,45 @@ class Login extends Controller
     public function changePassword(Request $request){
         $email = $request->email;
         $token = $request->token;
+        // var_dump($email);die;
         $reset = Http::get(Custom::APIRESETPASSWORD, ['email' => $email, 'token' => $token])->object();
-        var_dump($reset);die;
-        // if($reset->status == true){
+        // var_dump($reset);die;
+        if($reset->status == true){
+            session()->put([
+                'reset_password' => $reset->email
+            ]);
+            return redirect('/resetpassword');
+        }else{
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">
+            '.$reset->massages.'
+            </div>');
+        }
+    }
 
-        // }
+    public function view_reset(){
+        if(is_null(session('reset_password'))){
+            return redirect('/login');
+        }
+        return view('login.change',[
+            'title' => 'Reset Password'
+        ]);
+    }
+
+    public function resetPassword(Request $request){
+        $email = session('reset_password');
+        $password = $request->password1;
+        $reset = Http::put(Custom::APIRESETPASSWORD,['email' => $email, 'password' => $password])->object();
+        if($reset->status == true){
+            session()->forget('reset_password');
+            return redirect('/login')->with('loginError','<div class="alert alert-success text-center" role="alert">
+            '.$reset->massages.'
+            </div>');
+        }else{
+            session()->forget('reset_password');
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">
+            '.$reset->massages.'
+            </div>');
+        }
     }
 
     public function logout(Request $request){
