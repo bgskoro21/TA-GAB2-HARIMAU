@@ -191,7 +191,7 @@ class M_User extends CI_Model{
         }else{
             $hasil = 0;
         }
-        return $query;
+        return $hasil;
     }
 
     function forgotpassword($email,$password,$is_active){
@@ -206,6 +206,8 @@ class M_User extends CI_Model{
         } else {
             $hasil = 0;
         }
+
+        return $hasil;
     }
     
     public function aktivasi_akun($is_active,$email){
