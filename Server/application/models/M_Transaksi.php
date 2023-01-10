@@ -144,6 +144,89 @@ public function getSaldo(){
     }
     return $hasil;
 }
+
+// Untuk Saldo Bulan
+public function getSaldoBulans(){
+    $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS saldo');
+    $this->db->from('tbl_transaksi');
+    $this->db->where('month(waktu_transaksi)', date('m'));
+    $query = $this->db->get()->row_array();
+    return $query;
+}
+// Untuk Mencari Saldo dalam bulan
+public function getSaldoBulan($bulan){
+    $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS saldo');
+    $this->db->from('tbl_transaksi');
+    $this->db->where('monthname(waktu_transaksi)',$bulan);
+    $query = $this->db->get()->row_array();
+    if($query){
+        $hasil = $query;
+    }else {
+        $hasil = null;
+    }
+    return $hasil;
+}
+// Untuk Mencari Saldo setahun
+public function getSaldoTahuns(){
+    $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS saldo');
+    $this->db->from('tbl_transaksi');
+    $this->db->where('year(waktu_transaksi)', date('Y'));
+    $query = $this->db->get()->row_array();
+    return $query;
+}
+// Untuk Mencari saldo dalam pertahun
+public function getSaldoTahun($year){
+    $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS saldo');
+    $this->db->from('tbl_transaksi');
+    $this->db->where('year(waktu_transaksi)',$year);
+    $query = $this->db->get()->row_array();
+    if($query){
+        $hasil = $query;
+    }else {
+        $hasil = null;
+    }
+    return $hasil;
+}
+// Untuk mencari jumalah pendapatan perhari
+public function getPendHari(){
+    $this->db->select('SUM(pemasukan) AS pemasukan');
+    $this->db->from('tbl_transaksi');
+    $query = $this->db->get()->row_array();
+    if($query){
+        $hasil = $query;
+    }else {
+        $hasil = null;
+    }
+    return $hasil;
+}
+// Untuk Mencari jumalh pendapatan pertahun
+public function getPendTahun(){
+    $this->db->select('SUM(pemasukan) AS pemasukan');
+    $this->db->from('tbl_transaksi');
+    $this->db->where('year(waktu_transaksi)', date('Y'));
+    $query = $this->db->get()->row_array();
+    return $query;
+}
+// Untuk Mencari Jumalh pengeluaran perhari
+public function getPengHari(){
+    $this->db->select('SUM(pengeluaran) AS pengeluaran');
+    $this->db->from('tbl_transaksi');
+    $query = $this->db->get()->row_array();
+    if($query){
+        $hasil = $query;
+    }else {
+        $hasil = null;
+    }
+    return $hasil;
+}
+// Untuk Mencari Jumlah Pengeluaran pertahun
+public function getPengTahun(){
+    $this->db->select('SUM(pengeluaran) AS pengeluaran');
+    $this->db->from('tbl_transaksi');
+    $this->db->where('year(waktu_transaksi)', date('Y'));
+    $query = $this->db->get()->row_array();
+    return $query;
+}
     // Untuk Mendapatakan Tanggal Digunakan pada Laporan
     public function getHarian($tanggal){
         $this->db->from('tbl_transaksi');

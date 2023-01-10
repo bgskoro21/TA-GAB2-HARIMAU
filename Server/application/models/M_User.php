@@ -40,19 +40,19 @@ class M_User extends CI_Model{
         return $hasil;
     }
 
-    // public function login($username,$password ){
-    //     $this->db->select('nama_lengkap,level,profile_picture,username');
-    //     $this->db->from('user');
-    //     $this->db->where("username = '$username' AND password = '$password' ");
-    //     $query = $this->db->get()->row_array();
+    public function login($username,$password ){
+        $this->db->select('nama_lengkap,level,profile_picture,username');
+        $this->db->from('user');
+        $this->db->where("username = '$username' AND password = '$password' ");
+        $query = $this->db->get()->row_array();
 
-    //     if(!empty($query)){
-    //         $hasil = $query;
-    //     }else{
-    //         $hasil = null;
-    //     }
-    //     return $hasil;
-    // }
+        if(!empty($query)){
+            $hasil = $query;
+        }else{
+            $hasil = null;
+        }
+        return $hasil;
+    }
 
     public function delete_data($email){
         $this->db->select('email');
@@ -179,19 +179,33 @@ class M_User extends CI_Model{
         return $hasil;
     }
 
-    function changePassword($username,$password){
+    function changePassword($email,$password){
         $this->db->from('user');
-        $this->db->where('username',$username);
+        $this->db->where('email',$email);
         $query = $this->db->get()->result();
         if(count($query) == 1){
             $data['password'] = $password;
-            $this->db->where('username',$username);
+            $this->db->where('email',$email);
             $this->db->update('user',$data);
             $hasil = 1;
         }else{
             $hasil = 0;
         }
-        return $hasil;
+        return $query;
+    }
+
+    function forgotpassword($email,$password,$is_active){
+        $this->db->select('email');
+        $this->db->from('user');
+        $this->db->where('email',$email);
+        $this->db->where('is_active',1);
+        $query = $this->db->get()->row_array();
+        if($query){
+            $this->db->update('password',$password);
+            $hasil = 1;
+        } else {
+            $hasil = 0;
+        }
     }
     
     public function aktivasi_akun($is_active,$email){
