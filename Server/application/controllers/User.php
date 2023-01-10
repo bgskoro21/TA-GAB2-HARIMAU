@@ -9,14 +9,15 @@ class User extends Server {
 		parent::__construct();
 		// panggil model M_User
 		$this->load->model("M_User","model",TRUE);
+		$this->load->model("M_UserToken","mdl",TRUE);
 	}
 
 	// buat function get, untuk mengambil data
 	function service_get(){
-		$username = $this->get('username');
+		$email = $this->get('email');
 		$current = $this->get('current');
 		if(!empty($username)){
-			$hasil = $this->model->get_data($username);
+			$hasil = $this->model->get_data($email);
 
 		}else if(!empty($current)){
 			$hasil = $this->model->get_current($current);
@@ -83,8 +84,8 @@ class User extends Server {
 		$config = [	
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'mahardikaakbar9090@gmail.com',
-            'smtp_pass' => 'ghgojxuddibxpozu',
+            'smtp_user' => 'patriciusaldi70@gmail.com',
+            'smtp_pass' => 'vjwqpayxyyatknhl',
             'smtp_port' => 465,
             'mailtype' => 'html',
             'charset' => 'utf-8',
@@ -93,11 +94,11 @@ class User extends Server {
 
 		$this->load->library('email',$config);
 		$this->email->initialize($config);
-		$this->email->from('mahardikaakbar9090@gmail.com','Eyzel');
+		$this->email->from('patriciusaldi80@gmail.com','Eyzel');
 		$this->email->to($this->post('email'));
 		if($type == 'verify'){
 			$this->email->subject('Account Verification');
-			$this->email->message('Click this link to verify your account : <a href="'. base_url(). 'index.php/verifikasi?email='.$this->post('email').'&token='.urlencode($token).'">Verify</a>');
+			$this->email->message('Click this link to verify your account : <a href="'. $this->post('url'). '?email='.$this->post('email').'&token='.urlencode($token).'">Verify</a>');
 		}
 		if($this->email->send()){
 			return true;
@@ -122,7 +123,7 @@ class User extends Server {
 			"token" => ($this->post('username'))
 		];
 
-		$token = base64_encode('bagaskara');
+		$token = base64_encode(random_bytes("32"));
 		$user_token = [
 			'email' => $data['email'],
 			'token' => $token,
@@ -159,7 +160,7 @@ class User extends Server {
 		// $this->load->model("Mmahasiswa","model",TRUE);
 		// ambil parameter token "username"
 		// kondisi where tidak harus primary key
-		$token = $this->delete('username');
+		$token = $this->delete('email');
 		// panggil methode delete_data
 		// base64_encode untuk mengirimkan token dalam bentuk base64
 		// untuk mengamanka data npm
@@ -176,5 +177,7 @@ class User extends Server {
 				"massages" => "Data User Gagal Dihapus!"
 			]);
 		}
-	}    
+	}
+	
+	
 }

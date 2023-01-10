@@ -2,11 +2,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_User extends CI_Model{
-    public function get_data($username=null){
+    public function get_data($email=null){
         
             $this->db->from('user');
             if($username != null){
-                $this->db->where('username', $username);
+                $this->db->where('email', $email);
             }
             $query = $this->db->get()->result();
         
@@ -16,7 +16,7 @@ class M_User extends CI_Model{
     public function get_current($current){
         $this->db->select('id,nama_lengkap,level,no_hp,profile_picture,username,email');
         $this->db->from('user');
-        $this->db->where('username',$current );
+        $this->db->where('email',$current );
         $query = $this->db->get()->row_array();
 
         if(!empty($query)){
@@ -40,26 +40,13 @@ class M_User extends CI_Model{
         return $hasil;
     }
 
-    // public function login($username,$password ){
-    //     $this->db->select('nama_lengkap,level,profile_picture,username');
-    //     $this->db->from('user');
-    //     $this->db->where("username = '$username' AND password = '$password' ");
-    //     $query = $this->db->get()->row_array();
-
-    //     if(!empty($query)){
-    //         $hasil = $query;
-    //     }else{
-    //         $hasil = null;
-    //     }
-    //     return $hasil;
-    // }
+    
 
     public function delete_data($email){
         $this->db->select('email');
         $this->db->from('user');
         $this->db->where("email = '$email' ");
         $query = $this->db->get()->result();
-
         if(count($query) == 1){
             $this->db->where("email = '$email' ");
             $this->db->delete('user');
@@ -72,10 +59,10 @@ class M_User extends CI_Model{
 
     function save_data($username, $email, $password, $namalengkap,$nohp,$level){
         // cek apakah npm ada atau tidak
-        $this->db->select('username');
+        $this->db->select('email');
         $this->db->from("user");
         // teknik enkripsi
-        $this->db->where('username',$username);
+        $this->db->where('email',$email);
         // eksekusi query delete data
         $query = $this->db->get()->result();
         // jika npm tidak ditemukan
@@ -104,11 +91,11 @@ class M_User extends CI_Model{
 
     public function update_data($username, $email, $password, $namalengkap,$nohp,$level, $token){
         // cek apakah npm ada atau tidak
-        $this->db->select('username');
+        $this->db->select('email');
         $this->db->from("user");
         // query untuk mencari data berdasarkan npm yang di encode dan juga npm biasa
         // Conditional agar menghasilkan nilai 0
-        $this->db->where("username = '$token'");
+        $this->db->where("email = '$token'");
         // eksekusi query delete data
         $query = $this->db->get()->result();
 
@@ -124,7 +111,7 @@ class M_User extends CI_Model{
             );
 
              // ubah data mahasiswa
-             $this->db->where("username = '$token'");
+             $this->db->where("email = '$token'");
              $this->db->update("user",$data);
              $hasil = 1;
         }else{
@@ -136,7 +123,7 @@ class M_User extends CI_Model{
 
     public function add_photo($username, $nama_lengkap, $no_hp, $profile_picture=null){
         $this->db->from('user');
-        $this->db->where("username = '$username'");
+        $this->db->where("email = '$email'");
         $query = $this->db->get()->result();
 
         if(count($query) == 1){
@@ -152,7 +139,7 @@ class M_User extends CI_Model{
                     'no_hp' => $no_hp,
                 );
             }
-            $this->db->where("username = '$username'");
+            $this->db->where("email = '$email'");
             $this->db->update("user",$data);
             $hasil = 1;
         }else{
@@ -161,15 +148,15 @@ class M_User extends CI_Model{
         return $hasil;
     }
 
-    function getGambarLama($username){
+    function getGambarLama($email){
         $this->db->select('profile_picture');
-        return $this->db->get_where('user',['username' => $username])->row_array();
+        return $this->db->get_where('user',['$email' => $email])->row_array();
     }
 
-    function cekPassword($username, $password){
+    function cekPassword($email, $password){
         $this->db->select('password');
         $this->db->from('user');
-        $this->db->where("username = '$username' AND password = '$password' ");
+        $this->db->where("$email = '$email' AND password = '$password' ");
         $query = $this->db->get()->row_array();
         if(!empty($query)){
             $hasil = 1;
@@ -179,13 +166,13 @@ class M_User extends CI_Model{
         return $hasil;
     }
 
-    function changePassword($username,$password){
+    function changePassword($email,$password){
         $this->db->from('user');
-        $this->db->where('username',$username);
+        $this->db->where('email',$email);
         $query = $this->db->get()->result();
         if(count($query) == 1){
             $data['password'] = $password;
-            $this->db->where('username',$username);
+            $this->db->where('email',$email);
             $this->db->update('user',$data);
             $hasil = 1;
         }else{
@@ -209,4 +196,5 @@ class M_User extends CI_Model{
         }
         return $hasil;
     }
+    
 }
