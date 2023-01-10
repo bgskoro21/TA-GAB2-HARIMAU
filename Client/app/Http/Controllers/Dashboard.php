@@ -14,8 +14,8 @@ class Dashboard extends Controller
         $saldo = Http::get(Custom::APISALDO)->object()->total_saldo;
         $pengeluaran = Http::get(Custom::APIPENGELUARANBULANINI)->object()->pengeluaran_bulan;
         $transaksi = Http::get(Custom::APITRANSAKSI)->object()->bulan;
+        // var_dump($transaksi);die;
         $keuntungan = Http::get(Custom::APIKEUNTUNGAN)->json()['keuntungan'];
-        // var_dump($keuntungan);die;
         $bulan = Http::get(Custom::APIBULAN)->json()['bulan'];
         return view('content.dashboard.index',[
             "pemasukkan_bulan" => $pend_bulan,

@@ -16,7 +16,7 @@ class CustomAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if (session('username') == null) {
+        if (session('email') == null) {
             return redirect()->route('login');
         }
 

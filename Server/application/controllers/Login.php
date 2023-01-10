@@ -6,7 +6,8 @@ require APPPATH."libraries/Server.php";
 class Login extends Server{
     public function __construct(){
         parent::__construct();
-        $this->load->model('M_User','mdl',TRUE);
+        $this->load->model('M_User','model',TRUE);
+        
     }
 
     public function service_post(){
@@ -15,7 +16,7 @@ class Login extends Server{
          'password' => $this->post('password')
         ];
 
-        $cekLogin = $this->mdl->checkLogin($data['email']);
+        $cekLogin = $this->model->checkLogin($data['email']);
         if($cekLogin){
             if($cekLogin['is_active']){
                 // cek password
@@ -23,7 +24,11 @@ class Login extends Server{
                 if(password_verify($data['password'], $cekLogin['password'])){
                     $data = [
                         'email' => $cekLogin['email'],
-                        'level' => $cekLogin['level']
+                        'level' => $cekLogin['level'],
+                        'id'=> $cekLogin['id'],
+                        'nama_lengkap' => $cekLogin['nama_lengkap'],
+                        'profile_picture' => $cekLogin['profile_picture']
+                        
                     ];
                     $this->response([
                         "status" => 1,

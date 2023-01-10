@@ -13,7 +13,7 @@ class Login extends Controller
         if(!is_null(session('nama_lengkap'))){
             return redirect('/');
         }
-        return view('login.index',[
+        return view('login.login',[
             'title' => 'Login'
         ]);
     }
@@ -45,6 +45,29 @@ class Login extends Controller
         </div>');
 
 
+    }
+
+    public function forgotPassword(){
+        return view('login.forgot',[
+            'title' => 'Forgot Password'
+        ]);
+    }
+
+    public function verifikasi(Request $request){
+        $verifikasi = Http::get(Custom::APIVERIFIKASI, [
+            'email' => $request->email,
+            'token' => $request->token
+        ])->object();
+
+        if($verifikasi->status == true){
+            return redirect('/login')->with('loginError','<div class="alert alert-success text-center" role="alert">
+            '.$verifikasi->massages.'
+            </div>');
+        }else{
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">
+            '.$verifikasi->massages.'
+            </div>');
+        }
     }
 
     public function logout(Request $request){

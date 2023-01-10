@@ -24,7 +24,7 @@ class Pemasukkan extends Controller
             'waktu_transaksi' => $request->waktu_transaksi,
             'pemasukkan' =>$request->pemasukkan,
             'perincian' =>$request->perincian,
-            'user_id' => 14
+            'user_id' => 27
         ];
 
         $tambah = Http::post(Custom::APIPEMASUKKAN,$data)->object();
@@ -56,7 +56,7 @@ class Pemasukkan extends Controller
             'pemasukkan' =>$request->pemasukkan,
             'perincian' =>$request->perincian,
             'id' => $request->id,
-            'user_id' => 14
+            'user_id' => 27
         ];
         
         $edit = Http::put(Custom::APIPEMASUKKAN, $data)->object();

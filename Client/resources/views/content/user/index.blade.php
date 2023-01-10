@@ -1,5 +1,8 @@
 @extends('layout.main')
 @section('container')
+{{-- @php
+    var_dump($users);die;
+@endphp --}}
 <section class="m-3 bg-dark text-white radius p-4 overflow-auto">
     <div class="row d-flex justify-content-center align-items-center mb-3">
         <div class="col-10">
@@ -14,7 +17,6 @@
                 <tr>
                     <th scope="col" class="text-center">No</th>
                     <th scope="col" class="text-center">Nama</th>
-                    <th scope="col" class="text-center">Username</th>
                     <th scope="col" class="text-center">Email</th>
                     <th scope="col" class="text-center">Nomor HP</th>
                     <th scope="col" class="text-center">Level</th>
@@ -22,20 +24,21 @@
                 </tr>
         </thead>
         <tbody>
+            @if (isset($users->user))
             @foreach ($users->user as $user)
             <tr>
                 <td class="text-center">{{ $loop->iteration }}</td>
                 <td>{{  $user->nama_lengkap }}</td>
-                <td>{{ $user->username }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->no_hp }}</td>
                 <td>{{ $user->level }}</td>
                 <td class="text-center">
-                    <button class="btn btn-success btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ $user->username }}"><i class='bx bx-edit'></i></button>
+                    <button class="btn btn-success btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ $user->email }}"><i class='bx bx-edit'></i></button>
                     <button type="submit" onclick="setDelete('{{ $user->email }}')" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i></button>
                 </td>
             </tr>
             @endforeach
+            @endif
         </tbody>
     </table>
 </section>
@@ -53,10 +56,6 @@
               <div class="form-floating mb-3">
                   <input type="text" class="form-control" placeholder="pemasukan" name="nama_lengkap" id="nama_lengkap">
                   <label for="nama_lengkap" class="text-dark">Nama Lengkap</label>
-              </div>
-              <div class="form-floating mb-3">
-                  <input type="text" class="form-control" placeholder="username" name="username" id="username">
-                  <label for="username" class="text-dark">Username</label>
               </div>
               <div class="form-floating mb-3">
                   <input type="email" class="form-control" placeholder="email" name="email" id="email">
@@ -90,7 +89,7 @@
 @section('script')
 <script>
      function setDelete(username){
-        console.log(username);
+        // console.log(username);
         Swal.fire({
           title: 'Apakah kamu yakin?',
           showDenyButton: true,
@@ -123,7 +122,6 @@
           const json = JSON.parse(data)
           console.log(json)
         $('#nama_lengkap').val(json.nama_lengkap)
-        $('#username').val(json.username)
         $('#email').val(json.email)
         $('#no_hp').val(json.no_hp)
         $('#level').val(json.level)
@@ -140,7 +138,6 @@
     $('.float-password').show()
 
     $('#nama_lengkap').val('')
-    $('#username').val('')
     $('#email').val('')
     $('#no_hp').val('')
     $('#level').val('')

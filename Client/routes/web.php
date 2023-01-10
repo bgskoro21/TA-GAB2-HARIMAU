@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [Dashboard::class, 'index']);
+Route::get('/', [Dashboard::class, 'index'])->middleware('authCustom');
 Route::get('/user', [User::class, 'index']);
 Route::get('/user/dataByUsername/{username}', [User::class, 'dataByUsername']);
 Route::get('/pemasukkan/getPemasukkanById/{id}', [Pemasukkan::class, 'getPemasukkanById']);
@@ -46,3 +46,5 @@ Route::get('/logout',[Login::class, 'logout']);
 Route::get('/profile',[Profile::class, 'index']);
 Route::post('/profile/edit_profile',[Profile::class, 'edit_profile']);
 Route::post('/profile/change_password',[Profile::class, 'change_password']);
+Route::get('/login/verifikasi', [User::class, 'verifikasi']);
+Route::get('/forgotpassword', [Login::class, 'forgotPassword']);

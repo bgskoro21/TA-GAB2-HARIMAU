@@ -24,11 +24,11 @@ class User extends Controller
 
         $data = [
             'nama_lengkap' => $request->nama_lengkap,
-            'username' => $request->username,
             'email' => $request->email,
             'no_hp' => $request->no_hp,
             'level' => $request->level,
             'password' => $request->password,
+            'url' => 'http://127.0.0.1:8000/login/verifikasi'
         ];
         $tambah = Http::post(Custom::APIUSER, $data)->object();
         // var_dump($tambah);die;
@@ -39,8 +39,8 @@ class User extends Controller
         }
     }
 
-    public function hapus_data($username){
-        $delete = Http::asForm()->delete(Custom::APIUSER,["username" => $username])->object();
+    public function hapus_data($email){
+        $delete = Http::asForm()->delete(Custom::APIUSER,["email" => $email])->object();
         // var_dump($delete);
         if($delete->status == true){
             return redirect('/user')->with('message',$delete->massages);
@@ -49,15 +49,14 @@ class User extends Controller
         }
     }
 
-    public function dataByUsername($username){
-        $users = Http::get(Custom::APIUSER,['username' => $username])->object();
+    public function dataByUsername($email){
+        $users = Http::get(Custom::APIUSER,['email' => $email])->object();
         echo json_encode($users->user[0]);
     }
 
     public function edit_data(Request $request){
         $data = [
             'nama_lengkap' => $request->nama_lengkap,
-            'username' => $request->username,
             'email' => $request->email,
             'no_hp' => $request->no_hp,
             'level' => $request->level,

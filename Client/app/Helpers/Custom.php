@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Http;
+
 Class Custom {
     const API = 'http://localhost/TA-GAB2-HARIMAU/Server';
     // const APISALDO = Custom::API.'/index.php/pemasukkan';
@@ -19,6 +21,7 @@ Class Custom {
     const APISEARCHTRANSAKSI = Custom::API.'/index.php/laporan';
     const APIEDITPROFILE = Custom::API.'/index.php/uploadfoto';
     const APICEKPASSWORD = Custom::API.'/index.php/password';
+    const APIVERIFIKASI =  Custom::API.'/index.php/verifikasi';
     
 
 
@@ -37,11 +40,6 @@ Class Custom {
         $result = $Hari[$hari].", ".$tgl." ".$Bulan[(int)$bulan-1]." ".$tahun." ".$waktu;
     
         return $result;
-      }
-
-
-      public function Current(){
-        
       }
 }
 

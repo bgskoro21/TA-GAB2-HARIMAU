@@ -21,9 +21,9 @@
                                       <li class="dropdown-header text-start">
                                         <h6>Filter</h6>
                                       </li>
-                                      <li><a class="dropdown-item" href="#">Today</a></li>
-                                      <li><a class="dropdown-item" href="#">This Month</a></li>
-                                      <li><a class="dropdown-item" href="#">This Year</a></li>
+                                      <li><button class="dropdown-item btn-today" href="#">Today</button></li>
+                                      <li><button class="dropdown-item btn-month" href="#">This Month</button></li>
+                                      <li><button class="dropdown-item btn-year" href="#">This Year</button></li>
                                     </ul>
                                   </div>
                             </div>
@@ -135,6 +135,7 @@
                     </tr>
             </thead>
             <tbody>
+              @if ($transaksi != 0)
                 @php
                     $saldo = 0
                 @endphp
@@ -148,6 +149,7 @@
                     <td>@currency($saldo += $t->pemasukan - $t->pengeluaran)</td>
                 </tr>
                 @endforeach
+                @endif
             </tbody>
         </table>
 </section>
@@ -177,6 +179,7 @@
           label: 'Keuntungan Perbulan',
           backgroundColor: 'white',
           borderColor: 'white',
+          color: 'white',
           data: pemasukkanBulan
         }]
       };
@@ -191,12 +194,10 @@
                     // This more specific font property overrides the global property
                     font: {
                         size: 16
-                    },                    
+                    },
+                    color : 'white'                    
                 },
             },
-            customCanvasBackgroundColor: {
-                    color: 'black',
-                },
             title: {
                 display: true,
                 text: 'Grafik Keuntungan',
@@ -206,10 +207,10 @@
                 },
                 font: {
                         size: 22,
-                        color: 'white'
                 },
+                color : 'white',
                 align: 'start'
-            }
+            },
         },
         },
       };
@@ -218,5 +219,9 @@
         document.getElementById('grafik'),
         config
       );
+
+      $('.btn-today').on('click',function(){
+        console.log($(this).text());
+      })
 </script>
 @endsection
