@@ -15,12 +15,13 @@ class Transaksi extends Server{
             $this->response([
                 'status' => true,
                 'message' => 'Berhasil',
-                'bulan' => $hasil
+                'transaksi' => $hasil
         ],200);
         }else{
             $this->response([
                 'status' => false,
                 'message' => 'Gagal',
+                'transaksi' => 0
             ]);
         }
     }
