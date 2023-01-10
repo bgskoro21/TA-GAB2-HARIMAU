@@ -11,9 +11,9 @@ class Password extends Server{
     }
 
     function service_post(){
-        $username = $this->post('username');
+        $email = $this->post('email');
         $password = $this->post('password');
-        $hasil = $this->mdl->cekPassword($username,$password);
+        $hasil = $this->mdl->cekPassword($email,$password);
 
         if($hasil == 1){
             $this->response([
@@ -27,9 +27,9 @@ class Password extends Server{
     }
 
     function service_put(){
-        $username = $this->put('username');
-        $password = $this->put('newpassword');
-        $hasil = $this->mdl->changePassword($username,$password);
+        $email = $this->put('email');
+        $password = $this->put('password');
+        $hasil = $this->mdl->changePassword($email,$password);
 
         if($hasil == 1){
             $this->response([

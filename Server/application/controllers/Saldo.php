@@ -15,7 +15,7 @@ class Saldo extends Server{
                 'status' => true,
                 'message' => 'Berhasil',
                 'total_saldo' => $hasil
-        ],200);
+            ],200);
         }else{
             $this->response([
                 'status' => false,
