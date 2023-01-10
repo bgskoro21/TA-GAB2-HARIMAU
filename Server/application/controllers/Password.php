@@ -13,13 +13,13 @@ class Password extends Server{
     function service_post(){
         $email = $this->post('email');
         $password = $this->post('password');
-        $hasil = $this->mdl->cekPassword($email,$password);
-
-        if($hasil == 1){
+        $hasil = $this->mdl->cekPassword($email);
+        if(password_verify($password, $hasil['password'])){
             $this->response([
                 'status' => true
             ],200);
-        }else{
+        }
+        else{
             $this->response([
                 "status" => false
             ]);
@@ -28,7 +28,7 @@ class Password extends Server{
 
     function service_put(){
         $email = $this->put('email');
-        $password = $this->put('password');
+        $password = password_hash($this->put('password'),PASSWORD_DEFAULT);
         $hasil = $this->mdl->changePassword($email,$password);
 
         if($hasil == 1){

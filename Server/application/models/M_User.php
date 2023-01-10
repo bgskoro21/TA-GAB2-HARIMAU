@@ -148,16 +148,16 @@ class M_User extends CI_Model{
 
     function getGambarLama($email){
         $this->db->select('profile_picture');
-        return $this->db->get_where('user',['$email' => $email])->row_array();
+        return $this->db->get_where('user',['email' => $email])->row_array();
     }
 
-    function cekPassword($email, $password){
+    function cekPassword($email){
         $this->db->select('password');
         $this->db->from('user');
-        $this->db->where("$email = '$email' AND password = '$password' ");
+        $this->db->where("email = '$email'");
         $query = $this->db->get()->row_array();
         if(!empty($query)){
-            $hasil = 1;
+            $hasil = $query;
         }else {
             $hasil = 0;
         }

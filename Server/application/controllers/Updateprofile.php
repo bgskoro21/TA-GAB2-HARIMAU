@@ -29,12 +29,12 @@ class Updateprofile extends Server{
         }else{
             $gambarLama = $this->mdl->getGambarLama($this->post('token'));
             // var_dump($gambarLama);die;
-            if($gambarLama['profile_picture'] != null){
+            if(isset($gambarLama['profile_picture'])){
                 $pecah = explode('/', $gambarLama['profile_picture']);
                 unlink("./assets/images/$pecah[7]");
             }
             $namaGambar = $this->upload->data('file_name');
-            $doc_url = base_url("/assets/images/". $namaGambar);
+            $doc_url = "http://localhost/TA-GAB2-HARIMAU/Server/assets/images/". $namaGambar;
             $data = [
                 "profile_picture" => $doc_url,
                 "email" => $this->post('token'),

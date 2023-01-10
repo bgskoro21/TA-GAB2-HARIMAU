@@ -59,7 +59,7 @@ class Resetpassword extends Server{
         $password = password_hash($this->put('password'),PASSWORD_DEFAULT);
         
         $hasil = $this->model->changePassword($email,$password);
-        var_dump($hasil);die;
+        // var_dump($hasil);die;
         if ($hasil == 1){
             $this->response([
                 "status" => true,
