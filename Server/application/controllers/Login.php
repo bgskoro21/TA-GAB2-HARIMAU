@@ -24,7 +24,11 @@ class Login extends Server{
                 if(password_verify($data['password'], $cekLogin['password'])){
                     $data = [
                         'email' => $cekLogin['email'],
-                        'level' => $cekLogin['level']
+                        'level' => $cekLogin['level'],
+                        'id'=> $cekLogin['id'],
+                        'nama_lengkap' => $cekLogin['nama_lengkap'],
+                        'profile_picture' => $cekLogin['profile_picture']
+                        
                     ];
                     $this->response([
                         "status" => 1,
