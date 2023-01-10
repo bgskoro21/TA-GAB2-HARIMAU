@@ -34,9 +34,9 @@ class Updateprofile extends Server{
                 unlink("./assets/images/$pecah[7]");
             }
             $namaGambar = $this->upload->data('file_name');
-            $doc_url = base_url("/assets/images/". $namaGambar);
+            $doc_url = base_url("http://localhost/TA-GAB2-HARIMAU/Server/assets/images/". $namaGambar);
             $data = [
-                "profile_picture" => $doc_url = "http://localhost/TA-GAB2-HARIMAU/Server/assets/images/". $namaGambar,
+                "profile_picture" => $doc_url,
                 "email" => $this->post('token'),
                 "nama_lengkap" => $this->post('nama_lengkap'),
                 'no_hp' => $this->post('no_hp'),

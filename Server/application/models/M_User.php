@@ -102,7 +102,7 @@ class M_User extends CI_Model{
              // proses memasukkan data ke dalam array
              $data = array(
                 'email' => $email,
-                'password' => $password,
+                'password' => password_hash($this->post("password"),PASSWORD_DEFAULT),
                 'nama_lengkap' => $namalengkap,
                 'no_hp' => $nohp,
                 'level' => $level

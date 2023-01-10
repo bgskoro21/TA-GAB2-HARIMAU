@@ -52,7 +52,7 @@ class User extends Server {
 		// membuat data array untuk mengambil parameter data yang akan diisi
 		$data = [
 			"email" => $this->put("email"),
-			"password" => password_hash($this->post("password"),PASSWORD_DEFAULT),
+			"password" => password_hash($this->put("password"),PASSWORD_DEFAULT),
 			"nama_lengkap" => $this->put("nama_lengkap"),
             "no_hp" => $this->put("no_hp"),
             "level" => $this->put("level"),
