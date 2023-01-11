@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH . 'controllers/Token.php';
-class Pendapatan_hari extends Token{
+class Pengeluaran_hari extends Token{
     public function __construct(){
         parent::__construct();
         $this->load->model('M_Transaksi','mdl',TRUE);
