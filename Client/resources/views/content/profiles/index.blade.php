@@ -6,8 +6,11 @@
 
         <div class="card bg-dark text-white">
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
+            @if (!is_null($current_user->profile_picture))
             <img src="{{ $current_user->profile_picture }}" alt="Profile" class="rounded-circle img-fluid mb-2" width="150">
+            @else
+            <img src="https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Clip-Art-Transparent-File.png" alt="Profile" class="rounded-circle img-fluid mb-2" width="150">    
+            @endif
             <h4>{{ $current_user->nama_lengkap }}</h4>
             <p>{{ $current_user->level }}</p>
           </div>
@@ -73,13 +76,19 @@
                   <div class="row mb-3">
                     <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                     <div class="col-md-8 col-lg-9">
+                      @if (!empty($current_user->profile_picture))
                       <img src="{{ $current_user->profile_picture }}" alt="Profile" width="100" id="preview_photo">
+                      @else
+                      <img src="https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Clip-Art-Transparent-File.png" alt="Profile" id="preview_photo" width="100">    
+                      @endif
                       <div class="pt-2">
                         <div class="input-file">
                           <input type="file" name="profile_picture" id="photo" class="d-none">
                         </div>
                         <button type="button" class="btn btn-sm btn-primary" onclick="return getFile()"><i class="bx bx-upload"></i></button>
-                        <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bx bx-trash"></i></a>
+                        @if ($current_user->profile_picture)
+                        <button type="button" class="btn btn-danger btn-sm" onclick="return deleteProfilePicture()" title="Remove my profile image" id="btn_hapus"><i class="bx bx-trash"></i></button>
+                        @endif
                       </div>
                     </div>
                   </div>
@@ -149,6 +158,24 @@
 @section('script')
 <script>
 
+function deleteProfilePicture(){
+      Swal.fire({
+        title: 'Apakah kamu ingin menghapus foto profile?',
+        showDenyButton: true,
+        confirmButtonText: 'Ya',
+        denyButtonText: `Tidak`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          $('#preview_photo').attr('src', 'https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Clip-Art-Transparent-File.png')
+          $('#btn_hapus').hide()
+          // location.href = '/logout'
+        } else if (result.isDenied) {
+          return false;
+        }
+      })
+    }
+
     function getFile(){
         document.getElementById("photo").click();
     }
@@ -159,7 +186,7 @@
   $('#photo').change(function(){
             
     let reader = new FileReader();
-
+    $('#btn_hapus').show()
     reader.onload = (e) => { 
 
       $('#preview_photo').attr('src', e.target.result); 

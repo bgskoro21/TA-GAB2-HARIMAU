@@ -29,7 +29,6 @@ class Login extends Controller
                 'password.required' => 'Password harus diisi!',
             ]
     );
-
         $login = Http::post(Custom::APILOGIN,[
             'email' => $request->email,
             'password' => $request->password

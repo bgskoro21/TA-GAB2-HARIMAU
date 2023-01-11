@@ -27,6 +27,7 @@ class Profile extends Controller
                     'token' => $request->token,
                      ])->object();
         }else{
+            // var_dump($profile_picture);die;
             $update = Http::post(Custom::APIEDITPROFILE,[
                 'nama_lengkap' => $request->nama_lengkap,
                 'no_hp' => $request->no_hp,

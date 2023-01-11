@@ -58,7 +58,11 @@
             <div class="d-flex justify-content-evenly profile-details">
                 <div class="col-md-3">
                     <div class="profile-content">
+                        @if (!is_null(session('profile_picture')))
                         <img src="{{ session('profile_picture') }}" alt="Profile" class="img-fluid img-thumbnail rounded-circle">
+                        @else
+                        <img src="https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Clip-Art-Transparent-File.png" alt="Profile" class="rounded-circle img-fluid">
+                        @endif
                     </div>
                 </div>
                 <div class="col-md-6 ms-1">
