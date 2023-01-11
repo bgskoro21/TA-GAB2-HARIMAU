@@ -88,7 +88,7 @@ class M_User extends CI_Model{
         return $hasil;
     }
 
-    public function update_data($email, $password, $namalengkap,$nohp,$level, $token){
+    public function update_data($email,$level, $token){
         // cek apakah npm ada atau tidak
         $this->db->select('email');
         $this->db->from("user");
@@ -102,9 +102,6 @@ class M_User extends CI_Model{
              // proses memasukkan data ke dalam array
              $data = array(
                 'email' => $email,
-                'password' => password_hash($this->post("password"),PASSWORD_DEFAULT),
-                'nama_lengkap' => $namalengkap,
-                'no_hp' => $nohp,
                 'level' => $level
             );
 
@@ -148,13 +145,13 @@ class M_User extends CI_Model{
 
     function getGambarLama($email){
         $this->db->select('profile_picture');
-        return $this->db->get_where('user',['$email' => $email])->row_array();
+        return $this->db->get_where('user',['email' => $email])->row_array();
     }
 
-    function cekPassword($email, $password){
+    function cekPassword($email){
         $this->db->select('password');
         $this->db->from('user');
-        $this->db->where("email = '$email' AND password = '$password' ");
+        $this->db->where("email = '$email'");
         $query = $this->db->get()->row_array();
         if(!empty($query)){
             $hasil = $query;

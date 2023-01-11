@@ -1,9 +1,9 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH."libraries/Server.php";
+require APPPATH . 'controllers/Token.php';
 
-class Password extends Server{
+class Password extends Token{
 
     function __construct(){
         parent::__construct();

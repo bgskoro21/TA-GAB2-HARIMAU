@@ -1,6 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-require APPPATH."libraries/Server.php";
+require APPPATH . 'controllers/Token.php';
 
 class Updateprofile extends Server{
     function __construct(){
@@ -9,6 +9,9 @@ class Updateprofile extends Server{
     }
 
     function service_post(){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         
         $gambarLama = $this->mdl->getGambarLama($this->post('token'));
         // var_dump($gambarLama);
@@ -34,7 +37,7 @@ class Updateprofile extends Server{
                 unlink("./assets/images/$pecah[7]");
             }
             $namaGambar = $this->upload->data('file_name');
-            $doc_url = base_url("http://localhost/TA-GAB2-HARIMAU/Server/assets/images/". $namaGambar);
+            $doc_url = "http://localhost/TA-GAB2-HARIMAU/Server/assets/images/". $namaGambar;
             $data = [
                 "profile_picture" => $doc_url,
                 "email" => $this->post('token'),
@@ -55,5 +58,6 @@ class Updateprofile extends Server{
                 'message' => 'Data Profil Gagal Diubah'
             ]);
         }
+      }
     }
 }

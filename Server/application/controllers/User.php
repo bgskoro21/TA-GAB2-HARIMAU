@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH."libraries/Server.php";
-class User extends Server {
+require APPPATH . 'controllers/Token.php';
+class User extends Token {
 
 	public function __construct()
 	{
@@ -14,6 +14,9 @@ class User extends Server {
 
 	// buat function get, untuk mengambil data
 	function service_get(){
+		if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
 		$email = $this->get('email');
 		$current = $this->get('current');
 		if(!empty($email)){
@@ -40,27 +43,28 @@ class User extends Server {
 			]);
 
 		}
+	  }
 		
 		
 	}
 
 	// buat function put, untuk mengupdate data
 	function service_put(){
+		if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
 		// // panggil model M_User
 		// $this->load->model("M_User","model",TRUE);
 
 		// membuat data array untuk mengambil parameter data yang akan diisi
 		$data = [
 			"email" => $this->put("email"),
-			"password" => password_hash($this->put("password"),PASSWORD_DEFAULT),
-			"nama_lengkap" => $this->put("nama_lengkap"),
-            "no_hp" => $this->put("no_hp"),
             "level" => $this->put("level"),
 			"token" => $this->put('token') 
 		];
 
 		// panggil method update_data, dengan memasukkan argumen berupa array
-		$hasil = $this->model->update_data($data['email'],$data['password'],$data['nama_lengkap'],$data['no_hp'],$data['level'],$data['token']);
+		$hasil = $this->model->update_data($data['email'],$data['level'],$data['token']);
 
 		// jika hasil = 0, kenapa 0 karena kita akan memasukkan data yang belum ada di dalam database
 		if($hasil==1){
@@ -78,13 +82,14 @@ class User extends Server {
 		}
 		
 	}
+}
 
 	private function _sendEmail($token,$type){
 		$config = [	
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'patriciusaldi70@gmail.com',
-            'smtp_pass' => 'vjwqpayxyyatknhl',
+            'smtp_user' => 'bagaskara148@gmail.com',
+            'smtp_pass' => 'lmkderyrjjstdigd',
             'smtp_port' => 465,
             'mailtype' => 'html',
             'charset' => 'utf-8',
@@ -93,7 +98,7 @@ class User extends Server {
 
 		$this->load->library('email',$config);
 		$this->email->initialize($config);
-		$this->email->from('patriciusaldi80@gmail.com','Eyzel');
+		$this->email->from('bagaskara148@gmail.com','Eyzel');
 		$this->email->to($this->post('email'));
 		if($type == 'verify'){
 			$this->email->subject('Account Verification');
@@ -108,6 +113,9 @@ class User extends Server {
 
 	// buat function POST, untuk menambahkan data
 	function service_post(){
+		if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
 		// // panggil model M_user
 		$this->load->model("M_User","model",TRUE);
 
@@ -152,13 +160,17 @@ class User extends Server {
 		}
 
 	}
+}
 	// buat function DELETE, untuk menghapus data
 	function service_delete(){
+		if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
 		// // panggil model M_User
 		// $this->load->model("Mmahasiswa","model",TRUE);
 		// ambil parameter token "username"
 		// kondisi where tidak harus primary key
-		$token = $this->delete('email');
+				$token = $this->delete('email');
 		// panggil methode delete_data
 		// base64_encode untuk mengirimkan token dalam bentuk base64
 		// untuk mengamanka data npm
@@ -176,8 +188,8 @@ class User extends Server {
 			]);
 		}
 	}
-	
-	public function forgotpassword(){
+}
+public function forgotpassword(){
 
-	}
+}
 }

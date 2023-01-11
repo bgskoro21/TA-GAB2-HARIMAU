@@ -16,8 +16,8 @@ class Forgotpassword extends Server{
 		$config = [	
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'dikamahardika3020@gmail.com',
-            'smtp_pass' => 'iknvrdphrukfpfwe',
+            'smtp_user' => 'bagaskara148@gmail.com',
+            'smtp_pass' => 'lmkderyrjjstdigd',
             'smtp_port' => 465,
             'mailtype' => 'html',
             'charset' => 'utf-8',
@@ -26,7 +26,7 @@ class Forgotpassword extends Server{
 
 		$this->load->library('email',$config);
 		$this->email->initialize($config);
-		$this->email->from('dikamahardika3020@gmail.com','Eyzel');
+		$this->email->from('bagaskara148@gmail.com','Eyzel');
 		$this->email->to($this->post('email'));
 		if($type == 'forgot'){
 			$this->email->subject('Reset Password');
@@ -61,14 +61,14 @@ class Forgotpassword extends Server{
                 "massages" => "Silahkan Cek Email Anda Untuk Melakukan Forgot Password"
             ]);
             } else {
-                $this->response([
-                    "status" => true,
+            $this->response([
+                    "status" => false,
                     "massages" => "Email Belum TerAktivasi"
                 ]);
             }
         } else {
             $this->response([
-                "status" => true,
+                "status" => false,
                 "massages" => "Email Tidak Terdaftar"
             ]);
         }

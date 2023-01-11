@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-require APPPATH."libraries/Server.php";
-class Keuntungan extends Server{
+require APPPATH . 'controllers/Token.php';
+class Keuntungan extends Token{
     public function __construct(){
         parent::__construct();
         $this->load->model('M_Transaksi','mdl',TRUE);
@@ -9,6 +9,9 @@ class Keuntungan extends Server{
 
     
     function service_get(){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         $hasil = $this->mdl->getKeuntungan();
 
         if($hasil > 0){
@@ -24,5 +27,6 @@ class Keuntungan extends Server{
             ]);
         }
     }
+  }
 
 }
