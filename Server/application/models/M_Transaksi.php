@@ -59,7 +59,7 @@ class M_Transaksi extends CI_Model {
 
     // menampilkan jumlah pemasukan dalam bulan
     public function getBulan(){
-        $this->db->select('SUM(pemasukan) AS Total_bulan');
+        $this->db->select('SUM(pemasukan) AS pemasukan');
         $this->db->from('tbl_transaksi');
         $this->db->where('month(waktu_transaksi)', date('m'));
         $query = $this->db->get()->row_array();
@@ -136,6 +136,7 @@ class M_Transaksi extends CI_Model {
 public function getSaldo(){
     $this->db->select('SUM(pemasukan) - SUM(pengeluaran) AS saldo');
     $this->db->from('tbl_transaksi');
+    $this->db->where('waktu_transaksi',date('Y-m-d'));
     $query = $this->db->get()->row_array();
     if($query){
         $hasil = $query;
@@ -191,6 +192,7 @@ public function getSaldoTahun($year){
 public function getPendHari(){
     $this->db->select('SUM(pemasukan) AS pemasukan');
     $this->db->from('tbl_transaksi');
+    $this->db->where('waktu_transaksi',date('Y-m-d'));
     $query = $this->db->get()->row_array();
     if($query){
         $hasil = $query;
@@ -211,6 +213,7 @@ public function getPendTahun(){
 public function getPengHari(){
     $this->db->select('SUM(pengeluaran) AS pengeluaran');
     $this->db->from('tbl_transaksi');
+    $this->db->where('waktu_transaksi',date('Y-m-d'));
     $query = $this->db->get()->row_array();
     if($query){
         $hasil = $query;
@@ -260,7 +263,7 @@ public function getPengTahun(){
         }
         // Untuk Mendapatkan Pengeluaran Per bulan
         public function getPengBulan(){
-            $this->db->select('SUM(pengeluaran) AS Total_bulan');
+            $this->db->select('SUM(pengeluaran) AS pengeluaran');
             $this->db->from('tbl_transaksi');
             $this->db->where('month(waktu_transaksi)', date('m'));
             $query = $this->db->get()->row_array();

@@ -26,7 +26,7 @@ class Forgotpassword extends Server{
 
 		$this->load->library('email',$config);
 		$this->email->initialize($config);
-		$this->email->from('dikamahardika3020@gmail.com','Eyzel');
+		$this->email->from('bagaskara148@gmail.com','Eyzel');
 		$this->email->to($this->post('email'));
 		if($type == 'forgot'){
 			$this->email->subject('Reset Password');
@@ -62,13 +62,13 @@ class Forgotpassword extends Server{
             ]);
             } else {
             $this->response([
-                    "status" => true,
+                    "status" => false,
                     "massages" => "Email Belum TerAktivasi"
                 ]);
             }
         } else {
             $this->response([
-                "status" => true,
+                "status" => false,
                 "massages" => "Email Tidak Terdaftar"
             ]);
         }

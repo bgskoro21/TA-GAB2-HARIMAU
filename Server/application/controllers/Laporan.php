@@ -1,9 +1,9 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH."libraries/Server.php";
+require APPPATH . 'controllers/Token.php';
 
-class Laporan extends Server{
+class Laporan extends Token{
 
     function __construct(){
         parent::__construct();
@@ -11,6 +11,9 @@ class Laporan extends Server{
     }
 
     function service_get(){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         $tanggal = $this->get('tanggal');
         $bulan = $this->get('bulan');
         if(!empty($tanggal)){
@@ -31,4 +34,5 @@ class Laporan extends Server{
             ]);
         }
     }
+  }
 }

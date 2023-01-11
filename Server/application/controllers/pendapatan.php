@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH."libraries/Server.php";
+require APPPATH . 'controllers/Token.php';
 
-class Pendapatan extends Server {
+class Pendapatan extends Token {
 
 	public function __construct()
 	{
@@ -13,6 +13,9 @@ class Pendapatan extends Server {
 	}
 
 	function service_get(){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         $id = $this->get('id');
         
         $hasil = $this->mdl->get_data($id);
@@ -37,9 +40,13 @@ class Pendapatan extends Server {
                 'message' => 'Gagal',
             ]);
         }
+      }
     }
 
 	function service_delete($id){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         $hasil = $this->mdl->delete_data($id);
 
         if($hasil == 1){
@@ -53,9 +60,13 @@ class Pendapatan extends Server {
                 'message' => 'Data Pendapatan Gagal dihapus!',
             ]);
         }
+      }
     }
 
 	function service_post(){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         $user_id = $this->post('user_id');
         $waktu = $this->post('waktu_transaksi');
         $perincian = $this->post('perincian');
@@ -74,9 +85,13 @@ class Pendapatan extends Server {
                 'message' => 'Data Pendapatan Gagal Ditambahkan!',
             ]);
     }
+  }
 }
 
     function service_put(){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         $data = [
             "user_id" => $this->put('user_id'),
             "waktu_transaksi" => $this->put('waktu_transaksi'),
@@ -101,4 +116,5 @@ class Pendapatan extends Server {
 
     
     }
+  }
 }

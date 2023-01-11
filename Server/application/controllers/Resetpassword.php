@@ -23,7 +23,6 @@ class Resetpassword extends Server{
             // var_dump($user_token);die;
 			if($user_token){
 				if(time()-$user_token['date_created'] < (60 * 60 * 24)){
-                    $this->model->delete_data($email);
 					$this->mdl->del_email($email);
 					$this->response([
 						"status" => true,
@@ -31,7 +30,6 @@ class Resetpassword extends Server{
                         "email" => $email
 					]);
 				}else{
-					$this->model->delete_data($email);
 					$this->mdl->del_email($email);
 					$this->response([
 						"status" => false,

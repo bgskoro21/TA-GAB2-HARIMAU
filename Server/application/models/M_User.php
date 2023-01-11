@@ -88,7 +88,7 @@ class M_User extends CI_Model{
         return $hasil;
     }
 
-    public function update_data($email, $password, $namalengkap,$nohp,$level, $token){
+    public function update_data($email,$level, $token){
         // cek apakah npm ada atau tidak
         $this->db->select('email');
         $this->db->from("user");
@@ -102,9 +102,6 @@ class M_User extends CI_Model{
              // proses memasukkan data ke dalam array
              $data = array(
                 'email' => $email,
-                'password' => $password,
-                'nama_lengkap' => $namalengkap,
-                'no_hp' => $nohp,
                 'level' => $level
             );
 
