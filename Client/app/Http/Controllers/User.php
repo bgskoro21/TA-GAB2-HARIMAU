@@ -12,6 +12,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 class User extends Controller
 {
     public function index(){
+        if(session('level') != 'Admin'){
+            return redirect('/')->with('error','Anda bukan seorang Admin!');
+        }
         $user = Http::get(Custom::APIUSER);
         // var_dump($user->object());die;
         return view('content.user.index',[

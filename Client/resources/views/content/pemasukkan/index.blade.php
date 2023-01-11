@@ -33,12 +33,12 @@
                 <td>{{ $p->perincian }}</td>
                 <td>@currency($p->pemasukan)</td>
                 <td class="text-center">
-                    {{-- @if ($p->user_id == session('id')) --}}
+                    @if ($p->user_id == session('id'))
                     <button class="btn btn-success btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ $p->id }}"><i class='bx bx-edit'></i></button>
                     <button type="submit" onclick="setDelete({{ $p->id }})" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i></button>
-                    {{-- @else
+                    @else
                     <i class="text-muted">Forbidden</i>
-                    @endif --}}
+                    @endif
                 </td>
             </tr>
             @endforeach

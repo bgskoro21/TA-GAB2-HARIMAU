@@ -3,7 +3,9 @@
      {{-- {{ session('username') }} --}}
      <div class="row d-flex justify-content-center align-items-center" style="height: 100vh">
         <div class="col-4 bg-white shadow-sm" style="padding: 50px; border-radius:10px;">
-            <h1 class="text-center mb-4">LOGIN</h1>
+            <div class="img-container d-flex justify-content-center mb-4">
+                <img src="../../img/eyzel.png" alt="Logo" class="img-fluid" width="100">
+            </div>
             @php
                 echo session('loginError')
             @endphp
@@ -27,7 +29,7 @@
                     @enderror
                     <label for="password">Password</label>
                 </div>
-                <center><button type="submit" class="mt-5 px-4 py-2 btn btn-outline-dark mb-4">LOGIN</button></center>
+                <center><button type="submit" class="mt-4 px-4 py-2 btn btn-outline-dark mb-4">LOGIN</button></center>
             </form>
             <center><a href="/forgotpassword" class="text-center text-decoration-none" style="font-size: 12px;">Forgot Password?</a></center>
         </div>

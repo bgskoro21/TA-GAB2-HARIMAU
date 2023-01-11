@@ -1,6 +1,6 @@
 <div class="sidebar" id="">
     <div class="logo-details">
-        <img src="../../img/eyzel.jpeg" alt="Eyzel" width="50" >
+        <img src="../../img/eyzel.png" alt="Eyzel" width="50" >
         <span class="logo_name">EyzelKas</span>
     </div>
     <ul class="nav-links">
@@ -13,7 +13,7 @@
                 <li><a class="name_link" href="/">Beranda</a></li>
             </ul>
         </li>
-        {{-- @if (session('level') == 'Admin') --}}
+        @if (session('level') == 'Admin')
         <li class="{{ Request::is('user*') ? 'aktif' : '' }}">
             <a href="/user">
                 <i class='bx bx-user'></i>
@@ -23,7 +23,7 @@
                 <li><a class="name_link" href="/user">Daftar User</a></li>
             </ul>
         </li>
-        {{-- @endif --}}
+        @endif
         <li class= "{{Request::is('pemasukkan*') || Request::is('pengeluaran*')  ? 'aktif' : '' }}">
             <div class="iocn-link">
                 <a href="#">

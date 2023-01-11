@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 class Login extends Controller
 {
     public function index(){
-        if(!is_null(session('nama_lengkap'))){
+        if(!is_null(session('email'))){
             return redirect('/');
         }
         return view('login.login',[

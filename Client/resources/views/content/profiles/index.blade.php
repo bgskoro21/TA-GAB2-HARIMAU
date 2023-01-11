@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-xl-4">
 
-        <div class="card">
+        <div class="card bg-dark text-white">
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
             <img src="{{ $current_user->profile_picture }}" alt="Profile" class="rounded-circle img-fluid mb-2" width="150">
@@ -17,7 +17,7 @@
 
       <div class="col-xl-8">
 
-        <div class="card">
+        <div class="card bg-dark text-white">
           <div class="card-body pt-3">
             <!-- Bordered Tabs -->
             <ul class="nav nav-tabs nav-tabs-bordered">
