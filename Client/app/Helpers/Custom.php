@@ -8,6 +8,8 @@ Class Custom {
     const API = 'http://localhost/TA-GAB2-HARIMAU/Server';
     // const APISALDO = Custom::API.'/index.php/pemasukkan';
     const APIPENDAPATANBULANINI = Custom::API.'/index.php/pendapatan_bulan';
+    const APIPENDAPATANTAHUNINI = Custom::API.'/index.php/pendapatan_tahun';
+    const APIPENDAPATANHARIINI = Custom::API.'/index.php/pendapatan_hari';
     const APIPENGELUARANBULANINI = Custom::API.'/index.php/pengeluaran_bulan';
     const APISALDO = Custom::API.'/index.php/saldo';
     const APISALDOBULAN = Custom::API.'/index.php/saldo_bulan';

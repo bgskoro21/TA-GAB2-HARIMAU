@@ -53,3 +53,4 @@ Route::get('/changepassword', [Login::class, 'changePassword']);
 Route::get('/resetpassword', [Login::class, 'view_reset']);
 Route::post('/resetpassword', [Login::class, 'resetPassword']);
 Route::get('/getSaldo',[Dashboard::class, 'getSaldo']);
+Route::get('/getPemasukkan',[Dashboard::class, 'getPendapatan']);

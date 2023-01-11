@@ -10,7 +10,8 @@ class Dashboard extends Controller
 {
     public function index(){
         // var_dump(session('username'));
-        $pend_bulan = Http::get(Custom::APIPENDAPATANBULANINI)->object()->pendapatan_bulan;
+        $pend_hari = Http::get(Custom::APIPENDAPATANHARIINI)->object()->total_pendapatan;
+        // var_dump($pend_hari);die;
         $saldo = Http::get(Custom::APISALDO)->object()->total_saldo;
         $pengeluaran = Http::get(Custom::APIPENGELUARANBULANINI)->object()->pengeluaran_bulan;
         $transaksi = Http::get(Custom::APITRANSAKSI)->object()->transaksi;
@@ -18,7 +19,7 @@ class Dashboard extends Controller
         $keuntungan = Http::get(Custom::APIKEUNTUNGAN)->json()['keuntungan'];
         $bulan = Http::get(Custom::APIBULAN)->json()['bulan'];
         return view('content.dashboard.index',[
-            "pemasukkan_bulan" => $pend_bulan,
+            "pemasukkan_hari" => $pend_hari,
             "pengeluaran_bulan" => $pengeluaran,
             "transaksi" => $transaksi,
             "keuntungan" => $keuntungan,
@@ -40,6 +41,23 @@ class Dashboard extends Controller
         $data = [
             'title' => $request->keyword,
             'saldo' => $saldo
+        ];
+
+        echo json_encode($data);
+    }
+
+    public function getPendapatan(Request $request){
+        if($request->keyword == 'This Month'){
+           $saldo = Http::get(Custom::APIPENDAPATANBULANINI)->object()->total_pendapatan;
+        }else if($request->keyword == 'This Year'){
+           $saldo = Http::get(Custom::APIPENDAPATANTAHUNINI)->object()->total_pendapatan;
+        }else{
+            $saldo = Http::get(Custom::APIPENDAPATANHARIINI)->object()->total_pendapatan;
+        }
+
+        $data = [
+            'title' => $request->keyword,
+            'pemasukkan' => $saldo
         ];
 
         echo json_encode($data);
