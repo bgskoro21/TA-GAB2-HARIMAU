@@ -11,6 +11,8 @@ Class Custom {
     const APIPENDAPATANTAHUNINI = Custom::API.'/index.php/pendapatan_tahun';
     const APIPENDAPATANHARIINI = Custom::API.'/index.php/pendapatan_hari';
     const APIPENGELUARANBULANINI = Custom::API.'/index.php/pengeluaran_bulan';
+    const APIPENGELUARANTAHUNINI = Custom::API.'/index.php/pengeluaran_tahun';
+    const APIPENGELUARANHARIINI = Custom::API.'/index.php/pengeluaran_hari';
     const APISALDO = Custom::API.'/index.php/saldo';
     const APISALDOBULAN = Custom::API.'/index.php/saldo_bulan';
     const APISALDOTAHUN = Custom::API.'/index.php/saldo_tahun';

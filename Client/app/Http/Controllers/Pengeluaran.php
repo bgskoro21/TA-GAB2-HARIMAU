@@ -22,7 +22,7 @@ class Pengeluaran extends Controller
             'waktu_transaksi' => $request->waktu_transaksi,
             'pengeluaran' =>$request->pengeluaran,
             'perincian' =>$request->perincian,
-            'user_id' => 14
+            'user_id' => session('id')
         ];
 
         $tambah = Http::post(Custom::APIPENGELUARAN,$data)->object();
@@ -53,7 +53,7 @@ class Pengeluaran extends Controller
             'pengeluaran' =>$request->pengeluaran,
             'perincian' =>$request->perincian,
             'id' => $request->id,
-            'user_id' => 14
+            'user_id' => session('id')
         ];
 
         $edit = Http::put(Custom::APIPENGELUARAN, $data)->object();

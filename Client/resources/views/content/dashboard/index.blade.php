@@ -82,7 +82,7 @@
                       <div class="card-body">
                         <div class="row">
                             <div class="col-8">
-                                <h5 class="card-title">Keluar <span>| Today</span></h5>
+                                <h5 class="card-title">Keluar <span id="keluar_filter">| Today</span></h5>
                             </div>
                             <div class="col-4">
                                 <div class="filter d-flex justify-content-end">
@@ -91,9 +91,9 @@
                                       <li class="dropdown-header text-start">
                                         <h6>Filter</h6>
                                       </li>
-                                      <li><a class="dropdown-item" href="#">Today</a></li>
-                                      <li><a class="dropdown-item" href="#">This Month</a></li>
-                                      <li><a class="dropdown-item" href="#">This Year</a></li>
+                                      <li><button class="dropdown-item" onclick="return getPengeluaran(event)">Today</button></li>
+                                      <li><button class="dropdown-item" onclick="return getPengeluaran(event)">This Month</button></li>
+                                      <li><button class="dropdown-item" onclick="return getPengeluaran(event)">This Year</button></li>
                                     </ul>
                                   </div>
                             </div>
@@ -104,7 +104,7 @@
                             <i class='bx bx-cart fs-1' ></i>
                           </div>
                           <div class="ps-3">
-                            <h3>@currency($pengeluaran_bulan->Total_bulan)</h3>
+                            <h3 id="pengeluaran">@currency($pengeluaran->pengeluaran)</h3>
                             <span class="text-success small pt-1 fw-bold">12%</span> <span class="small pt-2 ps-1 text-white">increase</span>
                           </div>
                         </div>
@@ -244,6 +244,21 @@
             $('#pemasukkan').html('Rp. 0')
           }
           $('#pemasukkan').html(formatRupiah(result.pemasukkan.pemasukan, 'Rp. '))
+        });
+      }
+
+      function getPengeluaran(e){
+        keyword = $(e.target).text()
+        console.log(keyword)
+        fetch('/getPengeluaran?keyword='+keyword)
+        .then(response => response.json())
+        .then(result => {
+          // console.log(result.pengeluaran)
+          $('#keluar_filter').html('| '+result.title)
+          if(result.pengeluaran.pengeluaran == null){
+            $('#pengeluaran').html('Rp. 0')
+          }
+          $('#pengeluaran').html(formatRupiah(result.pengeluaran.pengeluaran, 'Rp. '))
         });
       }
 
