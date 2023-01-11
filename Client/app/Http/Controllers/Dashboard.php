@@ -27,4 +27,21 @@ class Dashboard extends Controller
             "title" => "Dashboard"
         ]);
     }
+
+    public function getSaldo(Request $request){
+        if($request->keyword == 'This Month'){
+           $saldo = Http::get(Custom::APISALDOBULAN)->object()->total_saldo;
+        }else if($request->keyword == 'This Year'){
+           $saldo = Http::get(Custom::APISALDOTAHUN)->object()->total_saldo;
+        }else{
+            $saldo = Http::get(Custom::APISALDO)->object()->total_saldo;
+        }
+
+        $data = [
+            'title' => $request->keyword,
+            'saldo' => $saldo
+        ];
+
+        echo json_encode($data);
+    }
 }

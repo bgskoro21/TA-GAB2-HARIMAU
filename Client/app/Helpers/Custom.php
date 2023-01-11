@@ -10,6 +10,8 @@ Class Custom {
     const APIPENDAPATANBULANINI = Custom::API.'/index.php/pendapatan_bulan';
     const APIPENGELUARANBULANINI = Custom::API.'/index.php/pengeluaran_bulan';
     const APISALDO = Custom::API.'/index.php/saldo';
+    const APISALDOBULAN = Custom::API.'/index.php/saldo_bulan';
+    const APISALDOTAHUN = Custom::API.'/index.php/saldo_tahun';
     const APIKEUNTUNGAN = Custom::API.'/index.php/keuntungan';
     const APITRANSAKSI = Custom::API.'/index.php/transaksi';
     const APIBULAN = Custom::API.'/index.php/bulan';

@@ -12,7 +12,7 @@
                       <div class="card-body">
                         <div class="row">
                             <div class="col-8">
-                                <h5 class="card-title">Saldo <span>| Today</span></h5>
+                                <h5 class="card-title">Saldo <span id="saldo_filter">| Today</span></h5>
                             </div>
                             <div class="col-4">
                                 <div class="filter d-flex justify-content-end">
@@ -21,9 +21,9 @@
                                       <li class="dropdown-header text-start">
                                         <h6>Filter</h6>
                                       </li>
-                                      <li><button class="dropdown-item btn-today" href="#">Today</button></li>
-                                      <li><button class="dropdown-item btn-month" href="#">This Month</button></li>
-                                      <li><button class="dropdown-item btn-year" href="#">This Year</button></li>
+                                      <li><button class="dropdown-item btn-today" onclick="return getSaldo(event)">Today</button></li>
+                                      <li><button class="dropdown-item btn-month" onclick="return getSaldo(event)">This Month</button></li>
+                                      <li><button class="dropdown-item btn-year" onclick="return getSaldo(event)">This Year</button></li>
                                     </ul>
                                   </div>
                             </div>
@@ -34,14 +34,14 @@
                             <i class='bx bx-cart fs-1' ></i>
                           </div>
                           <div class="ps-3">
-                            <h3>@currency($saldo->saldo)</h3>
+                            <h3 id="saldo">@currency($saldo->saldo)</h3>
                             <span class="text-success small pt-1 fw-bold">12%</span> <span class="small pt-2 ps-1 text-white">increase</span>
                           </div>
                         </div>
                       </div>
       
                     </div>
-                  </div><!-- End Sales Card -->
+                </div><!-- End Sales Card -->
                 <div class="col-xxl-4 col-md-4">
                     <div class="card info-card sales-card bg-dark text-white">
                       <div class="card-body">
@@ -220,8 +220,35 @@
         config
       );
 
-      $('.btn-today').on('click',function(){
-        console.log($(this).text());
-      })
+      function getSaldo(e){
+        keyword = $(e.target).text()
+        fetch('/getSaldo?keyword='+keyword)
+        .then(response => response.json())
+        .then(result => {
+          $('#saldo_filter').html('| '+result.title)
+          if(result.saldo.saldo == null){
+            $('#saldo').html('Rp. 0')
+          }
+          $('#saldo').html(formatRupiah(result.saldo.saldo, 'Rp. '))
+        });
+      }
+
+      	/* Fungsi formatRupiah */
+		function formatRupiah(angka, prefix){
+			var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split   		= number_string.split(','),
+			sisa     		= split[0].length % 3,
+			rupiah     		= split[0].substr(0, sisa),
+			ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+ 
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+ 
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+		}
 </script>
 @endsection
