@@ -43,7 +43,7 @@ EOD;
     function configToken()
     {
         // konfigurasi waktu expired
-        $config['exp'] = 300; //detik
+        $config['exp'] = 3630; //detik
         // konfiurasi key jwt (dalam format string)
         $config['key'] = 'key-kas';
         return $config;
