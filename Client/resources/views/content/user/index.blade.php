@@ -54,14 +54,14 @@
               <input type="hidden" name="token" id="token">        
               @csrf
               <div class="form-floating mb-3">
-                  <input type="text" class="form-control" placeholder="pemasukan" name="nama_lengkap" id="nama_lengkap">
+                  <input type="text" class="form-control float-nama" placeholder="pemasukan" name="nama_lengkap" id="nama_lengkap">
                   <label for="nama_lengkap" class="text-dark">Nama Lengkap</label>
               </div>
               <div class="form-floating mb-3">
                   <input type="email" class="form-control" placeholder="email" name="email" id="email">
                   <label for="email" class="text-dark">Email</label>
               </div>
-              <div class="form-floating mb-3">
+              <div class="form-floating mb-3 float-hp">
                   <input type="text" class="form-control" placeholder="no_hp" name="no_hp" id="no_hp">
                   <label for="no_hp" class="text-dark">Nomor HP</label>
               </div>
@@ -115,18 +115,17 @@
         const username = $(this).data('id')
         $('.modal-body form').attr('action','/user/edit_data/')
         $('.float-password').hide()
+        $('.float-hp').hide()
+        $('.float-nama').hide()
 
     $.ajax({
       url: '/user/dataByUsername/'+username,
       success: function(data){
           const json = JSON.parse(data)
-          console.log(json)
-        $('#nama_lengkap').val(json.nama_lengkap)
+        //   console.log(json)
         $('#email').val(json.email)
-        $('#no_hp').val(json.no_hp)
         $('#level').val(json.level)
-        $('#password').val(json.password)
-        $('#token').val(json.username)
+        $('#token').val(json.email)
       }
     })
   })

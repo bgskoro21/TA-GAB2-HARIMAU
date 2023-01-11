@@ -56,15 +56,17 @@ class User extends Controller
 
     public function edit_data(Request $request){
         $data = [
-            'nama_lengkap' => $request->nama_lengkap,
             'email' => $request->email,
-            'no_hp' => $request->no_hp,
             'level' => $request->level,
             'token' => $request->token,
         ];
 
         $edit = Http::put(Custom::APIUSER, $data)->object();
         if($edit->status == true){
+            session()->put([
+                'email' => $request->email,
+                'level' => $request->level
+            ]);
             return redirect('/user')->with('message',$edit->massages);
         }else{
             return redirect('/user')->with('error',$edit->massages);

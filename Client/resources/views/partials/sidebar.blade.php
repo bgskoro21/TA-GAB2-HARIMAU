@@ -1,6 +1,6 @@
 <div class="sidebar" id="">
     <div class="logo-details">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/985px-Laravel.svg.png" alt="Eyzel" width="50" >
+        <img src="../../img/eyzel.jpeg" alt="Eyzel" width="50" >
         <span class="logo_name">EyzelKas</span>
     </div>
     <ul class="nav-links">
