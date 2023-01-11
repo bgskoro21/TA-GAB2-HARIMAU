@@ -30,6 +30,7 @@ Class Custom {
     const APIVERIFIKASI =  Custom::API.'/index.php/verifikasi';
     const APIFORGOTPASSWORD =  Custom::API.'/index.php/forgotpassword';
     const APIRESETPASSWORD =  Custom::API.'/index.php/resetpassword';
+    const APITOKEN = Custom::API.'/index.php/token';
     
 
 

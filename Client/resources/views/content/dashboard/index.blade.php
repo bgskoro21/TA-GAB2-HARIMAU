@@ -238,7 +238,7 @@
         fetch('/getPemasukkan?keyword='+keyword)
         .then(response => response.json())
         .then(result => {
-          // console.log(result.pemasukan)
+          // console.log(result.pemasukkan)
           $('#masuk_filter').html('| '+result.title)
           if(result.pemasukkan.pemasukan == null){
             $('#pemasukkan').html('Rp. 0')

@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Http;
 class Pengeluaran extends Controller
 {
     public function index(){
-        $pengeluaran = Http::get(Custom::APIPENGELUARAN)->object();
+        $pengeluaran = Http::withToken(session('token'))->get(Custom::APIPENGELUARAN)->object();
+        if(isset($pengeluaran->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
         // var_dump($pengeluaran);die;
         return view('content.pengeluaran.index',[
             'title' => 'Daftar Pengeluaran',
@@ -25,7 +30,14 @@ class Pengeluaran extends Controller
             'user_id' => session('id')
         ];
 
-        $tambah = Http::post(Custom::APIPENGELUARAN,$data)->object();
+        $tambah = Http::withToken(session('token'))->post(Custom::APIPENGELUARAN,$data)->object();
+
+        if(isset($tambah->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
+
         if($tambah->status == true){
             return redirect('/pengeluaran')->with('message', $tambah->message);
         }else{
@@ -34,7 +46,14 @@ class Pengeluaran extends Controller
     }
 
     public function hapus_data($id){
-        $delete = Http::delete(Custom::APIPENGELUARAN.'/'.$id)->object();
+        $delete = Http::withToken(session('token'))->delete(Custom::APIPENGELUARAN.'/'.$id)->object();
+
+        if(isset($delete->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
+
         if($delete->status == true){
             return redirect('/pengeluaran')->with('message', $delete->message);
         }else{
@@ -43,7 +62,12 @@ class Pengeluaran extends Controller
     }
 
     public function getPengeluaranById($id){
-        $pengeluaran = Http::get(Custom::APIPENGELUARAN, ['id' => $id])->object();
+        $pengeluaran = Http::withToken(session('token'))->get(Custom::APIPENGELUARAN, ['id' => $id])->object();
+        if(isset($pengeluaran->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
         echo json_encode($pengeluaran->pengeluaran[0]);
     }
 
@@ -56,7 +80,12 @@ class Pengeluaran extends Controller
             'user_id' => session('id')
         ];
 
-        $edit = Http::put(Custom::APIPENGELUARAN, $data)->object();
+        $edit = Http::withToken(session('token'))->put(Custom::APIPENGELUARAN, $data)->object();
+        if(isset($edit->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
         if($edit->status == true){
             return redirect('/pengeluaran')->with('message', $edit->message);
         }else{

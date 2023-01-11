@@ -15,11 +15,16 @@ class User extends Controller
         if(session('level') != 'Admin'){
             return redirect('/')->with('error','Anda bukan seorang Admin!');
         }
-        $user = Http::get(Custom::APIUSER);
+        $user = Http::withToken(session('token'))->get(Custom::APIUSER)->object();
+        if(isset($user->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
         // var_dump($user->object());die;
         return view('content.user.index',[
             'title' => "Daftar User",
-            'users' => $user->object()
+            'users' => $user
         ]);
     }
 
@@ -33,27 +38,45 @@ class User extends Controller
             'password' => $request->password,
             'url' => 'http://127.0.0.1:8000/login/verifikasi'
         ];
-        $tambah = Http::post(Custom::APIUSER, $data)->object();
+        $tambah = Http::withToken(session('token'))->post(Custom::APIUSER, $data)->object();
         // var_dump($tambah);die;
+        if(isset($tambah->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
+
         if($tambah->status == true){
             return redirect('/user')->with('message',$tambah->massages);
-        }else{
+        }
+        else{
             return redirect('/user')->with('error',$tambah->massages);
         }
     }
 
     public function hapus_data($email){
-        $delete = Http::asForm()->delete(Custom::APIUSER,["email" => $email])->object();
+        $delete = Http::withToken(session('token'))->asForm()->delete(Custom::APIUSER,["email" => $email])->object();
         // var_dump($delete);
+        if(isset($delete->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
         if($delete->status == true){
             return redirect('/user')->with('message',$delete->massages);
-        }else{
+        }
+        else{
             return redirect('/user')->with('error',$delete->massages);
         }
     }
 
     public function dataByUsername($email){
-        $users = Http::get(Custom::APIUSER,['email' => $email])->object();
+        $users = Http::withToken(session('token'))->get(Custom::APIUSER,['email' => $email])->object();
+        if(isset($users->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
         echo json_encode($users->user[0]);
     }
 
@@ -64,14 +87,26 @@ class User extends Controller
             'token' => $request->token,
         ];
 
-        $edit = Http::put(Custom::APIUSER, $data)->object();
+        $edit = Http::withToken(session('token'))->put(Custom::APIUSER, $data)->object();
+        if(isset($edit->result)){
+            if($edit->result == 0){
+                session()->flush();
+                return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+                </div>');
+            }
+        }
+
         if($edit->status == true){
-            session()->put([
-                'email' => $request->email,
-                'level' => $request->level
-            ]);
+            // echo 'Hai';die;
+            if($data['token'] == session('email')){
+                session()->put([
+                    'email' => $request->email,
+                    'level' => $request->level
+                ]);
+            }
             return redirect('/user')->with('message',$edit->massages);
-        }else{
+        }
+        else{
             return redirect('/user')->with('error',$edit->massages);
         }
     }

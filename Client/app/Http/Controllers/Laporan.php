@@ -12,40 +12,51 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class Laporan extends Controller
 {
     public function index(Request $request){
-        $waktu = Http::get(Custom::APIWAKTU)->object()->hari;
+        $waktu = Http::withToken(session('token'))->get(Custom::APIWAKTU)->object();
         // var_dump($waktu);die;
-        $bulan = Http::get(Custom::APIBULAN)->object()->bulan;
+        $bulan = Http::withToken(session('token'))->get(Custom::APIBULAN)->object();
+        if(isset($waktu->result) || isset($bulan->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
         if($request->waktu == 'harian'){
             return view('content.laporan.index',[
                 'title' => 'Laporan Harian',
-                'waktu' => $waktu
+                'waktu' => $waktu->hari
             ]);
         }else if($request->waktu == 'bulanan'){
             return view('content.laporan.index',[
                 'title' => 'Laporan Bulanan',
-                'waktu' => $bulan
+                'waktu' => $bulan->bulan
             ]);
         }
     }
 
     public function pdf(Request $request){
         if(!empty($request->tanggal)){
-            $transaksi = Http::get(Custom::APISEARCHTRANSAKSI, [
+            $transaksi = Http::withToken(session('token'))->get(Custom::APISEARCHTRANSAKSI, [
                 'tanggal' => $request->tanggal 
-            ])->json()['laporan'];
+            ])->json();
             // var_dump($transaksi);die;
             $waktu = Custom::format_indo($request->tanggal);
         }else{
-            $transaksi = Http::get(Custom::APISEARCHTRANSAKSI, [
+            $transaksi = Http::withToken(session('token'))->get(Custom::APISEARCHTRANSAKSI, [
                 'bulan' => $request->bulan
-            ])->json()['laporan'];
+            ])->json();
             // var_dump($transaksi);die;
             $waktu = $request->bulan;
         }
 
+        if(isset($transaksi['result'])){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
+
         $pdf = Pdf::loadView('content.pdf.index', [
             'waktu' => $waktu,
-            'transaksi' => $transaksi
+            'transaksi' => $transaksi['laporan']
         ])->setPaper('a4','landscape');
         return $pdf->stream();
     }

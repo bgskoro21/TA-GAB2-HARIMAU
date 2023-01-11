@@ -28,12 +28,21 @@ class Login extends Controller
                 'email.required' => 'Email harus diisi!',
                 'password.required' => 'Password harus diisi!',
             ]
-    );
+        );
+        
         $login = Http::post(Custom::APILOGIN,[
             'email' => $request->email,
             'password' => $request->password
         ])->json();
         if($login['status'] == 1){
+            $token = Http::post(Custom::APITOKEN)->object();
+            // var_dump($token);die;
+            if(isset($token->token)){
+                session()->put([
+                    'token' => $token->token,
+                    'waktu' => $token->exp
+                ]);
+            }
             Session::put($login['userdata']);
             return redirect()->intended('/');
         }

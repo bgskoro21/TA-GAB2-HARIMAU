@@ -67,7 +67,7 @@
                 </div>
                 <div class="col-md-6 ms-1">
                     <div class="name-job">
-                        <div class="profile_name">{{ session('nama_lengkap') }}</div>
+                        <div class="profile_name">{{ session('nama_lengkap') }}{{ session('waktu') }}</div>
                         <div class="job">{{ session('level') }}</div>
                     </div>
                 </div>
