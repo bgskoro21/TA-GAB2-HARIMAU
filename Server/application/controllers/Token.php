@@ -43,9 +43,9 @@ EOD;
     function configToken()
     {
         // konfigurasi waktu expired
-        $config['exp'] = 300; //detik
+        $config['exp'] = 1800; //detik
         // konfiurasi key jwt (dalam format string)
-        $config['key'] = 'key-jwt';
+        $config['key'] = 'key-kas';
         return $config;
     }
     // fungsi untuk auth token(pada saat dibaca)

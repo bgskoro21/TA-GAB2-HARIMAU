@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH."libraries/Server.php";
+require APPPATH . 'controllers/Token.php';
 
-class Pengeluaran extends Server {
+class Pengeluaran extends Token {
 
 	public function __construct()
 	{
@@ -13,6 +13,9 @@ class Pengeluaran extends Server {
 	}
 
 	function service_get(){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         $id = $this->get('id');
 
         $hasil = $this->mdl->getPengeluaran($id);
@@ -37,9 +40,13 @@ class Pengeluaran extends Server {
                 'message' => 'Gagal',
             ]);
         }
+      }
     }
 
 	function service_delete($id){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         $hasil = $this->mdl->deletePengeluaran($id);
 
         if($hasil == 1){
@@ -54,9 +61,13 @@ class Pengeluaran extends Server {
                 'message' => 'Data Pengeluaran Gagal Dihapus',
             ]);
         }
+      }
     }
 
 	function service_post(){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         $user_id = $this->post('user_id');
         $waktu = $this->post('waktu_transaksi');
         $perincian = $this->post('perincian');
@@ -75,9 +86,13 @@ class Pengeluaran extends Server {
                 'message' => 'Data Pengeluaran Gagal Ditambahkan!',
             ]);
         }
+      }
     }
 
     function service_put(){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         $data = [
             "user_id" => $this->put('user_id'),
             "waktu_transaksi" => $this->put('waktu_transaksi'),
@@ -99,5 +114,6 @@ class Pengeluaran extends Server {
                 'message' => 'Data Pengeluaran Gagal Diubah!',
             ]);
         }
+      }
     }
 }

@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH."libraries/Server.php";
+require APPPATH . 'controllers/Token.php';
 
-class Verifikasi extends Server{
+class Verifikasi extends Token{
     public function __construct()
 	{
 		parent::__construct();

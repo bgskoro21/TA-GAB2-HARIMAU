@@ -1,9 +1,9 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH."libraries/Server.php";
+require APPPATH . 'controllers/Token.php';
 
-class Password extends Server{
+class Password extends Token{
 
     function __construct(){
         parent::__construct();
@@ -12,7 +12,7 @@ class Password extends Server{
 
     function service_post(){
         $email = $this->post('email');
-        $password = $this->post('password');
+        $password = password_hash($this->put('password'),PASSWORD_DEFAULT);
         $hasil = $this->mdl->cekPassword($email,$password);
         if(password_verify($password, $hasil['password'])){
             $this->response([

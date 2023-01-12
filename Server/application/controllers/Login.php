@@ -1,9 +1,9 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH."libraries/Server.php";
+require APPPATH . 'controllers/Token.php';
 
-class Login extends Server{
+class Login extends Token{
     public function __construct(){
         parent::__construct();
         $this->load->model('M_User','model',TRUE);
@@ -24,7 +24,11 @@ class Login extends Server{
                 if(password_verify($data['password'], $cekLogin['password'])){
                     $data = [
                         'email' => $cekLogin['email'],
-                        'level' => $cekLogin['level']
+                        'level' => $cekLogin['level'],
+                        'id'=> $cekLogin['id'],
+                        'nama_lengkap' => $cekLogin['nama_lengkap'],
+                        'profile_picture' => $cekLogin['profile_picture']
+                        
                     ];
                     $this->response([
                         "status" => 1,
