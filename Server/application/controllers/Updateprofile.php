@@ -61,4 +61,36 @@ class Updateprofile extends Token{
         }
       }
     }
+
+    function service_delete(){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
+
+            $email = $this->delete('token');
+
+            $gambarLama = $this->mdl->getGambarLama($email);
+            // var_dump($gambarLama);die;
+            
+            $pecah = explode('/', $gambarLama['profile_picture']);
+            unlink("./assets/images/$pecah[7]");
+
+            $hasil = $this->mdl->deletePhoto($email);
+            if($hasil == 1){
+                $this->response([
+                    'status' => true,
+                    'message' => 'Foto Profil Berhasil Dihapus'
+                ],200);
+            }else{
+                $this->response([
+                    'status' => false,
+                    'message' => 'Foto Profil Gagal Dihapus'
+                ],200);
+            }
+
+
+
+
+    }
+}
 }

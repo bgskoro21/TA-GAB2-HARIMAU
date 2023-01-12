@@ -207,5 +207,23 @@ class M_User extends CI_Model{
         }
         return $hasil;
     }
+
+    public function deletePhoto($email){
+        $this->db->select('email');
+        $this->db->from('user');
+        $this->db->where('email',$email);
+        $query = $this->db->get()->row_array();
+        if($query){
+            $data['profile_picture'] = null;
+            $this->db->where('email',$email);
+            $this->db->update('user',$data);
+            $hasil = 1;
+        }else{
+            $hasil = 0;
+        }
+
+
+        return $hasil;
+    }
     
 }
