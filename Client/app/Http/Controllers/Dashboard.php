@@ -48,17 +48,17 @@ class Dashboard extends Controller
         }
 
         if(isset($saldo->result)){
-            if($saldo->result == 0){
-                session()->flush();
-                return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-                </div>');
-            }
+            $data = [
+                'title' => $request->keyword,
+                'saldo' => $saldo
+            ];
+        }else{
+            $data = [
+                'title' => $request->keyword,
+                'saldo' => $saldo->total_saldo
+            ];
         }
 
-        $data = [
-            'title' => $request->keyword,
-            'saldo' => $saldo->total_saldo
-        ];
 
         echo json_encode($data);
     }
@@ -73,15 +73,17 @@ class Dashboard extends Controller
         }
 
         if(isset($saldo->result)){
-                session()->flush();
-                return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-                </div>');
+            $data = [
+                'title' => $request->keyword,
+                'pemasukkan' => $saldo
+            ];
+        }else {
+            $data = [
+                'title' => $request->keyword,
+                'pemasukkan' => $saldo->total_pendapatan
+            ];
         }
 
-        $data = [
-            'title' => $request->keyword,
-            'pemasukkan' => $saldo->total_pendapatan
-        ];
 
         echo json_encode($data);
     }
@@ -96,17 +98,17 @@ class Dashboard extends Controller
         }
 
         if(isset($saldo->result)){
-            if($saldo->result == 0){
-                session()->flush();
-                return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-                </div>');
-            }
+            $data = [
+                'title' => $request->keyword,
+                'pengeluaran' => $saldo
+            ];
+        }else{
+            $data = [
+                'title' => $request->keyword,
+                'pengeluaran' => $saldo->total_pengeluaran
+            ];
         }
 
-        $data = [
-            'title' => $request->keyword,
-            'pengeluaran' => $saldo->total_pengeluaran
-        ];
 
         echo json_encode($data);
     }

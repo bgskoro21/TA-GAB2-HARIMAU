@@ -139,4 +139,9 @@ class Login extends Controller
         $request->session()->flush();
         return redirect('/login');
     }
+
+    public function expToken(){
+        session()->flush();
+        return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!</div>');
+    }
 }

@@ -225,6 +225,9 @@
         fetch('/getSaldo?keyword='+keyword)
         .then(response => response.json())
         .then(result => {
+          if(result.saldo.hasOwnProperty('result')){
+            location.href = '/expToken'
+          }
           $('#saldo_filter').html('| '+result.title)
           if(result.saldo.saldo == null){
             $('#saldo').html('Rp. 0')
@@ -238,6 +241,9 @@
         fetch('/getPemasukkan?keyword='+keyword)
         .then(response => response.json())
         .then(result => {
+          if(result.pemasukkan.hasOwnProperty('result')){
+            location.href = '/expToken'
+          }
           // console.log(result.pemasukkan)
           $('#masuk_filter').html('| '+result.title)
           if(result.pemasukkan.pemasukan == null){
@@ -249,10 +255,13 @@
 
       function getPengeluaran(e){
         keyword = $(e.target).text()
-        console.log(keyword)
+        // console.log(keyword)
         fetch('/getPengeluaran?keyword='+keyword)
         .then(response => response.json())
         .then(result => {
+          if(result.pengeluaran.hasOwnProperty('result')){
+            location.href = '/expToken'
+          }
           // console.log(result.pengeluaran)
           $('#keluar_filter').html('| '+result.title)
           if(result.pengeluaran.pengeluaran == null){

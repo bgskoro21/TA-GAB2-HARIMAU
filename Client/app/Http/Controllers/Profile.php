@@ -11,7 +11,12 @@ class Profile extends Controller
 {
 
     public function index(){
-        $user = Http::get(Custom::APIUSER,['current' => session('email')])->object();
+        $user = Http::withToken(session('token'))->get(Custom::APIUSER,['current' => session('email')])->object();
+        if(isset($user->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
         return view('content.profiles.index',[
             'title' => 'User Profile',
             'current_user' => $user->user
@@ -21,22 +26,32 @@ class Profile extends Controller
     public function edit_profile(Request $request){
         $profile_picture = $request->file('profile_picture');
         if($request->hasFile('profile_picture')){
-            $update = Http::attach('photo', file_get_contents($profile_picture),session('nama_lengkap').'-picture.jpg')->post(Custom::APIEDITPROFILE,[
+            $update = Http::withToken(session('token'))->attach('photo', file_get_contents($profile_picture),session('nama_lengkap').'-picture.jpg')->post(Custom::APIEDITPROFILE,[
                     'nama_lengkap' => $request->nama_lengkap,
                     'no_hp' => $request->no_hp,
                     'token' => $request->token,
                      ])->object();
         }else{
             // var_dump($profile_picture);die;
-            $update = Http::post(Custom::APIEDITPROFILE,[
+            $update = Http::withToken('token')->post(Custom::APIEDITPROFILE,[
                 'nama_lengkap' => $request->nama_lengkap,
                 'no_hp' => $request->no_hp,
                 'token' => $request->token,
             ])->object();
         }
+        if(isset($update->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
         // var_dump($update);die;
         if($update->status == true){
-            $user = Http::get(Custom::APIUSER,['current' => session('email')])->object();
+            $user = Http::withToken(session('token'))->get(Custom::APIUSER,['current' => session('email')])->object();
+            if(isset($user->result)){
+                session()->flush();
+                return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+                </div>');
+            }
             session()->put([
                 'nama_lengkap' => $user->user->nama_lengkap,
                 'email' => $user->user->email,
@@ -48,10 +63,15 @@ class Profile extends Controller
     }
 
     public function change_password(Request $request){
-        $cekPassword = Http::post(Custom::APICEKPASSWORD,[
+        $cekPassword = Http::withToken(session('token'))->post(Custom::APICEKPASSWORD,[
             'password' => $request->password,
             'email' => session('email')
         ])->object();
+        if(isset($cekPassword->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
         // var_dump($cekPassword);die;
         if($cekPassword->status == true){
             $data = [
@@ -59,7 +79,15 @@ class Profile extends Controller
                 'email' => session('email')
             ];
 
-            $password = Http::put(Custom::APICEKPASSWORD,$data)->object();
+            $password = Http::withToken(session('token'))->put(Custom::APICEKPASSWORD,$data)->object();
+
+            // jika token habis atau tidak sesuai
+            if(isset($password->result)){
+                session()->flush();
+                return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+                </div>');
+            }
+
             if($password->status == true){
                 return redirect('/profile')->with('message',$password->message);
             }else{
