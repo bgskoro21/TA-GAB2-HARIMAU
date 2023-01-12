@@ -11,8 +11,11 @@ class Password extends Token{
     }
 
     function service_post(){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         $email = $this->post('email');
-        $password = password_hash($this->put('password'),PASSWORD_DEFAULT);
+        $password = $this->post('password');
         $hasil = $this->mdl->cekPassword($email,$password);
         if(password_verify($password, $hasil['password'])){
             $this->response([
@@ -23,9 +26,13 @@ class Password extends Token{
                 "status" => false
             ]);
         }
+      }
     }
     
     function service_put(){
+        if ($this->authtoken() == 0) {
+            return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
+        } else {
         $email = $this->put('email');
         $password = password_hash($this->put('password'),PASSWORD_DEFAULT);
         $hasil = $this->mdl->changePassword($email,$password);
@@ -42,4 +49,5 @@ class Password extends Token{
             ],200);
         }
     }
+  }
 }
