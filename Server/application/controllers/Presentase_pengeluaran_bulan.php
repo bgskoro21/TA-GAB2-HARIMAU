@@ -24,7 +24,7 @@ class Presentase_pengeluaran_Bulan extends Token{
             $this->response([
                 'status' => true,
                 'message' => 'Berhasil',
-                'presentase_pengeluaran' =>  number_format($hasil,1,",","")   
+                'presentase' =>  number_format($hasil,1,",","")   
             ],200);
         }else{
             $this->response([

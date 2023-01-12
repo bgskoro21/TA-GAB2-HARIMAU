@@ -14,7 +14,7 @@ class Presentase_pengeluaran_tahun extends Token{
         $kemarin = $this->mdl->getPengTKemarin();
         $tahun_ini = $this->mdl->getPengTahun();
         if(isset($kemarin['pengeluaran'])){
-            $hasil = ($tahun_ini['pengeluaran']-$kemarin['pengeluaran'])/$kemarin['pengeluaran'];
+            $hasil = ($tahun_ini['pengeluaran']-$kemarin['pengeluaran'])/$kemarin['pengeluaran'] * 100;
         }
 
 
@@ -22,7 +22,7 @@ class Presentase_pengeluaran_tahun extends Token{
             $this->response([
                 'status' => true,
                 'message' => 'Berhasil',
-                'presentase_pengeluaran' =>  number_format($hasil,1,",","") 
+                'presentase' =>  number_format($hasil,1,",","") 
             ],200);
         }else{
             $this->response([
