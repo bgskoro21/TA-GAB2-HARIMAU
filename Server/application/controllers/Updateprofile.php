@@ -70,7 +70,7 @@ class Updateprofile extends Token{
             $email = $this->delete('token');
 
             $gambarLama = $this->mdl->getGambarLama($email);
-            // var_dump($gambarLama);die;
+            // var_dump($pecah);die;
             
             $pecah = explode('/', $gambarLama['profile_picture']);
             unlink("./assets/images/$pecah[7]");

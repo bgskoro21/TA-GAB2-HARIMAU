@@ -24,7 +24,7 @@ class Presentase_pendapatan_Tahun extends Token{
             $this->response([
                 'status' => true,
                 'message' => 'Berhasil',
-                'presentase_pendapatan' =>  number_format($hasil,1,",","") 
+                'presentase' =>  $hasil
             ],200);
         }else{
             $this->response([

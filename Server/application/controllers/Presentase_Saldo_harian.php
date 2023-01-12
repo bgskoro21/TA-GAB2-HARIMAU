@@ -14,7 +14,7 @@ class Presentase_Saldo_harian extends Token{
         $kemarin = $this->mdl->getSaldoKemarin();
         $hari_ini = $this->mdl->getSaldo();
         if(isset($kemarin['saldo'])){
-            $hasil = $hari_ini['saldo']-$kemarin['saldo']/$kemarin['saldo'];
+            $hasil = ($hari_ini['saldo']-$kemarin['saldo'])/$kemarin['saldo'] * 100;
         }
 
 
@@ -22,7 +22,7 @@ class Presentase_Saldo_harian extends Token{
             $this->response([
                 'status' => true,
                 'message' => 'Berhasil',
-                'presentase_saldo' =>  number_format($hasil,1,",","") 
+                'presentase' =>  $hasil
             ],200);
         }else{
             $this->response([

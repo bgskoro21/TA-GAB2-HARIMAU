@@ -14,7 +14,7 @@ class Presentase_pendapatan_hari extends Token{
         $kemarin = $this->mdl->getPendKemarin();
         $hari_ini = $this->mdl->getPendHari();
         if(isset($kemarin['pemasukan'])){
-            $hasil = ($hari_ini['pemasukan'] - $kemarin['pemasukan'])/$kemarin['pemasukan'];
+            $hasil = ($hari_ini['pemasukan'] - $kemarin['pemasukan'])/$kemarin['pemasukan'] * 100;
         }
 
 
@@ -22,7 +22,7 @@ class Presentase_pendapatan_hari extends Token{
             $this->response([
                 'status' => true,
                 'message' => 'Berhasil',
-                'presentase_pendapatan' =>  number_format($hasil,1,",","") 
+                'presentase' =>  $hasil
             ],200);
         }else{
             $this->response([

@@ -24,7 +24,7 @@ class Presentase_Saldo_Bulan extends Token{
             $this->response([
                 'status' => true,
                 'message' => 'Berhasil',
-                'presentase_saldo' =>  number_format($hasil,1,",","") 
+                'presentase' =>  $hasil
             ],200);
         }else{
             $this->response([
