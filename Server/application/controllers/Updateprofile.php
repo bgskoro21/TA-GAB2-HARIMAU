@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH . 'controllers/Token.php';
 
-class Updateprofile extends Server{
+class Updateprofile extends Token{
     function __construct(){
         parent::__construct();
         $this->load->model('M_User','mdl',TRUE);
