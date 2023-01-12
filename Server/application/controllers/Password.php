@@ -17,7 +17,6 @@ class Password extends Token{
         $email = $this->post('email');
         $password = $this->post('password');
         $hasil = $this->mdl->cekPassword($email,$password);
-
         if(password_verify($password, $hasil['password'])){
             $this->response([
                 'status' => true
@@ -30,7 +29,7 @@ class Password extends Token{
         }
       }
     }
-
+    
     function service_put(){
         if ($this->authtoken() == 0) {
             return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);

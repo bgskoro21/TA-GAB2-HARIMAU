@@ -151,7 +151,7 @@ class M_User extends CI_Model{
     function cekPassword($email){
         $this->db->select('password');
         $this->db->from('user');
-        $this->db->where("email = '$email'");
+        $this->db->where("email = '$email' AND password = '$password' ");
         $query = $this->db->get()->row_array();
         if(!empty($query)){
             $hasil = $query;
@@ -205,6 +205,24 @@ class M_User extends CI_Model{
         }else{
             $hasil = 0;
         }
+        return $hasil;
+    }
+
+    public function deletePhoto($email){
+        $this->db->select('email');
+        $this->db->from('user');
+        $this->db->where('email',$email);
+        $query = $this->db->get()->row_array();
+        if($query){
+            $data['profile_picture'] = null;
+            $this->db->where('email',$email);
+            $this->db->update('user',$data);
+            $hasil = 1;
+        }else{
+            $hasil = 0;
+        }
+
+
         return $hasil;
     }
     

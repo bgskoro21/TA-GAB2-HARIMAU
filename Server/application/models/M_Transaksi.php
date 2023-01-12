@@ -144,6 +144,62 @@ public function getSaldo(){
         $hasil = null;
     }
     return $hasil;
+}   
+
+public function getSaldoKemarin(){
+    $this->db->select('waktu_transaksi');
+    $this->db->from('tbl_transaksi');
+    $this->db->where('waktu_transaksi',date('Y-m-d', strtotime('yesterday')));
+    $query = $this->db->get()->row_array();
+    if($query){
+        $this->db->select('SUM(pemasukan) - SUM(pengeluaran) as saldo');
+        $this->db->from('tbl_transaksi');
+        $this->db->where('waktu_transaksi',$query['waktu_transaksi']);
+        $kemarin = $this->db->get()->row_array();
+        $hasil = $kemarin;
+    }else {
+        $hasil = null;
+    }
+    return $hasil;
+} 
+
+public function getSaldoBKemarin(){
+    $this->db->select('waktu_transaksi');
+    $this->db->from('tbl_transaksi');
+    if(date('m') == '01'){
+        $this->db->where('month(waktu_transaksi)', '12');
+        $this->db->where('year(waktu_transaksi)', date('Y', strtotime('last year')));
+    }else{
+        $this->db->where('month(waktu_transaksi)', date('Y-m', strtotime('last month')));
+    }
+    $query = $this->db->get()->row_array();
+    if($query){
+        $this->db->select('SUM(pemasukan) - SUM(pengeluaran) as saldo');
+        $this->db->from('tbl_transaksi');
+        $this->db->where('waktu_transaksi',$query['waktu_transaksi']);
+        $kemarin = $this->db->get()->row_array();
+        $hasil = $kemarin;
+    }else {
+        $hasil = null;
+    }
+    return $hasil;
+}
+
+public function getSaldoTKemarin(){
+    $this->db->select('waktu_transaksi');
+    $this->db->from('tbl_transaksi');
+    $this->db->where('year(waktu_transaksi)', date('Y', strtotime('last year')));;
+    $query = $this->db->get()->row_array();
+    if($query){
+        $this->db->select('SUM(pemasukan) - SUM(pengeluaran) as saldo');
+        $this->db->from('tbl_transaksi');
+        $this->db->where('waktu_transaksi',$query['waktu_transaksi']);
+        $kemarin = $this->db->get()->row_array();
+        $hasil = $kemarin;
+    }else {
+        $hasil = null;
+    }
+    return $hasil;
 }
 
 // Untuk Saldo Bulan
@@ -209,6 +265,69 @@ public function getPendTahun(){
     $query = $this->db->get()->row_array();
     return $query;
 }
+
+public function getPendKemarin(){
+    $this->db->select('waktu_transaksi');
+    $this->db->from('tbl_transaksi');
+    $this->db->where('pemasukan > 0');
+    $this->db->where('waktu_transaksi',date('Y-m-d', strtotime('yesterday')));
+    $query = $this->db->get()->row_array();
+    if($query){
+        $this->db->select('SUM(pemasukan) AS pemasukan');
+        $this->db->from('tbl_transaksi');
+        $this->db->where('pemasukan > 0');
+        $this->db->where('waktu_transaksi',$query['waktu_transaksi']);
+        $kemarin = $this->db->get()->row_array();
+        $hasil = $kemarin;
+    }else {
+        $hasil = null;
+    }
+    return $hasil;
+} 
+
+public function getpendBKemarin(){
+    $this->db->select('waktu_transaksi');
+    $this->db->from('tbl_transaksi');
+    $this->db->where('pemasukan > 0');
+    if(date('m') == '01'){
+        $this->db->where('month(waktu_transaksi)', '12');
+        $this->db->where('year(waktu_transaksi)', date('Y', strtotime('last year')));
+    }else{
+        $this->db->where('month(waktu_transaksi)', date('Y-m', strtotime('last month')));
+    }
+    $query = $this->db->get()->row_array();
+    if($query){
+        $this->db->select('SUM(pemasukan) AS pemasukan');
+        $this->db->from('tbl_transaksi');
+        $this->db->where('pemasukan > 0');
+        $this->db->where('waktu_transaksi',$query['waktu_transaksi']);
+        $kemarin = $this->db->get()->row_array();
+        $hasil = $kemarin;
+    }else {
+        $hasil = null;
+    }
+    return $hasil;
+}
+
+public function getPendTKemarin(){
+    $this->db->select('waktu_transaksi');
+    $this->db->from('tbl_transaksi');
+    $this->db->where('pemasukan > 0');
+    $this->db->where('year(waktu_transaksi)', date('Y', strtotime('last year')));;
+    $query = $this->db->get()->row_array();
+    if($query){
+        $this->db->select('SUM(pemasukan) as pemasukan');
+        $this->db->from('tbl_transaksi');
+        $this->db->where('pemasukan > 0');
+        $this->db->where('waktu_transaksi',$query['waktu_transaksi']);
+        $kemarin = $this->db->get()->row_array();
+        $hasil = $kemarin;
+    }else {
+        $hasil = null;
+    }
+    return $hasil;
+}
+
 // Untuk Mencari Jumalh pengeluaran perhari
 public function getPengHari(){
     $this->db->select('SUM(pengeluaran) AS pengeluaran');
@@ -329,5 +448,66 @@ public function getPengTahun(){
             return $hasil;
     }
     
+    public function getPengKemarin(){
+        $this->db->select('waktu_transaksi');
+        $this->db->from('tbl_transaksi');
+        $this->db->where('pengeluaran > 0');
+        $this->db->where('waktu_transaksi',date('Y-m-d', strtotime('yesterday')));
+        $query = $this->db->get()->row_array();
+        if($query){
+            $this->db->select('SUM(pengeluaran) AS pengeluaran');
+            $this->db->from('tbl_transaksi');
+            $this->db->where('pengeluaran > 0');
+            $this->db->where('waktu_transaksi',$query['waktu_transaksi']);
+            $kemarin = $this->db->get()->row_array();
+            $hasil = $kemarin;
+        }else {
+            $hasil = null;
+        }
+        return $hasil;
+    } 
+    
+    public function getpengBKemarin(){
+        $this->db->select('waktu_transaksi');
+        $this->db->from('tbl_transaksi');
+        $this->db->where('pengeluaran > 0');
+        if(date('m') == '01'){
+            $this->db->where('month(waktu_transaksi)', '12');
+            $this->db->where('year(waktu_transaksi)', date('Y', strtotime('last year')));
+        }else{
+            $this->db->where('month(waktu_transaksi)', date('Y-m', strtotime('last month')));
+        }
+        $query = $this->db->get()->row_array();
+        if($query){
+            $this->db->select('SUM(pengeluaran) AS pengeluaran');
+            $this->db->from('tbl_transaksi');
+            $this->db->where('pengeluaran > 0');
+            $this->db->where('waktu_transaksi',$query['waktu_transaksi']);
+            $kemarin = $this->db->get()->row_array();
+            $hasil = $kemarin;
+        }else {
+            $hasil = null;
+        }
+        return $hasil;
+    }
+    
+    public function getPengTKemarin(){
+        $this->db->select('waktu_transaksi');
+        $this->db->from('tbl_transaksi');
+        $this->db->where('pengeluaran > 0');
+        $this->db->where('year(waktu_transaksi)', date('Y', strtotime('last year')));;
+        $query = $this->db->get()->row_array();
+        if($query){
+            $this->db->select('SUM(pengeluaran) as pengeluaran');
+            $this->db->from('tbl_transaksi');
+            $this->db->where('pengeluaran > 0');
+            $this->db->where('waktu_transaksi',$query['waktu_transaksi']);
+            $kemarin = $this->db->get()->row_array();
+            $hasil = $kemarin;
+        }else {
+            $hasil = null;
+        }
+        return $hasil;
+    }
         
     }
