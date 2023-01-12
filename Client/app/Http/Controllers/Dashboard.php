@@ -18,6 +18,9 @@ class Dashboard extends Controller
         // var_dump($pengeluaran);die;
         $transaksi = Http::withToken(session('token'))->get(Custom::APITRANSAKSI)->object();
         // var_dump($transaksi);die;
+        $presentase_saldo = Http::withToken(session('token'))->get(Custom::APIPRESENTASESALDOHARIAN)->object();
+        $presentase_pendapatan = Http::withToken(session('token'))->get(Custom::APIPRESENTASEPENDAPATANHARIAN)->object();
+        $presentase_pengeluaran = Http::withToken(session('token'))->get(Custom::APIPRESENTASEPENGELUARANHARIAN)->object();
         $keuntungan = Http::withToken(session('token'))->get(Custom::APIKEUNTUNGAN)->json();
         $bulan = Http::withToken(session('token'))->get(Custom::APIBULAN)->json();
         if(isset($pend_hari->result)){
@@ -34,6 +37,9 @@ class Dashboard extends Controller
             "keuntungan" => $keuntungan['keuntungan'],
             "bulan" => $bulan['bulan'],
             "saldo" => $saldo->total_saldo,
+            'presentase_saldo' => $presentase_saldo,
+            'presentase_pendapatan' => $presentase_pendapatan,
+            'presentase_pengeluaran' => $presentase_pengeluaran,
             "title" => "Dashboard"
         ]);
     }
@@ -41,10 +47,13 @@ class Dashboard extends Controller
     public function getSaldo(Request $request){
         if($request->keyword == 'This Month'){
            $saldo = Http::withToken(session('token'))->get(Custom::APISALDOBULAN)->object();
+           $presentase = Http::withToken(session('token'))->get(Custom::APIPRESENTASESALDOBULAN)->object();
         }else if($request->keyword == 'This Year'){
-           $saldo = Http::withToken(session('token'))->get(Custom::APISALDOTAHUN)->object();
+            $saldo = Http::withToken(session('token'))->get(Custom::APISALDOTAHUN)->object();
+            $presentase = Http::withToken(session('token'))->get(Custom::APIPRESENTASESALDOTAHUN)->object();
         }else{
             $saldo = Http::withToken(session('token'))->get(Custom::APISALDO)->object();
+            $presentase = Http::withToken(session('token'))->get(Custom::APIPRESENTASESALDOHARIAN)->object();
         }
 
         if(isset($saldo->result)){
@@ -52,10 +61,12 @@ class Dashboard extends Controller
                 'title' => $request->keyword,
                 'saldo' => $saldo
             ];
-        }else{
+        }
+        else{
             $data = [
                 'title' => $request->keyword,
-                'saldo' => $saldo->total_saldo
+                'saldo' => $saldo->total_saldo,
+                'presentase' => $presentase
             ];
         }
 
@@ -66,10 +77,13 @@ class Dashboard extends Controller
     public function getPendapatan(Request $request){
         if($request->keyword == 'This Month'){
            $saldo = Http::withToken(session('token'))->get(Custom::APIPENDAPATANBULANINI)->object();
+           $presentase = Http::withToken(session('token'))->get(Custom::APIPRESENTASEPENDAPATANBULAN)->object();
         }else if($request->keyword == 'This Year'){
-           $saldo = Http::withToken(session('token'))->get(Custom::APIPENDAPATANTAHUNINI)->object();
+            $saldo = Http::withToken(session('token'))->get(Custom::APIPENDAPATANTAHUNINI)->object();
+            $presentase = Http::withToken(session('token'))->get(Custom::APIPRESENTASEPENDAPATANTAHUN)->object();
         }else{
             $saldo = Http::withToken(session('token'))->get(Custom::APIPENDAPATANHARIINI)->object();
+            $presentase = Http::withToken(session('token'))->get(Custom::APIPRESENTASEPENDAPATANHARIAN)->object();
         }
 
         if(isset($saldo->result)){
@@ -80,7 +94,8 @@ class Dashboard extends Controller
         }else {
             $data = [
                 'title' => $request->keyword,
-                'pemasukkan' => $saldo->total_pendapatan
+                'pemasukkan' => $saldo->total_pendapatan,
+                'presentase' => $presentase
             ];
         }
 
@@ -91,10 +106,13 @@ class Dashboard extends Controller
     public function getPengeluaran(Request $request){
         if($request->keyword == 'This Month'){
            $saldo = Http::withToken(session('token'))->get(Custom::APIPENGELUARANBULANINI)->object();
+           $presentase = Http::withToken(session('token'))->get(Custom::APIPRESENTASEPENGELUARANBULAN)->object();
         }else if($request->keyword == 'This Year'){
            $saldo = Http::withToken(session('token'))->get(Custom::APIPENGELUARANTAHUNINI)->object();
+           $presentase = Http::withToken(session('token'))->get(Custom::APIPRESENTASEPENGELUARANBULAN)->object();
         }else{
             $saldo = Http::withToken(session('token'))->get(Custom::APIPENGELUARANHARIINI)->object();
+            $presentase = Http::withToken(session('token'))->get(Custom::APIPRESENTASEPENGELUARANHARIAN)->object();
         }
 
         if(isset($saldo->result)){
@@ -105,7 +123,8 @@ class Dashboard extends Controller
         }else{
             $data = [
                 'title' => $request->keyword,
-                'pengeluaran' => $saldo->total_pengeluaran
+                'pengeluaran' => $saldo->total_pengeluaran,
+                'presentase' => $presentase
             ];
         }
 

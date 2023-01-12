@@ -167,9 +167,7 @@ function deleteProfilePicture(){
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          $('#preview_photo').attr('src', 'https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Clip-Art-Transparent-File.png')
-          $('#btn_hapus').hide()
-          // location.href = '/logout'
+          location.href = '/deletephoto'
         } else if (result.isDenied) {
           return false;
         }

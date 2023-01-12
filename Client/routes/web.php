@@ -56,3 +56,4 @@ Route::get('/getSaldo',[Dashboard::class, 'getSaldo'])->middleware('authCustom')
 Route::get('/getPemasukkan',[Dashboard::class, 'getPendapatan'])->middleware('authCustom');
 Route::get('/getPengeluaran',[Dashboard::class, 'getPengeluaran'])->middleware('authCustom');
 Route::get('/expToken',[Login::class, 'expToken'])->middleware('authCustom');
+Route::get('/deletephoto',[Profile::class, 'deletephoto'])->middleware('authCustom');

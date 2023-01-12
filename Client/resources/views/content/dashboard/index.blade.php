@@ -1,8 +1,8 @@
 @extends('layout.main')
 @section('container')
 {{-- @php
-    // var_dump($keuntungan)
-    echo session('nama_lengkap')
+    var_dump($presentase);die;
+    // echo session('nama_lengkap')
 @endphp --}}
 <section class="mt-3 mx-3">
     <div class="row">
@@ -30,12 +30,26 @@
                         </div>
       
                         <div class="d-flex align-items-center">
-                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center p-2" style="background-color: rgb(187, 190, 190)">
-                            <i class='bx bx-cart fs-1' ></i>
+                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center p-2" style="background-color: rgb(174, 212, 212)">
+                            <i class='bx bx-cart fs-1 text-success' ></i>
                           </div>
                           <div class="ps-3">
                             <h3 id="saldo">@currency($saldo->saldo)</h3>
-                            <span class="text-success small pt-1 fw-bold">12%</span> <span class="small pt-2 ps-1 text-white">increase</span>
+                            @if (isset($presentase_saldo->presentase))
+                            @if ($presentase_saldo->presentase >= 0)
+                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">{{ number_format($presentase_saldo->presentase,2,'.','') }}%</span> 
+                            <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
+                            @else 
+                            <span class="text-danger small pt-1 fw-bold" id="presentase_saldo">{{ number_format($presentase_saldo->presentase,2,'.','') }}%</span> 
+                            <span class="small pt-2 ps-1 text-white" id="ket_saldo">decrease</span>
+                            @endif
+                            @else
+                            @if ($saldo->saldo != 0)
+                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">100%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
+                            @else
+                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">0%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
+                            @endif
+                            @endif
                           </div>
                         </div>
                       </div>
@@ -65,12 +79,26 @@
                         </div>
       
                         <div class="d-flex align-items-center">
-                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center p-2" style="background-color: rgb(187, 190, 190)">
-                            <i class='bx bx-dollar fs-1' ></i>
+                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center p-2" style="background-color: rgb(219, 210, 168)">
+                            <i class='bx bx-dollar fs-1' style="color: rgb(179, 143, 28)" ></i>
                           </div>
                           <div class="ps-3">
                             <h3 id="pemasukkan">@currency($pemasukkan_hari->pemasukan)</h3>
-                            <span class="text-success small pt-1 fw-bold">12%</span> <span class="small pt-2 ps-1 text-white">increase</span>
+                            @if (isset($presentase_pendapatan->presentase))
+                            @if ($presentase_pendapatan->presentase > 0)
+                            <span class="text-success small pt-1 fw-bold" id="presentase_pemasukkan">{{ number_format($presentase_pendapatan->presentase,2,'.','') }}%</span>
+                            <span class="small pt-2 ps-1 text-white" id="ket_pemasukkan">increase</span>
+                            @else
+                            <span class="text-danger small pt-1 fw-bold" id="presentase_pemasukkan">{{ number_format($presentase_pendapatan->presentase,2,'.','') }}%</span>
+                            <span class="small pt-2 ps-1 text-white" id="ket_pemasukkan">decrease</span>
+                            @endif
+                            @else
+                            @if ($pemasukkan_hari->pemasukan != 0)
+                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">100%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
+                            @else
+                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">0%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
+                            @endif
+                            @endif
                           </div>
                         </div>
                       </div>
@@ -100,12 +128,26 @@
                         </div>
       
                         <div class="d-flex align-items-center">
-                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center p-2" style="background-color: rgb(187, 190, 190)">
-                            <i class='bx bx-cart fs-1' ></i>
+                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center p-2" style="background-color: rgb(233, 186, 186)">
+                            <i class='bx bx-minus fs-1 text-danger'></i>
                           </div>
                           <div class="ps-3">
                             <h3 id="pengeluaran">@currency($pengeluaran->pengeluaran)</h3>
-                            <span class="text-success small pt-1 fw-bold">12%</span> <span class="small pt-2 ps-1 text-white">increase</span>
+                            @if (isset($presentase_pengeluaran->presentase))
+                              @if ($presentase_pengeluaran->presentase < 0)
+                              <span class="text-danger small pt-1 fw-bold" id="presentase_pengeluaran">{{ number_format($presentase_pengeluaran->presentase,2,'.','') }}%</span> 
+                              <span class="small pt-2 ps-1 text-white" id="ket_pengeluaran">decrease</span>
+                              @else
+                              <span class="text-success small pt-1 fw-bold" id="presentase_pengeluaran">{{ number_format($presentase_pengeluaran->presentase,2,'.','') }}%</span> 
+                              <span class="small pt-2 ps-1 text-white" id="ket_pengeluaran">increase</span>
+                              @endif
+                            @else
+                            @if ($pengeluaran->pengeluaran != 0)
+                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">100%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
+                            @else
+                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">0%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
+                            @endif
+                            @endif
                           </div>
                         </div>
                       </div>
@@ -225,14 +267,48 @@
         fetch('/getSaldo?keyword='+keyword)
         .then(response => response.json())
         .then(result => {
+          // console.log(result.presentase)
           if(result.saldo.hasOwnProperty('result')){
             location.href = '/expToken'
           }
           $('#saldo_filter').html('| '+result.title)
+
           if(result.saldo.saldo == null){
             $('#saldo').html('Rp. 0')
+            $('#presentase_saldo').html('0%')
+            $('#ket_saldo').text('increase')
+          }else{
+            $('#saldo').html(formatRupiah(result.saldo.saldo, 'Rp. '))
           }
-          $('#saldo').html(formatRupiah(result.saldo.saldo, 'Rp. '))
+
+          if(result.presentase.hasOwnProperty('presentase')){
+            if(result.presentase.presentase >= 0){
+              if($('#presentase_saldo').hasClass('text-danger')){
+                $('#presentase_saldo').removeClass('text-danger')
+                $('#presentase_saldo').addClass('text-success')
+                $('#ket_saldo').text('increase')
+              }
+            }else{
+              if($('#presentase_saldo').hasClass('text-success')){
+                $('#presentase_saldo').removeClass('text-success')
+                $('#presentase_saldo').addClass('text-danger')
+                $('#ket_saldo').text('decrease')
+              }
+            }
+            $('#presentase_saldo').html(result.presentase.presentase.toFixed(2)+'%')
+          }else{
+            if($('#presentase_pemasukkan').hasClass('text-danger')){
+              $('#presentase_pemasukkan').removeClass('text-danger')
+              $('#presentase_pemasukkan').addClass('text-success')
+              $('#ket_pemasukkan').text('increase')
+            }
+            if(result.saldo.saldo != null){
+              $('#presentase_pengeluaran').html('100%')
+            }else{
+              $('#presentase_pengeluaran').html('0%')
+              $('#ket_pengeluaran').text('increase')
+            }
+          }
         });
       }
 
@@ -246,10 +322,43 @@
           }
           // console.log(result.pemasukkan)
           $('#masuk_filter').html('| '+result.title)
+
           if(result.pemasukkan.pemasukan == null){
             $('#pemasukkan').html('Rp. 0')
+            $('#presentase_pemasukkan').html('0%')
+            $('#ket_pemasukkan').text('increase')
+          }else{
+            $('#pemasukkan').html(formatRupiah(result.pemasukkan.pemasukan, 'Rp. '))
           }
-          $('#pemasukkan').html(formatRupiah(result.pemasukkan.pemasukan, 'Rp. '))
+
+          if(result.presentase.hasOwnProperty('presentase')){
+            if(result.presentase.presentase >= 0){
+              if($('#presentase_pengeluaran').hasClass('text-danger')){
+                $('#presentase_pengeluaran').removeClass('text-danger')
+                $('#presentase_pengeluaran').addClass('text-success')
+                $('#ket_pengeluaran').text('increase')
+              }
+            }else{
+              if($('#presentase_pengeluaran').hasClass('text-success')){
+                $('#presentase_pengeluaran').removeClass('text-success')
+                $('#presentase_pengeluaran').addClass('text-danger')
+                $('#ket_pengeluaran').text('decrease')
+              }
+            }
+            $('#presentase_pemasukkan').html(result.presentase.presentase.toFixed(2)+'%')
+          }else{
+            if($('#presentase_pemasukkan').hasClass('text-danger')){
+              $('#presentase_pemasukkan').removeClass('text-danger')
+              $('#presentase_pemasukkan').addClass('text-success')
+              $('#ket_pemasukkan').text('increase')
+            }
+            if(result.pemasukkan.pemasukan != null){
+              $('#presentase_pemasukkan').html('100%')
+            }else{
+              $('#presentase_pemasukkan').html('0%')
+              $('#ket_pemasukkan').text('increase')
+            }
+          }
         });
       }
 
@@ -266,8 +375,38 @@
           $('#keluar_filter').html('| '+result.title)
           if(result.pengeluaran.pengeluaran == null){
             $('#pengeluaran').html('Rp. 0')
+          }else{
+            $('#pengeluaran').html(formatRupiah(result.pengeluaran.pengeluaran, 'Rp. '))
           }
-          $('#pengeluaran').html(formatRupiah(result.pengeluaran.pengeluaran, 'Rp. '))
+
+          if(result.presentase.hasOwnProperty('presentase')){
+            if(result.presentase.presentase >= 0){
+              if($('#presentase_pengeluaran').hasClass('text-danger')){
+                $('#presentase_pengeluaran').removeClass('text-danger')
+                $('#presentase_pengeluaran').addClass('text-success')
+                $('#ket_pengeluaran').text('increase')
+              }
+            }else{
+              if($('#presentase_pengeluaran').hasClass('text-success')){
+                $('#presentase_pengeluaran').removeClass('text-success')
+                $('#presentase_pengeluaran').addClass('text-danger')
+                $('#ket_pengeluaran').text('decrease')
+              }
+            }
+            $('#presentase_pengeluaran').html(result.presentase.presentase.toFixed(2)+'%')
+          }else{
+            if($('#presentase_pengeluaran').hasClass('text-danger')){
+              $('#presentase_pengeluaran').removeClass('text-danger')
+              $('#presentase_pengeluaran').addClass('text-success')
+              $('#ket_pengeluaran').text('increase')
+            }
+            if(result.pengeluaran.pengeluaran != null){
+              $('#presentase_pengeluaran').html('100%')
+            }else{
+              $('#presentase_pengeluaran').html('0%')
+              $('#ket_pengeluaran').text('increase')
+            }
+          }
         });
       }
 

@@ -33,7 +33,7 @@ class Profile extends Controller
                      ])->object();
         }else{
             // var_dump($profile_picture);die;
-            $update = Http::withToken('token')->post(Custom::APIEDITPROFILE,[
+            $update = Http::withToken(session('token'))->post(Custom::APIEDITPROFILE,[
                 'nama_lengkap' => $request->nama_lengkap,
                 'no_hp' => $request->no_hp,
                 'token' => $request->token,
@@ -95,6 +95,27 @@ class Profile extends Controller
             }
         }else{
             return redirect('/profile')->with('error','Password lama tidak cocok');
+        }
+    }
+
+    public function deletePhoto(){
+        $email = session('email');
+        // var_dump($email);die;
+        $hapus = Http::withToken(session('token'))->asForm()->delete(Custom::APIEDITPROFILE, ['token' => $email])->object();
+
+        if(isset($hapus->result)){
+            session()->flush();
+            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
+            </div>');
+        }
+
+        if($hapus->status == true){
+            session()->put([
+                'profile_picture' => null
+            ]);
+            return redirect('/profile')->with('message',$hapus->message);
+        }else{
+            return redirect('/profile')->with('error',$hapus->message);
         }
     }
 

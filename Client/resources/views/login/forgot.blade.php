@@ -20,6 +20,7 @@
                 </div>
                 <center><button type="submit" class="px-4 py-2 btn btn-outline-dark mb-4">Reset Password</button></center>
             </form>
+            <center><a href="/login" class="text-center text-decoration-none" style="font-size: 12px;">Back to Login?</a></center>
         </div>
     </div>
 @endsection

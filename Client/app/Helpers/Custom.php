@@ -15,6 +15,15 @@ Class Custom {
     const APIPENGELUARANHARIINI = Custom::API.'/index.php/pengeluaran_hari';
     const APISALDO = Custom::API.'/index.php/saldo';
     const APISALDOBULAN = Custom::API.'/index.php/saldo_bulan';
+    const APIPRESENTASESALDOHARIAN = Custom::API.'/index.php/presentase_saldo_harian';
+    const APIPRESENTASESALDOTAHUN = Custom::API.'/index.php/presentase_saldo_tahun';
+    const APIPRESENTASESALDOBULAN = Custom::API.'/index.php/presentase_saldo_bulan';
+    const APIPRESENTASEPENDAPATANHARIAN = Custom::API.'/index.php/presentase_pendapatan_hari';
+    const APIPRESENTASEPENDAPATANBULAN = Custom::API.'/index.php/presentase_pendapatan_bulan';
+    const APIPRESENTASEPENDAPATANTAHUN = Custom::API.'/index.php/presentase_pendapatan_tahun';
+    const APIPRESENTASEPENGELUARANBULAN = Custom::API.'/index.php/presentase_pengeluaran_bulan';
+    const APIPRESENTASEPENGELUARANTAHUN = Custom::API.'/index.php/presentase_pengeluaran_tahun';
+    const APIPRESENTASEPENGELUARANHARIAN = Custom::API.'/index.php/presentase_pengeluaran_hari';
     const APISALDOTAHUN = Custom::API.'/index.php/saldo_tahun';
     const APIKEUNTUNGAN = Custom::API.'/index.php/keuntungan';
     const APITRANSAKSI = Custom::API.'/index.php/transaksi';
