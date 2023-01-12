@@ -22,7 +22,7 @@ class Presentase_pengeluaran_tahun extends Token{
             $this->response([
                 'status' => true,
                 'message' => 'Berhasil',
-                'presentase' =>  number_format($hasil,1,",","") 
+                'presentase' =>  $hasil
             ],200);
         }else{
             $this->response([
