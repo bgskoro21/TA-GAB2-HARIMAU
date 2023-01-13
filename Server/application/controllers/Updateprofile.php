@@ -27,13 +27,14 @@ class Updateprofile extends Token{
             $data = [
                 "nama_lengkap" => $this->post('nama_lengkap'),
                 "email" => $this->post('token'),
-                'no_hp' => $this->post('no_hp')
+                'no_hp' => $this->post('no_hp'),
+                'about' => $this->post('about')
             ];
-            $hasil = $this->mdl->add_photo($data['email'],$data['nama_lengkap'],$data['no_hp']);
+            $hasil = $this->mdl->add_photo($data['email'],$data['nama_lengkap'],$data['no_hp'], $data['about']);
         }else{
             $gambarLama = $this->mdl->getGambarLama($this->post('token'));
             // var_dump($gambarLama);die;
-            if($gambarLama['profile_picture'] != null){
+            if(isset($gambarLama['profile_picture'])){
                 $pecah = explode('/', $gambarLama['profile_picture']);
                 unlink("./assets/images/$pecah[7]");
             }
@@ -44,8 +45,9 @@ class Updateprofile extends Token{
                 "email" => $this->post('token'),
                 "nama_lengkap" => $this->post('nama_lengkap'),
                 'no_hp' => $this->post('no_hp'),
+                'about' => $this->post('about')
             ];
-            $hasil = $this->mdl->add_photo($data['email'],$data['nama_lengkap'],$data['no_hp'],$data['profile_picture']);
+            $hasil = $this->mdl->add_photo($data['email'],$data['nama_lengkap'],$data['no_hp'],$data['about'],$data['profile_picture']);
         }
 
         if($hasil == 1 ){

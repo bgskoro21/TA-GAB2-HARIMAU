@@ -49,5 +49,5 @@ class Password extends Token{
             ],200);
         }
     }
-  }
+}
 }

@@ -14,7 +14,7 @@ class M_User extends CI_Model{
     }
 
     public function get_current($current){
-        $this->db->select('id,nama_lengkap,level,no_hp,profile_picture, email');
+        $this->db->select('id,nama_lengkap,level,no_hp,profile_picture, email,about');
         $this->db->from('user');
         $this->db->where('email',$current );
         $query = $this->db->get()->row_array();
@@ -116,7 +116,7 @@ class M_User extends CI_Model{
         return $hasil;
     }
 
-    public function add_photo($email, $nama_lengkap, $no_hp, $profile_picture=null){
+    public function add_photo($email, $nama_lengkap, $no_hp,$about, $profile_picture=null){
         $this->db->from('user');
         $this->db->where("email = '$email'");
         $query = $this->db->get()->result();
@@ -126,11 +126,13 @@ class M_User extends CI_Model{
                 $data = array(
                     'nama_lengkap' => $nama_lengkap,
                     'no_hp' => $no_hp,
-                    'profile_picture' => $profile_picture
+                    'profile_picture' => $profile_picture,
+                    'about' => $about
                 );
             }else{
                 $data = array(
                     'nama_lengkap' => $nama_lengkap,
+                    'about' => $about,
                     'no_hp' => $no_hp,
                 );
             }
