@@ -116,7 +116,7 @@ class M_User extends CI_Model{
         return $hasil;
     }
 
-    public function add_photo($email, $nama_lengkap, $no_hp, $profile_picture=null, $about){
+    public function add_photo($email, $nama_lengkap, $no_hp,$about, $profile_picture=null){
         $this->db->from('user');
         $this->db->where("email = '$email'");
         $query = $this->db->get()->result();

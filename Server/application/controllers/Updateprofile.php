@@ -47,7 +47,7 @@ class Updateprofile extends Token{
                 'no_hp' => $this->post('no_hp'),
                 'about' => $this->post('about')
             ];
-            $hasil = $this->mdl->add_photo($data['email'],$data['nama_lengkap'],$data['no_hp'],$data['profile_picture'], $data['about']);
+            $hasil = $this->mdl->add_photo($data['email'],$data['nama_lengkap'],$data['no_hp'],$data['about'],$data['profile_picture']);
         }
 
         if($hasil == 1 ){
