@@ -208,6 +208,22 @@ class M_User extends CI_Model{
         return $hasil;
     }
 
+    public function aktivasi_login($is_login,$email){
+        $this->db->select('email');
+        $this->db->from('user');
+        $this->db->where('email',$email);
+        $query = $this->db->get()->result();
+        if(count($query) > 0){
+            $data['is_login'] = $is_login;
+            $this->db->where('email',$email);
+            $this->db->update('user',$data);
+            $hasil = 1;
+        }else{
+            $hasil = 0;
+        }
+        return $hasil;
+    }
+
     public function deletePhoto($email){
         $this->db->select('email');
         $this->db->from('user');
@@ -221,8 +237,22 @@ class M_User extends CI_Model{
         }else{
             $hasil = 0;
         }
+        return $hasil;
+    }
 
-
+    public function logout($email){
+        $this->db->select('email');
+        $this->db->from('user');
+        $this->db->where('email',$email);
+        $query = $this->db->get()->row_array();
+        if($query){
+            $data['is_login'] = 0;
+            $this->db->where('email',$email);
+            $this->db->update('user',$data);
+            $hasil = 1;
+        }else{
+            $hasil = 0;
+        }
         return $hasil;
     }
     
@@ -232,6 +262,20 @@ class M_User extends CI_Model{
         $this->db->or_like('level', $keyword);
         $query = $this->db->get()->result();
         if (count($query) > 0){
+            $hasil = $query;
+        }else{
+            $hasil = null;
+        }
+
+        return $hasil;
+    }
+
+    public function isLogin($email){
+        $this->db->select('is_login');
+        $this->db->from('user');
+        $this->db->where('email',$email);
+        $query = $this->db->get()->row_array();
+        if ($query){
             $hasil = $query;
         }else{
             $hasil = null;
