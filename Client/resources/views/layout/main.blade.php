@@ -22,7 +22,7 @@
   <body class="body-admin">
       @include('partials.sidebar')
       <section class="home-section">
-        @include('partials.header')
+          @include('partials.header')
         <div class="main">
           @yield('container')
         </div>

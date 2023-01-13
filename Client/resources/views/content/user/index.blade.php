@@ -5,42 +5,38 @@
 @endphp --}}
 <section class="m-3 bg-dark text-white radius p-4 overflow-auto">
     <div class="row d-flex justify-content-center align-items-center mb-3">
-        <div class="col-10">
+        <div class="col-md-9">
             <h2>{{ $title }}</h2>
         </div>
-        <div class="col-2 text-end">
+        <div class="col-md-3 text-end d-flex align-items-center">
+            <input type="text" id="keyword" class="form-control me-2" placeholder="Search by Name or Role" style="border-radius: 30px">
             <button class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btn_tambah"><i class='bx bx-plus-medical'></i></button>
         </div>
     </div>
-    <table class="table table-bordered table-responsive border overflow-hidden text-white" id="table_user">
-        <thead>
-                <tr>
-                    <th scope="col" class="text-center">No</th>
-                    <th scope="col" class="text-center">Nama</th>
-                    <th scope="col" class="text-center">Email</th>
-                    <th scope="col" class="text-center">Nomor HP</th>
-                    <th scope="col" class="text-center">Level</th>
-                    <th scope="col" class="text-center">Aksi</th>
-                </tr>
-        </thead>
-        <tbody>
-            @if (isset($users->user))
-            @foreach ($users->user as $user)
-            <tr>
-                <td class="text-center">{{ $loop->iteration }}</td>
-                <td>{{  $user->nama_lengkap }}</td>
-                <td>{{ $user->email }}</td>
-                <td>{{ $user->no_hp }}</td>
-                <td>{{ $user->level }}</td>
-                <td class="text-center">
-                    <button class="btn btn-success btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ $user->email }}"><i class='bx bx-edit'></i></button>
+    <div class="row card-user">
+        @foreach ($users->user as $user)
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <div class="row g-0">
+                  <div class="col-md-4 d-flex align-items-center p-1">
+                    <img src="{{ $user->profile_picture }}" class="img-fluid rounded-circle" alt="Profile Picture">
+                  </div>
+                  <div class="col-md-6 d-flex align-items-center">
+                    <div class="card-body">
+                      <p class="card-title text-dark fw-bold">{{ $user->nama_lengkap }}</p>
+                      <p class="card-text text-dark">{{ $user->level }}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-2 d-lg-flex flex-column justify-content-center align-items-end d-sm-inline-block">
+                    <a href="/user/detailuser?email={{ $user->email }}"><button class="btn btn-dark btn-sm btn-detail mb-1"><i class="bx bxs-user-detail"></i></button></a>
+                    <button class="btn btn-success btn-sm btn-edit mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ $user->email }}"><i class='bx bx-edit'></i></button>
                     <button type="submit" onclick="setDelete('{{ $user->email }}')" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i></button>
-                </td>
-            </tr>
-            @endforeach
-            @endif
-        </tbody>
-    </table>
+                  </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
 </section>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -88,7 +84,7 @@
 @endsection
 @section('script')
 <script>
-     function setDelete(username){
+     function setDelete(email){
         // console.log(username);
         Swal.fire({
           title: 'Apakah kamu yakin?',
@@ -98,12 +94,23 @@
         }).then((result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
-            location.href = '/user/hapus_data/'+username
+            location.href = '/user/hapus_data/'+email
           } else if (result.isDenied) {
             return false;
           }
         })
       }
+
+      $('#keyword').on('keyup',function(){
+        keyword = $('#keyword').val()
+        $.ajax({
+            url: '/user/filteruser?keyword='+keyword,
+            success: function(data){
+                console.log(data);
+               $('.card-user').html(data)
+            }
+        })
+      })
 
     $(document).ready( function () {
         $('#table_user').DataTable();

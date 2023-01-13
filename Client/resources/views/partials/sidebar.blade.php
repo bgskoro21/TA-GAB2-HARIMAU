@@ -1,32 +1,37 @@
-<div class="sidebar" id="">
+<div class="sidebar close">
     <div class="logo-details">
         <img src="../../img/eyzel.png" alt="Eyzel" width="50" >
-        <span class="logo_name">EyzelKas</span>
+        <span class="logo_name" style="flex: 1">EyzelKas</span>
+        <i class='bx bx-arrow-back bg-white d-sm-block d-md-none text-dark fs-3 btn-tutup'></i>
     </div>
     <ul class="nav-links">
         <li class="{{ Request::is('/') ? 'aktif' : '' }}">
-            <a href="/">
-                <i class="bx bx-grid-alt"></i>
-                <span class="name_link">Beranda</span>
-            </a>
-            <ul class="sub-menu blank">
+            <div class="iocn-link">
+                <a href="/">
+                    <i class="bx bx-grid-alt"></i>
+                    <span class="name_link">Beranda</span>
+                </a>
+            </div>
+            <ul class="sub-menu">
                 <li><a class="name_link" href="/">Beranda</a></li>
             </ul>
         </li>
         @if (session('level') == 'Admin')
         <li class="{{ Request::is('user*') ? 'aktif' : '' }}">
-            <a href="/user">
-                <i class='bx bx-user'></i>
-                <span class="name_link">Daftar User</span>
-            </a>
-            <ul class="sub-menu blank">
+            <div class="iocn-link">
+                <a href="/user">
+                    <i class='bx bx-user'></i>
+                    <span class="name_link">Daftar User</span>
+                </a>
+            </div>
+            <ul class="sub-menu">
                 <li><a class="name_link" href="/user">Daftar User</a></li>
             </ul>
         </li>
         @endif
         <li class= "{{Request::is('pemasukkan*') || Request::is('pengeluaran*')  ? 'aktif' : '' }}">
             <div class="iocn-link">
-                <a href="#">
+                <a href="/pemasukkan">
                     <i class='bx bx-book-bookmark'></i>
                     <span class="name_link">Transaksi</span>
                 </a>
@@ -37,26 +42,22 @@
                 <li><a href="/pengeluaran">Kas Keluar</a></li>
             </ul>
         </li>
-        @if (Request::is('laporan*') || Request::is('laporanbulanan*'))
-        <li class= "aktif">
-        @else
-        <li>
-        @endif
+        <li class= "{{Request::is('laporan*') || Request::is('pengeluaran*')  ? 'aktif' : '' }}">
             <div class="iocn-link">
-                <a href="#">
+                <a href="/laporan/umum">
                     <i class="bx bx-collection"></i>
                     <span class="name_link">Laporan Kas</span>
                 </a>
                 <i class="bx bxs-chevron-down arrow"></i>
             </div>
             <ul class="sub-menu">
+                <li><a href="/laporan/umum">Laporan Kas Umum</a></li>
                 <li><a href="/laporan?waktu=harian">Laporan Harian</a></li>
                 <li><a href="/laporan?waktu=bulanan">Laporan Bulanan</a></li>
             </ul>
         </li>
         <li>
-            <div class="d-flex justify-content-evenly profile-details">
-                <div class="col-md-3">
+            <div class="profile-details">
                     <div class="profile-content">
                         @if (!is_null(session('profile_picture')))
                         <img src="{{ session('profile_picture') }}" alt="Profile" class="img-fluid img-thumbnail rounded-circle">
@@ -64,17 +65,12 @@
                         <img src="https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Clip-Art-Transparent-File.png" alt="Profile" class="rounded-circle img-fluid">
                         @endif
                     </div>
-                </div>
-                <div class="col-md-6 ms-1">
                     <div class="name-job">
                         <div class="profile_name">{{ session('nama_lengkap') }}</div>
                         <div class="job">{{ session('level') }}</div>
                     </div>
-                </div>
-                <div class="col-md-3">
                     <button onclick="setLogout()" type="submit"><i class="bx bx-log-out fs-3"></i></button>
                 </div>
-            </div>
         </li>
     </ul>
 </div>

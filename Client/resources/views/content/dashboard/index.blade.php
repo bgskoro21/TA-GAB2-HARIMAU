@@ -7,7 +7,7 @@
 <section class="mt-3 mx-3">
     <div class="row">
                    <!-- Sales Card -->
-                <div class="col-xxl-4 col-md-4">
+                <div class="col-xxl-4 col-md-4 mb-2">
                     <div class="card info-card sales-card bg-dark text-white">
                       <div class="card-body">
                         <div class="row">
@@ -45,7 +45,7 @@
                             @endif
                             @else
                             @if ($saldo->saldo != 0)
-                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">100%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
+                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">100.00%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
                             @else
                             <span class="text-success small pt-1 fw-bold" id="presentase_saldo">0%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
                             @endif
@@ -56,7 +56,7 @@
       
                     </div>
                 </div><!-- End Sales Card -->
-                <div class="col-xxl-4 col-md-4">
+                <div class="col-xxl-4 col-md-4 mb-2">
                     <div class="card info-card sales-card bg-dark text-white">
                       <div class="card-body">
                         <div class="row">
@@ -94,7 +94,7 @@
                             @endif
                             @else
                             @if ($pemasukkan_hari->pemasukan != 0)
-                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">100%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
+                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">100.00%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
                             @else
                             <span class="text-success small pt-1 fw-bold" id="presentase_saldo">0%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
                             @endif
@@ -105,7 +105,7 @@
       
                     </div>
                   </div><!-- End Sales Card -->
-                <div class="col-xxl-4 col-md-4">
+                <div class="col-xxl-4 col-md-4 mb-2">
                     <div class="card info-card sales-card bg-dark text-white">
                       <div class="card-body">
                         <div class="row">
@@ -143,7 +143,7 @@
                               @endif
                             @else
                             @if ($pengeluaran->pengeluaran != 0)
-                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">100%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
+                            <span class="text-success small pt-1 fw-bold" id="presentase_saldo">100.00%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
                             @else
                             <span class="text-success small pt-1 fw-bold" id="presentase_saldo">0%</span> <span class="small pt-2 ps-1 text-white" id="ket_saldo">increase</span>
                             @endif
@@ -156,7 +156,7 @@
                   </div><!-- End Sales Card -->
     </div>
 </section>
-<section class="mx-3 p-3">
+<section class="mx-3 p-3 mb-2">
     <div class="row">
         <div class="col-md-12 bg-dark p-3 radius">
             <canvas id="grafik"></canvas>
@@ -195,8 +195,6 @@
             </tbody>
         </table>
 </section>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -302,12 +300,9 @@
               $('#presentase_pemasukkan').addClass('text-success')
               $('#ket_pemasukkan').text('increase')
             }
-            if(result.saldo.saldo != null){
-              $('#presentase_pengeluaran').html('100%')
-            }else{
+              $('#presentase_pengeluaran').html('100.00%')
               $('#presentase_pengeluaran').html('0%')
               $('#ket_pengeluaran').text('increase')
-            }
           }
         });
       }
@@ -333,16 +328,16 @@
 
           if(result.presentase.hasOwnProperty('presentase')){
             if(result.presentase.presentase >= 0){
-              if($('#presentase_pengeluaran').hasClass('text-danger')){
-                $('#presentase_pengeluaran').removeClass('text-danger')
-                $('#presentase_pengeluaran').addClass('text-success')
-                $('#ket_pengeluaran').text('increase')
+              if($('#presentase_pemasukkan').hasClass('text-danger')){
+                $('#presentase_pemasukkan').removeClass('text-danger')
+                $('#presentase_pemasukkan').addClass('text-success')
+                $('#ket_pemasukkan').text('increase')
               }
             }else{
-              if($('#presentase_pengeluaran').hasClass('text-success')){
-                $('#presentase_pengeluaran').removeClass('text-success')
-                $('#presentase_pengeluaran').addClass('text-danger')
-                $('#ket_pengeluaran').text('decrease')
+              if($('#presentase_pemasukkan').hasClass('text-success')){
+                $('#presentase_pemasukkan').removeClass('text-success')
+                $('#presentase_pemasukkan').addClass('text-danger')
+                $('#ket_pemasukkan').text('decrease')
               }
             }
             $('#presentase_pemasukkan').html(result.presentase.presentase.toFixed(2)+'%')
@@ -352,12 +347,8 @@
               $('#presentase_pemasukkan').addClass('text-success')
               $('#ket_pemasukkan').text('increase')
             }
-            if(result.pemasukkan.pemasukan != null){
-              $('#presentase_pemasukkan').html('100%')
-            }else{
-              $('#presentase_pemasukkan').html('0%')
+              $('#presentase_pemasukkan').html('100.00%')
               $('#ket_pemasukkan').text('increase')
-            }
           }
         });
       }
@@ -400,12 +391,8 @@
               $('#presentase_pengeluaran').addClass('text-success')
               $('#ket_pengeluaran').text('increase')
             }
-            if(result.pengeluaran.pengeluaran != null){
-              $('#presentase_pengeluaran').html('100%')
-            }else{
-              $('#presentase_pengeluaran').html('0%')
+              $('#presentase_pengeluaran').html('100.00%')
               $('#ket_pengeluaran').text('increase')
-            }
           }
         });
       }

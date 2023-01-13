@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <i class="bx bx-menu fs-2 text-white" style="cursor: pointer"></i>
-      <div class="{{ Request::is('profile*') ? 'bg-dark' : '' }} p-1">
+      <div class="{{ Request::is('profile*') ? 'bg-dark' : '' }}">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown"> 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" aria-expanded="false">

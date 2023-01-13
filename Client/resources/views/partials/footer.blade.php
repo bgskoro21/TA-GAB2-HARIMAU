@@ -37,4 +37,8 @@
   sidebarBtn.addEventListener("click", () => {
     sidebar.classList.toggle("close");
   });
+
+  $('.btn-tutup').on('click', function(){
+    $('.sidebar').addClass('close')
+  })
   </script>

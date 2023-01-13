@@ -110,4 +110,55 @@ class User extends Controller
             return redirect('/user')->with('error',$edit->massages);
         }
     }
+
+    public function detailUser(Request $request){
+        $email = $request->email;
+        $user = Http::withToken(session('token'))->get(Custom::APIUSER,['current' => $email])->object();
+        if(isset($user->result)){
+            return redirect('/expToken');
+        }
+
+        return view('content.user.detail',[
+            'title' => 'Detail User',
+            'current_user' => $user->user
+        ]);
+        // var_dump($user);
+    }
+
+    public function filterUser(Request $request){
+        $keyword = $request->keyword;
+        $output = '';
+        $users = Http::withToken(session('token'))->get(Custom::APIFILTERUSER, ['keyword' => $keyword])->object();
+        if(isset($users->result)){
+            return redirect('/expToken');
+        }
+
+        if($users->status == true){
+            foreach($users->searching as $user){
+                $output .= ' <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                      <div class="col-md-4 d-flex align-items-center p-1">
+                        <img src="'.$user->profile_picture.'" class="img-fluid rounded-circle" alt="Profile Picture">
+                      </div>
+                      <div class="col-md-6 d-flex align-items-center">
+                        <div class="card-body">
+                          <p class="card-title text-dark fw-bold">'.$user->nama_lengkap.'</p>
+                          <p class="card-text text-dark">'.$user->level.'</p>
+                        </div>
+                      </div>
+                      <div class="col-md-2 d-flex flex-column justify-content-center align-items-end">
+                        <a href="/user/detailuser?email='.$user->email.'"><button class="btn btn-dark btn-sm btn-detail mb-1"><i class="bx bxs-user-detail"></i></button></a>
+                        <button class="btn btn-success btn-sm btn-edit mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="'.$user->email.'"><i class="bx bx-edit"></i></button>
+                        <button type="submit" onclick="setDelete('.$user->email.')" class="btn btn-danger btn-sm"><i class="bx bx-trash"></i></button>
+                      </div>
+                    </div>
+                </div>
+            </div>';
+        }
+    }else{
+        $output .= '<p class="text-center text-white fs-4">User tidak ditemukan!</p>';
+    }
+        echo $output;
+    }
 }

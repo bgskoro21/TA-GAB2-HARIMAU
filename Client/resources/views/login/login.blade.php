@@ -2,7 +2,7 @@
 @section('container-login')
      {{-- {{ session('username') }} --}}
      <div class="row d-flex justify-content-center align-items-center" style="height: 100vh">
-        <div class="col-4 bg-white shadow-sm" style="padding: 50px; border-radius:10px;">
+        <div class="col-md-4 bg-white shadow-sm" style="padding: 50px; border-radius:10px;">
             <div class="img-container d-flex justify-content-center mb-4">
                 <img src="../../img/eyzel.png" alt="Logo" class="img-fluid" width="100">
             </div>

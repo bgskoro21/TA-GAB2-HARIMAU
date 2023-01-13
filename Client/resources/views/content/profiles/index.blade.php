@@ -42,7 +42,7 @@
 
               <div class="tab-pane fade show active profile-overview" id="profile-overview">
                 <h5 class="card-title">About</h5>
-                <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
+                <p class="small fst-italic">{{ $current_user->about }}</p>
 
                 <h5 class="card-title">Profile Details</h5>
 
@@ -104,6 +104,13 @@
                     <label for="no_hp" class="col-md-4 col-lg-3 col-form-label">Nomor HP</label>
                     <div class="col-md-8 col-lg-9">
                       <input name="no_hp" type="text" class="form-control" id="no_hp" value="{{ $current_user->no_hp }}">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                    <div class="col-md-8 col-lg-9">
+                      <textarea name="about" class="form-control" id="about" style="height: 100px">{{ $current_user->about }}</textarea>
                     </div>
                   </div>
 

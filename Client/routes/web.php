@@ -57,3 +57,9 @@ Route::get('/getPemasukkan',[Dashboard::class, 'getPendapatan'])->middleware('au
 Route::get('/getPengeluaran',[Dashboard::class, 'getPengeluaran'])->middleware('authCustom');
 Route::get('/expToken',[Login::class, 'expToken'])->middleware('authCustom');
 Route::get('/deletephoto',[Profile::class, 'deletephoto'])->middleware('authCustom');
+Route::get('/user/filteruser',[User::class, 'filteruser'])->middleware('authCustom');
+Route::get('/user/detailuser',[User::class, 'detailuser'])->middleware('authCustom');
+Route::get('/laporan/umum',[Laporan::class, 'laporan_umum'])->middleware('authCustom');
+Route::post('/laporan/umum',[Laporan::class, 'laporan_umum'])->middleware('authCustom');
+Route::get('/laporan/umum/pdf',[Laporan::class, 'pdf_umum'])->middleware('authCustom');
+Route::get('/laporan/umum/qrcode',[Laporan::class, 'qrcode_umum'])->middleware('authCustom');

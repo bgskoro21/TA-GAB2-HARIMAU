@@ -13,9 +13,7 @@ class Profile extends Controller
     public function index(){
         $user = Http::withToken(session('token'))->get(Custom::APIUSER,['current' => session('email')])->object();
         if(isset($user->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
         return view('content.profiles.index',[
             'title' => 'User Profile',
@@ -29,6 +27,7 @@ class Profile extends Controller
             $update = Http::withToken(session('token'))->attach('photo', file_get_contents($profile_picture),session('nama_lengkap').'-picture.jpg')->post(Custom::APIEDITPROFILE,[
                     'nama_lengkap' => $request->nama_lengkap,
                     'no_hp' => $request->no_hp,
+                    'about' => $request->about,
                     'token' => $request->token,
                      ])->object();
         }else{
@@ -36,21 +35,18 @@ class Profile extends Controller
             $update = Http::withToken(session('token'))->post(Custom::APIEDITPROFILE,[
                 'nama_lengkap' => $request->nama_lengkap,
                 'no_hp' => $request->no_hp,
+                'about' => $request->about,
                 'token' => $request->token,
             ])->object();
         }
         if(isset($update->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
         // var_dump($update);die;
         if($update->status == true){
             $user = Http::withToken(session('token'))->get(Custom::APIUSER,['current' => session('email')])->object();
             if(isset($user->result)){
-                session()->flush();
-                return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-                </div>');
+                return redirect('/expToken');
             }
             session()->put([
                 'nama_lengkap' => $user->user->nama_lengkap,
@@ -68,9 +64,7 @@ class Profile extends Controller
             'email' => session('email')
         ])->object();
         if(isset($cekPassword->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
         // var_dump($cekPassword);die;
         if($cekPassword->status == true){
@@ -83,9 +77,7 @@ class Profile extends Controller
 
             // jika token habis atau tidak sesuai
             if(isset($password->result)){
-                session()->flush();
-                return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-                </div>');
+                return redirect('/expToken');
             }
 
             if($password->status == true){
@@ -104,9 +96,7 @@ class Profile extends Controller
         $hapus = Http::withToken(session('token'))->asForm()->delete(Custom::APIEDITPROFILE, ['token' => $email])->object();
 
         if(isset($hapus->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
 
         if($hapus->status == true){

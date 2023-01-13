@@ -83,4 +83,85 @@ class Laporan extends Controller
             'laporan' => $laporan
         ]);
     }
+
+    public function laporan_umum(Request $request){
+        if($request->tanggal_awal || $request->tanggal_akhir){
+            $tanggal_awal = $request->tanggal_awal;
+            $tanggal_akhir = $request->tanggal_akhir;
+            $transaksi = Http::withToken(session('token'))->get(Custom::APIFILTERTRANSAKSI, ['tanggal_awal' => $tanggal_awal, 'tanggal_akhir' => $tanggal_akhir])->object();
+            if($tanggal_awal != $tanggal_akhir){
+                $waktu = Custom::format_indo($tanggal_awal).' s/d '.Custom::format_indo($tanggal_akhir);
+            }else{
+                $waktu = Custom::format_indo($tanggal_awal);
+            }
+        }else{
+            $tanggal_awal = date('Y-m-d');
+            $tanggal_akhir = date('Y-m-d');
+            $transaksi = Http::withToken(session('token'))->get(Custom::APIFILTERTRANSAKSI, ['tanggal_awal' => $tanggal_awal, 'tanggal_akhir' => $tanggal_akhir])->object();
+            $waktu = Custom::format_indo($tanggal_awal);
+        }
+
+        if(isset($transaksi->result)){
+            return redirect('/expToken');
+        }
+
+        return view('content.laporan.umum',[
+            'title' => 'Kas Umum',
+            'transaksi' => $transaksi,
+            'waktu' => $waktu,
+            'tanggal_awal' => $tanggal_awal,
+            'tanggal_akhir' => $tanggal_akhir
+        ]);
+    }
+
+    public function pdf_umum(Request $request){
+        $tanggal_awal = $request->tanggal_awal;
+        $tanggal_akhir = $request->tanggal_akhir;
+        // var_dump($tanggal_akhir);die;
+        
+        if($tanggal_awal != $tanggal_akhir){
+            $waktu = Custom::format_indo($tanggal_awal).' s/d '.Custom::format_indo($tanggal_akhir);
+        }else{
+            $waktu = Custom::format_indo($tanggal_awal);
+        }
+
+        $transaksi = Http::withToken(session('token'))->get(Custom::APIFILTERTRANSAKSI, ['tanggal_awal' => $tanggal_awal, 'tanggal_akhir' => $tanggal_akhir])->object();
+        // var_dump($transaksi);die;
+
+        if(isset($transaksi->result)){
+            return redirect('/expToken');
+        }
+
+        $pdf = Pdf::loadView('content.pdf.umum', [
+            'waktu' => $waktu,
+            'transaksi' => $transaksi,
+            'title' => 'Kas Umum'
+        ])->setPaper('a4','landscape');
+        return $pdf->stream();
+    }
+
+    public function qrcode_umum(Request $request){
+        $tanggal_awal = $request->tanggal_awal;
+        $tanggal_akhir = $request->tanggal_akhir;
+
+        if($tanggal_awal != $tanggal_akhir){
+            $waktu = Custom::format_indo($tanggal_awal).' s/d '.Custom::format_indo($tanggal_akhir);
+        }else{
+            $waktu = Custom::format_indo($tanggal_awal);
+        }
+
+        $laporan = 'umum';
+        $output_file = '/qr-code/umum/img-' . $waktu . '.png';
+
+        $image = QrCode::format('png')
+        ->size(300)->errorCorrection('H')
+        ->generate("Laporan : $waktu");
+        Storage::disk('public')->put($output_file, $image);
+
+        return view('content.qrcode.index',[
+            'title' => 'QR-Code',
+            'waktu' => $waktu,
+            'laporan' => $laporan
+        ]);
+    }
 }

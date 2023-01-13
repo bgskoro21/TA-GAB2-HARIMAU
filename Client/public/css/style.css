@@ -63,7 +63,8 @@
 }
 
 /* mengatur scroll pada sidebar */
-.sidebar .nav-links::-webkit-scrollbar {
+.sidebar .nav-links::-webkit-scrollbar,
+.sidebar.close .btn-tutup {
     display: none;
 }
 
@@ -296,23 +297,35 @@ button {
 }
 
 @media (max-width: 400px) {
-    .sidebar.close .nav-links li .sub-menu {
+    .sidebar.close .nav-links li .sub-menu,
+    .sidebar.close .nav-links li .iocn-link,
+    .sidebar.close .profile-details img,
+    .sidebar.close .logo-details {
         display: none;
     }
+
     .sidebar {
-        width: 78px;
+        width: 80%;
+        z-index: 2;
     }
+
     .sidebar.close {
         width: 0;
     }
+
     .home-section {
         left: 78px;
         width: calc(100% - 78px);
-        z-index: 100;
+        z-index: 1;
     }
     .sidebar.close ~ .home-section {
         width: 100%;
         left: 0;
+        z-index: 100;
+    }
+
+    .sidebar .profile-details {
+        width: 80%;
     }
 }
 

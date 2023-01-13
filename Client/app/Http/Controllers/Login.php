@@ -35,12 +35,11 @@ class Login extends Controller
             'password' => $request->password
         ])->json();
         if($login['status'] == 1){
-            $token = Http::post(Custom::APITOKEN)->object();
+            $token = Http::post(Custom::APITOKEN, ['email' => $request->email])->object();
             // var_dump($token);die;
             if(isset($token->token)){
                 session()->put([
                     'token' => $token->token,
-                    'waktu' => $token->exp
                 ]);
             }
             Session::put($login['userdata']);
@@ -136,11 +135,13 @@ class Login extends Controller
     }
 
     public function logout(Request $request){
+        Http::put(Custom::APILOGIN,['email' => session('email')])->object();
         $request->session()->flush();
         return redirect('/login');
     }
 
     public function expToken(){
+        Http::put(Custom::APILOGIN,['email' => session('email')])->object();
         session()->flush();
         return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!</div>');
     }

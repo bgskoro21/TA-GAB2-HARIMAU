@@ -40,6 +40,8 @@ Class Custom {
     const APIFORGOTPASSWORD =  Custom::API.'/index.php/forgotpassword';
     const APIRESETPASSWORD =  Custom::API.'/index.php/resetpassword';
     const APITOKEN = Custom::API.'/index.php/token';
+    const APIFILTERUSER = Custom::API.'/index.php/searching_nama';
+    const APIFILTERTRANSAKSI = Custom::API.'/index.php/searching_laporan';
     
 
 
