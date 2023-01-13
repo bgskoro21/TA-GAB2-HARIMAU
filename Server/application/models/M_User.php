@@ -14,7 +14,7 @@ class M_User extends CI_Model{
     }
 
     public function get_current($current){
-        $this->db->select('id,nama_lengkap,level,no_hp,profile_picture, email');
+        $this->db->select('id,nama_lengkap,level,no_hp,profile_picture, email,about');
         $this->db->from('user');
         $this->db->where('email',$current );
         $query = $this->db->get()->row_array();
