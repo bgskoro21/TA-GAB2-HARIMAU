@@ -74,17 +74,31 @@ EOD;
     //buat fungsi "POST"
     function service_post()
     {
-        date_default_timezone_set("Asia/Jakarta");        
-        $exp = $this->configToken()['exp']+time();
-        $token = array(           
-            "exp" => $exp,                          
-        );
+        $this->load->model("M_User","model",true);
+        $email = $this->post('email');
+        $hasil = $this->model->isLogin($email);
+        // var_dump($hasil);die;
 
-        // $jwt = JWT::encode($token, $this->configToken()['key'],'HS256');
-        $jwt = JWT::encode($token, $this->privateKey,'RS256');
-        
+        if($hasil['is_login'] == 1){
+            date_default_timezone_set("Asia/Jakarta");        
+            $exp = $this->configToken()['exp']+time();
+            $token = array(           
+                "exp" => $exp,                          
+            );
+    
+            // $jwt = JWT::encode($token, $this->configToken()['key'],'HS256');
+            $jwt = JWT::encode($token, $this->privateKey,'RS256');
             
-        $data = array('token' => $jwt, 'exp' => date("d/m/Y H:i",$exp));
-        $this->response($data, 200);
+                
+            $data = array('token' => $jwt, 'exp' => date("d/m/Y H:i",$exp));
+            $this->response($data, 200);
+        } else {
+            $this->response([
+                'result' => 0,
+                'message' => 'Anda Harus Login Dahulu'
+            ]);
+
+        }
+
     }    
 }

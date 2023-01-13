@@ -22,6 +22,7 @@ class Login extends Token{
                 // cek password
                 // var_dump($cekLogin['password']);die;
                 if(password_verify($data['password'], $cekLogin['password'])){
+                    $this->model->aktivasi_login(1,$data['email']);
                     $data = [
                         'email' => $cekLogin['email'],
                         'level' => $cekLogin['level'],
@@ -54,6 +55,27 @@ class Login extends Token{
             ]);
         }
     }
-}
+
+    function service_put(){
+
+            $data = [
+                "email" => $this->put('email')
+            ];
+            $hasil = $this->model->aktivasi_login(0,$data['email']);
+            // var_dump($hasil);die;
+            if($hasil == 1){
+                $this->response([
+                    'status' => true,
+                    'message' => 'Logout Berhasil'
+                ],200);
+            }else{
+                $this->response([
+                    'status' => false,
+                    'message' => 'Logout Gagal'
+                ],200);
+            }
+         }
+    }
+ 
 
 
