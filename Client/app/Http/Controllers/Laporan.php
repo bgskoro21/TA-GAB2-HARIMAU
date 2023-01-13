@@ -35,13 +35,13 @@ class Laporan extends Controller
 
     public function pdf(Request $request){
         if(!empty($request->tanggal)){
-            $transaksi = Http::withToken(session('token'))->get(Custom::APISEARCHTRANSAKSI, [
+            $transaksi = Http::get(Custom::APISEARCHTRANSAKSI, [
                 'tanggal' => $request->tanggal 
             ])->json();
             // var_dump($transaksi);die;
             $waktu = Custom::format_indo($request->tanggal);
         }else{
-            $transaksi = Http::withToken(session('token'))->get(Custom::APISEARCHTRANSAKSI, [
+            $transaksi = Http::get(Custom::APISEARCHTRANSAKSI, [
                 'bulan' => $request->bulan
             ])->json();
             // var_dump($transaksi);die;
@@ -49,9 +49,7 @@ class Laporan extends Controller
         }
 
         if(isset($transaksi['result'])){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
 
         $pdf = Pdf::loadView('content.pdf.index', [
@@ -88,7 +86,7 @@ class Laporan extends Controller
         if($request->tanggal_awal || $request->tanggal_akhir){
             $tanggal_awal = $request->tanggal_awal;
             $tanggal_akhir = $request->tanggal_akhir;
-            $transaksi = Http::withToken(session('token'))->get(Custom::APIFILTERTRANSAKSI, ['tanggal_awal' => $tanggal_awal, 'tanggal_akhir' => $tanggal_akhir])->object();
+            $transaksi = Http::get(Custom::APIFILTERTRANSAKSI, ['tanggal_awal' => $tanggal_awal, 'tanggal_akhir' => $tanggal_akhir])->object();
             if($tanggal_awal != $tanggal_akhir){
                 $waktu = Custom::format_indo($tanggal_awal).' s/d '.Custom::format_indo($tanggal_akhir);
             }else{
@@ -97,7 +95,7 @@ class Laporan extends Controller
         }else{
             $tanggal_awal = date('Y-m-d');
             $tanggal_akhir = date('Y-m-d');
-            $transaksi = Http::withToken(session('token'))->get(Custom::APIFILTERTRANSAKSI, ['tanggal_awal' => $tanggal_awal, 'tanggal_akhir' => $tanggal_akhir])->object();
+            $transaksi = Http::get(Custom::APIFILTERTRANSAKSI, ['tanggal_awal' => $tanggal_awal, 'tanggal_akhir' => $tanggal_akhir])->object();
             $waktu = Custom::format_indo($tanggal_awal);
         }
 
@@ -125,7 +123,7 @@ class Laporan extends Controller
             $waktu = Custom::format_indo($tanggal_awal);
         }
 
-        $transaksi = Http::withToken(session('token'))->get(Custom::APIFILTERTRANSAKSI, ['tanggal_awal' => $tanggal_awal, 'tanggal_akhir' => $tanggal_akhir])->object();
+        $transaksi = Http::get(Custom::APIFILTERTRANSAKSI, ['tanggal_awal' => $tanggal_awal, 'tanggal_akhir' => $tanggal_akhir])->object();
         // var_dump($transaksi);die;
 
         if(isset($transaksi->result)){

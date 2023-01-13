@@ -38,7 +38,7 @@ Route::get('/pengeluaran/hapus_data/{id}', [Pengeluaran::class, 'hapus_data'])->
 Route::post('/pengeluaran/edit_data', [Pengeluaran::class, 'edit_data'])->middleware('authCustom');
 Route::get('/laporan',[Laporan::class, 'index'])->middleware('authCustom');
 Route::get('/laporan/harian',[Laporan::class, 'index'])->middleware('authCustom');
-Route::get('/laporan/pdf', [Laporan::class, 'pdf'])->middleware('authCustom');
+Route::get('/laporan/pdf', [Laporan::class, 'pdf']);
 Route::get('/laporan/qrcode', [Laporan::class, 'qrcode'])->middleware('authCustom');
 Route::get('/login',[Login::class, 'index'])->name('login');
 Route::post('/login',[Login::class, 'authenticate']);
@@ -61,5 +61,5 @@ Route::get('/user/filteruser',[User::class, 'filteruser'])->middleware('authCust
 Route::get('/user/detailuser',[User::class, 'detailuser'])->middleware('authCustom');
 Route::get('/laporan/umum',[Laporan::class, 'laporan_umum'])->middleware('authCustom');
 Route::post('/laporan/umum',[Laporan::class, 'laporan_umum'])->middleware('authCustom');
-Route::get('/laporan/umum/pdf',[Laporan::class, 'pdf_umum'])->middleware('authCustom');
+Route::get('/laporan/umum/pdf',[Laporan::class, 'pdf_umum']);
 Route::get('/laporan/umum/qrcode',[Laporan::class, 'qrcode_umum'])->middleware('authCustom');
