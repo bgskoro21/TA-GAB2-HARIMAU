@@ -226,4 +226,17 @@ class M_User extends CI_Model{
         return $hasil;
     }
     
+    public function getSearchNama($keyword){
+        $this->db->from('user');
+        $this->db->like('nama_lengkap', $keyword);
+        $this->db->or_like('level', $keyword);
+        $query = $this->db->get()->result();
+        if (count($query) > 0){
+            $hasil = $query;
+        }else{
+            $hasil = null;
+        }
+
+        return $hasil;
+    }
 }

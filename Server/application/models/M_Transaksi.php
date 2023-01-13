@@ -372,22 +372,6 @@ public function getPengTahun(){
     }
 
 
-    public function getSearchNama($nama = null,$level = null){
-        $this->db->from('user');
-        if($nama != null){
-            $this->db->like('nama_lengkap', $nama);
-        }
-        $this->db->like('level', $level);
-        $query = $this->db->get()->result();
-        if (count($query) > 0){
-            $hasil = $query;
-        }else{
-            $hasil = null;
-        }
-
-        return $hasil;
-    }
-
     // Untuk Mendapatkan Bulan Digunakan pada Laporan
     public function getBulanan($bulan){
         $this->db->from('tbl_transaksi');
