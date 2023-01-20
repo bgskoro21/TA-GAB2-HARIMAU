@@ -36,7 +36,9 @@ class Updateprofile extends Token{
             // var_dump($gambarLama);die;
             if(isset($gambarLama['profile_picture'])){
                 $pecah = explode('/', $gambarLama['profile_picture']);
-                unlink("./assets/images/$pecah[7]");
+                if($pecah[7] != 'default.png'){
+                    unlink("./assets/images/$pecah[7]");
+                }
             }
             $namaGambar = $this->upload->data('file_name');
             $doc_url = "http://localhost/TA-GAB2-HARIMAU/Server/assets/images/". $namaGambar;
@@ -75,7 +77,10 @@ class Updateprofile extends Token{
             // var_dump($pecah);die;
             
             $pecah = explode('/', $gambarLama['profile_picture']);
-            unlink("./assets/images/$pecah[7]");
+            // var_dump($pecah);die;
+            if($pecah[7] != 'default.png'){
+                unlink("./assets/images/$pecah[7]");
+            }
 
             $hasil = $this->mdl->deletePhoto($email);
             if($hasil == 1){
@@ -89,10 +94,6 @@ class Updateprofile extends Token{
                     'message' => 'Foto Profil Gagal Dihapus'
                 ],200);
             }
-
-
-
-
     }
-}
+  }
 }
