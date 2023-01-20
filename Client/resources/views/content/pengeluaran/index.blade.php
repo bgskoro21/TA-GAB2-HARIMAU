@@ -5,16 +5,18 @@
 @endphp --}}
 <section class="m-3 radius p-4 overflow-auto bg-dark text-white">
     <div class="row d-flex justify-content-center align-items-center mb-3">
-        <div class="col-10">
+        <div class="col-md-8">
             <h2>{{ $title }}</h2>
         </div>
-        <div class="col-2 text-end">
-            <button class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btn_tambah"><i class='bx bx-plus-medical'></i></button>
+        <div class="col-md-4 text-end">
+            <button class="btn btn-dang text-white btn-sm delete_all"><i class='bx bx-trash'></i> Hapus Diseleksi</button>
+            <a href="/pengeluaran/tambahdata"><button class="btn btn-show-all text-white btn-sm" id="btn_tambah"><i class='bx bx-plus-medical'></i> Tambah Data</button></a>
         </div>
     </div>
-    <table class="table table-bordered table-responsive border overflow-hidden text-white" id="table_pemasukkan">
+    <table class="table table-bordered table-responsive border overflow-hidden text-white" id="table_pengeluaran">
         <thead>
                 <tr>
+                    <th scope="col" class="text-center check" data-orderable="false"><input type="checkbox" id="master"></th>
                     <th scope="col" class="text-center">No</th>
                     <th scope="col" class="text-center">Nama</th>
                     <th scope="col" class="text-center">Waktu</th>
@@ -27,15 +29,20 @@
             @if (isset($pengeluaran->pengeluaran))
             @foreach ($pengeluaran->pengeluaran as $p)
             <tr>
+                <td class="text-center">
+                    @if ($p->user_id == session('id'))
+                    <input type="checkbox" class="sub_chk" data-id="{{$p->id}}">
+                    @endif
+                </td>
                 <td class="text-center">{{ $loop->iteration }}</td>
-                <td>{{  $p->nama_lengkap }}</td>
+                <td>{{  $p->email }}</td>
                 <td>{{  \Custom::format_indo($p->waktu_transaksi) }}</td>
                 <td>{{ $p->perincian }}</td>
                 <td>@currency($p->pengeluaran)</td>
                 <td class="text-center">
                     @if ($p->user_id == session('id'))
-                    <button class="btn btn-success btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ $p->id }}"><i class='bx bx-edit'></i></button>
-                    <button type="submit" onclick="setDelete({{ $p->id }})" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i></button>
+                    <button class="btn btn-suc btn-sm btn-edit text-white" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ $p->id }}"><i class='bx bx-edit'></i></button>
+                    <button type="submit" onclick="setDelete({{ $p->id }})" class="btn btn-dang text-white btn-sm"><i class='bx bx-trash'></i></button>
                     @else
                     <i class="text-muted">Forbidden</i>
                     @endif
@@ -98,8 +105,61 @@
         })
       }
 
-    $(document).ready( function () {
-        $('#table_pemasukkan').DataTable();
+      $(document).ready( function () {
+        $('#table_pengeluaran').DataTable();
+        $('.check').data('orderable',false)
+
+        $('#master').on('click', function(e) {
+         if($(this).is(':checked',true))  
+         {
+            $(".sub_chk").prop('checked', true);  
+         } else {  
+            $(".sub_chk").prop('checked',false);  
+         }  
+        });
+
+        $('.delete_all').on('click', function(e) {
+
+        var allVals = [];  
+        $(".sub_chk:checked").each(function() {  
+            allVals.push($(this).attr('data-id'));
+        }); 
+
+        if(allVals.length <=0) {  
+                alert("Please select row.");  
+        }else{
+            Swal.fire({
+            title: 'Apakah kamu ingin hapus data yang diseleksi?',
+            showDenyButton: true,
+            confirmButtonText: 'Ya',
+            denyButtonText: `Tidak`,
+            }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                var join_selected_values = allVals.join(",");
+                $.ajax({
+                        url: '/pengeluaran/deleteSelected',
+                        type: 'POST',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: 'ids='+join_selected_values,
+                        success: function (data) {
+                            const json = JSON.parse(data)
+                            if(json.hasOwnProperty('result')){
+                                location.href='/expToken'
+                            }else {
+                                location.href='/flash?status='+json.status+'&messages='+json.messages+"&route=pengeluaran"
+                            }
+                        },
+                        error: function (data) {
+                            alert(json.responseText);
+                        }
+                    });
+            } else if (result.isDenied) {
+                return false;
+            }
+            })  
+        }
+    })
     });
 
     $('.btn-edit').on('click', function(){
@@ -120,17 +180,6 @@
         $('#input_waktu').val(json.waktu_transaksi)
       }
     })
-  })
-
-  $('#btn_tambah').on('click', function(){
-    $('#exampleModalLabel').html('Tambah Pemasukkan')
-    $('.modal-footer button[type=submit]').html('Tambah Data')
-    $('.modal-body form').attr('action','/pengeluaran/add_data')
-    
-    $('#id').val('')
-    $('#input_pengeluaran').val('')
-    $('#input_perincian').val('')
-    $('#input_waktu').val('')
   })
 
     $('#form_pengeluaran').validate({

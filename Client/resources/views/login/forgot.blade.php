@@ -2,7 +2,7 @@
 @section('container-login')
       {{-- {{ session('username') }} --}}
       <div class="row d-flex justify-content-center align-items-center" style="height: 100vh">
-        <div class="col-4 bg-white shadow-sm d-flex flex-column justify-content-center" style="padding: 50px; border-radius:10px;">
+        <div class="col-md-4 bg-white shadow-sm d-flex flex-column justify-content-center" style="padding: 50px; border-radius:10px;">
             <h3 class="text-center mb-4">FORGOT PASSWORD</h3>
             @php
                 echo session('loginError')

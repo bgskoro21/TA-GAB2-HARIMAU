@@ -7,20 +7,20 @@
         </div>
         <div class="col-md-4 d-lg-flex d-sm-iniline-block justify-content-end align-items-center">
             @if (isset($transaksi->searching))
-            <button class="btn btn-primary btn-danger btn-sm text-end me-1" id="btn-pdf"><i class='bx bxs-file-pdf'></i></button>
-            <button class="btn btn-primary btn-success btn-sm text-end me-1" id="btn-qr"><i class='bx bx-grid-alt' ></i></button>
+            <button class="btn  btn-dang btn-sm text-end me-1 text-white" id="btn-pdf"><i class='bx bxs-file-pdf'></i></button>
+            <button class="btn  btn-suc btn-sm text-end me-1 text-white" id="btn-qr"><i class='bx bx-grid-alt' ></i></button>
             @else
-            <button class="btn btn-primary btn-danger btn-sm text-end me-1" disabled><i class='bx bxs-file-pdf'></i></button>
-            <button class="btn btn-primary btn-success btn-sm text-end me-1" disabled><i class='bx bx-grid-alt' ></i></button>
+            <button class="btn  btn-dang btn-sm text-end me-1 text-white" disabled><i class='bx bxs-file-pdf'></i></button>
+            <button class="btn  btn-suc btn-sm text-end me-1 text-white" disabled><i class='bx bx-grid-alt' ></i></button>
             @endif
-            <button class="btn btn-primary btn-sm text-end" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class='bx bx-search-alt-2' ></i></button>
+            <button class="btn btn-show-all btn-sm text-end text-white" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class='bx bx-search-alt-2' ></i></button>
         </div>
     </div>
     <div class="row bg-dark text-white rounded-bottom rounded-top p-2 overflow-auto">
         <div class="col">
             <h3 style="text-align: center;" class="mt-2">Arus Kas Keluar Masuk</h3>
             <p style="text-align: center;">Periode : {{ $waktu }}</p>
-            <table width="100%" class="table table-bordered table-hover table-responsive text-white">
+            <table width="100%" class="table table-bordered table-responsive text-white">
                 <thead>
                     <tr>
                         <th class="text-center">No</th>

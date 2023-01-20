@@ -42,7 +42,7 @@
                 <li><a href="/pengeluaran">Kas Keluar</a></li>
             </ul>
         </li>
-        <li class= "{{Request::is('laporan*') || Request::is('pengeluaran*')  ? 'aktif' : '' }}">
+        <li class= "{{Request::is('laporan*') ? 'aktif' : '' }}">
             <div class="iocn-link">
                 <a href="/laporan/umum">
                     <i class="bx bx-collection"></i>
@@ -59,17 +59,13 @@
         <li>
             <div class="profile-details">
                     <div class="profile-content">
-                        @if (!is_null(session('profile_picture')))
                         <img src="{{ session('profile_picture') }}" alt="Profile" class="img-fluid img-thumbnail rounded-circle">
-                        @else
-                        <img src="https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Clip-Art-Transparent-File.png" alt="Profile" class="rounded-circle img-fluid">
-                        @endif
                     </div>
                     <div class="name-job">
                         <div class="profile_name">{{ session('nama_lengkap') }}</div>
                         <div class="job">{{ session('level') }}</div>
                     </div>
-                    <button onclick="setLogout()" type="submit"><i class="bx bx-log-out fs-3"></i></button>
+                    <button onclick="setLogout('{{ session('email') }}')" type="submit"><i class="bx bx-log-out fs-3"></i></button>
                 </div>
         </li>
     </ul>
@@ -77,7 +73,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
 <script>
-    function setLogout(){
+    function setLogout(email){
         Swal.fire({
           title: 'Apakah kamu ingin logout?',
           showDenyButton: true,
@@ -86,7 +82,7 @@
         }).then((result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
-            location.href = '/logout'
+            location.href = '/logout?email='+email
           } else if (result.isDenied) {
             return false;
           }

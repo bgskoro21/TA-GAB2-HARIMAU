@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Helpers\Custom;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
+
 
 class Dashboard extends Controller
 {
@@ -23,13 +26,35 @@ class Dashboard extends Controller
         $presentase_pengeluaran = Http::withToken(session('token'))->get(Custom::APIPRESENTASEPENGELUARANHARIAN)->object();
         $keuntungan = Http::withToken(session('token'))->get(Custom::APIKEUNTUNGAN)->json();
         $bulan = Http::withToken(session('token'))->get(Custom::APIBULAN)->json();
+        $pendapatan = Http::withToken(session('token'))->get(Custom::APIPEMASUKKAN)->object();
+        $pengeluaran_h = Http::withToken(session('token'))->get(Custom::APIPENGELUARAN)->object();
+        $waktu='';
+
         if(isset($pend_hari->result)){
-            if($pend_hari->result == 0){
-                session()->flush();
-                return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-                </div>');
+            return redirect('/expToken');
+        }
+
+        if(!empty($transaksi->transaksi)){
+            for($i=0; $i<count($transaksi->transaksi); $i++){
+                if($transaksi->transaksi[$i]->waktu_transaksi == date('Y-m-d')){
+                    $waktu = date('Y-m-d');
+                    break;
+                }
+                $waktu = null;
+            }
+
+            if($waktu != null){
+                $output_file = '/qr-code/harian/img-' . $waktu . '.png';
+                $image = QrCode::format('png')
+                ->size(300)->errorCorrection('H')
+                ->generate("http://127.0.0.1:8000/laporan/pdf?tanggal=".$waktu);
+                Storage::disk('public')->put($output_file, $image);
             }
         }
+        
+        
+
+
         return view('content.dashboard.index',[
             "pemasukkan_hari" => $pend_hari->total_pendapatan,
             "pengeluaran" => $pengeluaran->total_pengeluaran,
@@ -40,6 +65,9 @@ class Dashboard extends Controller
             'presentase_saldo' => $presentase_saldo,
             'presentase_pendapatan' => $presentase_pendapatan,
             'presentase_pengeluaran' => $presentase_pengeluaran,
+            'pemasukkan' => $pendapatan,
+            'pengeluaran_h' => $pengeluaran_h,
+            'waktu' => $waktu,
             "title" => "Dashboard"
         ]);
     }

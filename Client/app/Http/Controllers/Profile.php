@@ -90,18 +90,18 @@ class Profile extends Controller
         }
     }
 
-    public function deletePhoto(){
-        $email = session('email');
+    public function deletePhoto(Request $request){
+        $email = $request->token;
         // var_dump($email);die;
         $hapus = Http::withToken(session('token'))->asForm()->delete(Custom::APIEDITPROFILE, ['token' => $email])->object();
-
+        // var_dump($hapus);die;
         if(isset($hapus->result)){
             return redirect('/expToken');
         }
 
         if($hapus->status == true){
             session()->put([
-                'profile_picture' => null
+                'profile_picture' => 'http://localhost/TA-GAB2-HARIMA/Server/assets/images/default.png'
             ]);
             return redirect('/profile')->with('message',$hapus->message);
         }else{

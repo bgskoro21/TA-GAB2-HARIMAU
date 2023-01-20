@@ -63,3 +63,8 @@ Route::get('/laporan/umum',[Laporan::class, 'laporan_umum'])->middleware('authCu
 Route::post('/laporan/umum',[Laporan::class, 'laporan_umum'])->middleware('authCustom');
 Route::get('/laporan/umum/pdf',[Laporan::class, 'pdf_umum']);
 Route::get('/laporan/umum/qrcode',[Laporan::class, 'qrcode_umum'])->middleware('authCustom');
+Route::post('/pemasukkan/deleteSelected',[Pemasukkan::class, 'deleteSelectedData'])->middleware('authCustom');
+Route::get('/flash',[Pemasukkan::class, 'set_session']);
+Route::post('/pengeluaran/deleteSelected',[Pengeluaran::class, 'deleteSelectedData'])->middleware('authCustom');
+Route::get('/pemasukkan/tambahdata',[Pemasukkan::class, 'create'])->middleware('authCustom');
+Route::get('/pengeluaran/tambahdata',[Pengeluaran::class, 'create'])->middleware('authCustom');

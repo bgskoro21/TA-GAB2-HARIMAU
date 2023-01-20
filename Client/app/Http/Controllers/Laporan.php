@@ -16,9 +16,7 @@ class Laporan extends Controller
         // var_dump($waktu);die;
         $bulan = Http::withToken(session('token'))->get(Custom::APIBULAN)->object();
         if(isset($waktu->result) || isset($bulan->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
         if($request->waktu == 'harian'){
             return view('content.laporan.index',[
@@ -60,6 +58,13 @@ class Laporan extends Controller
     }
 
     public function qrcode(Request $request){
+        if(isset($request->tanggal)){
+            $keyword = $request->tanggal;
+            $url = 'http://127.0.0.1:8000/laporan/pdf?tanggal=';
+        }else{
+            $url = 'http://127.0.0.1:8000/laporan/pdf?bulan=';
+            $keyword = $request->bulan;
+        }
         if(!empty($request->tanggal)){
             $waktu = Custom::format_indo($request->tanggal);
             $laporan = 'harian';
@@ -72,7 +77,7 @@ class Laporan extends Controller
 
         $image = QrCode::format('png')
         ->size(300)->errorCorrection('H')
-        ->generate("Laporan : $waktu");
+        ->generate("$url".$keyword);
         Storage::disk('public')->put($output_file, $image);
 
         return view('content.qrcode.index',[
@@ -143,7 +148,7 @@ class Laporan extends Controller
         $tanggal_akhir = $request->tanggal_akhir;
 
         if($tanggal_awal != $tanggal_akhir){
-            $waktu = Custom::format_indo($tanggal_awal).' s/d '.Custom::format_indo($tanggal_akhir);
+            $waktu = Custom::format_indo($tanggal_awal).' - '.Custom::format_indo($tanggal_akhir);
         }else{
             $waktu = Custom::format_indo($tanggal_awal);
         }
@@ -153,7 +158,7 @@ class Laporan extends Controller
 
         $image = QrCode::format('png')
         ->size(300)->errorCorrection('H')
-        ->generate("Laporan : $waktu");
+        ->generate("http://127.0.0.1:8000/laporan/umum/pdf?tanggal_awal=".$tanggal_awal."&tanggal_akhir=".$tanggal_akhir);
         Storage::disk('public')->put($output_file, $image);
 
         return view('content.qrcode.index',[

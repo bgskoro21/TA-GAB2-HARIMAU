@@ -11,9 +11,7 @@ class Pengeluaran extends Controller
     public function index(){
         $pengeluaran = Http::withToken(session('token'))->get(Custom::APIPENGELUARAN)->object();
         if(isset($pengeluaran->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
         // var_dump($pengeluaran);die;
         return view('content.pengeluaran.index',[
@@ -23,35 +21,35 @@ class Pengeluaran extends Controller
     }
 
     public function add_data(Request $request){
-        $data = [
-            'waktu_transaksi' => $request->waktu_transaksi,
-            'pengeluaran' =>$request->pengeluaran,
-            'perincian' =>$request->perincian,
-            'user_id' => session('id')
-        ];
+        for($i=0;$i<count($request->waktu_transaksi);$i++){
+            $arr = [
+               'waktu_transaksi' => $request->waktu_transaksi[$i],
+               'pengeluaran' =>$request->pengeluaran[$i],
+               'perincian' =>$request->perincian[$i],
+               'user_id' => session('id')
+           ];
 
-        $tambah = Http::withToken(session('token'))->post(Custom::APIPENGELUARAN,$data)->object();
+           $tambah = Http::withToken(session('token'))->post(Custom::APIPENGELUARAN,$arr)->object();
+       };
 
-        if(isset($tambah->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
-        }
-
-        if($tambah->status == true){
-            return redirect('/pengeluaran')->with('message', $tambah->message);
-        }else{
-            return redirect('/pengeluaran')->with('error', $tambah->message);
-        }
+       if(isset($tambah->status)){
+        echo json_encode([
+            'messages' => $tambah->message,
+            'status' => $tambah->status
+        ]);
+    }else{
+        echo json_encode([
+            'result' => 0
+        ]);
+    }
+       
     }
 
     public function hapus_data($id){
-        $delete = Http::withToken(session('token'))->delete(Custom::APIPENGELUARAN.'/'.$id)->object();
+        $delete = Http::withToken(session('token'))->asForm()->delete(Custom::APIPENGELUARAN,['id' => $id])->object();
 
         if(isset($delete->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
 
         if($delete->status == true){
@@ -64,9 +62,7 @@ class Pengeluaran extends Controller
     public function getPengeluaranById($id){
         $pengeluaran = Http::withToken(session('token'))->get(Custom::APIPENGELUARAN, ['id' => $id])->object();
         if(isset($pengeluaran->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
         echo json_encode($pengeluaran->pengeluaran[0]);
     }
@@ -82,14 +78,31 @@ class Pengeluaran extends Controller
 
         $edit = Http::withToken(session('token'))->put(Custom::APIPENGELUARAN, $data)->object();
         if(isset($edit->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
         if($edit->status == true){
             return redirect('/pengeluaran')->with('message', $edit->message);
         }else{
             return redirect('/pengeluaran')->with('error', $edit->message);
         }
+    }
+
+    public function deleteSelectedData(Request $request){
+        if($request->ajax()){
+            
+            // echo json_encode($request->ids);
+            $delete = Http::withToken(session('token'))->asForm()->delete(Custom::APIPENGELUARAN,['selected' => $request->ids])->object();
+            echo json_encode($delete);
+        }
+    }
+
+    public function create(){
+        $pengeluaran = Http::withToken(session('token'))->get(Custom::APIPENGELUARAN)->object();
+        if(isset($pengeluaran->result)){
+            return redirect('/expToken');
+        }
+        return view('content.pengeluaran.create',[
+            'title' => "Tambah Data"
+        ]);
     }
 }

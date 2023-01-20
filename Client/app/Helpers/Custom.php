@@ -61,6 +61,11 @@ Class Custom {
     
         return $result;
       }
+
+
+      public static function currency($expression){
+        return number_format($expression,0,',','.');;
+      }
 }
 
 

@@ -11,20 +11,19 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class User extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         if(session('level') != 'Admin'){
             return redirect('/')->with('error','Anda bukan seorang Admin!');
         }
         $user = Http::withToken(session('token'))->get(Custom::APIUSER)->object();
+
         if(isset($user->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
         // var_dump($user->object());die;
         return view('content.user.index',[
             'title' => "Daftar User",
-            'users' => $user
+            'users' => $user,
         ]);
     }
 
@@ -41,9 +40,7 @@ class User extends Controller
         $tambah = Http::withToken(session('token'))->post(Custom::APIUSER, $data)->object();
         // var_dump($tambah);die;
         if(isset($tambah->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
 
         if($tambah->status == true){
@@ -58,9 +55,7 @@ class User extends Controller
         $delete = Http::withToken(session('token'))->asForm()->delete(Custom::APIUSER,["email" => $email])->object();
         // var_dump($delete);
         if(isset($delete->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
         if($delete->status == true){
             return redirect('/user')->with('message',$delete->massages);
@@ -73,9 +68,7 @@ class User extends Controller
     public function dataByUsername($email){
         $users = Http::withToken(session('token'))->get(Custom::APIUSER,['email' => $email])->object();
         if(isset($users->result)){
-            session()->flush();
-            return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-            </div>');
+            return redirect('/expToken');
         }
         echo json_encode($users->user[0]);
     }
@@ -90,9 +83,7 @@ class User extends Controller
         $edit = Http::withToken(session('token'))->put(Custom::APIUSER, $data)->object();
         if(isset($edit->result)){
             if($edit->result == 0){
-                session()->flush();
-                return redirect('/login')->with('loginError','<div class="alert alert-danger text-center" role="alert">Token anda sudah habis, silahkan login kembali!
-                </div>');
+                return redirect('/expToken');
             }
         }
 
@@ -135,29 +126,25 @@ class User extends Controller
 
         if($users->status == true){
             foreach($users->searching as $user){
-                $output .= ' <div class="col-md-3">
-                <div class="card mb-3">
-                    <div class="row g-0">
-                      <div class="col-md-4 d-flex align-items-center p-1">
-                        <img src="'.$user->profile_picture.'" class="img-fluid rounded-circle" alt="Profile Picture">
-                      </div>
-                      <div class="col-md-6 d-flex align-items-center">
-                        <div class="card-body">
-                          <p class="card-title text-dark fw-bold">'.$user->nama_lengkap.'</p>
-                          <p class="card-text text-dark">'.$user->level.'</p>
-                        </div>
-                      </div>
-                      <div class="col-md-2 d-flex flex-column justify-content-center align-items-end">
-                        <a href="/user/detailuser?email='.$user->email.'"><button class="btn btn-dark btn-sm btn-detail mb-1"><i class="bx bxs-user-detail"></i></button></a>
-                        <button class="btn btn-success btn-sm btn-edit mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="'.$user->email.'"><i class="bx bx-edit"></i></button>
-                        <button type="submit" onclick="setDelete('.$user->email.')" class="btn btn-danger btn-sm"><i class="bx bx-trash"></i></button>
-                      </div>
+                    $output .= '  <li class="list-group-item list-user bg-dark">
+                    <div class="row d-flex">
+                    <div class="col-2 d-flex align-items-center">
+                        <img src="'.$user->profile_picture.'" class="img-fluid rounded-circle" alt="Profile Picture" style="width: 80px; height:80px;">
                     </div>
-                </div>
-            </div>';
+                    <div class="col-8 d-flex flex-column p-0 justify-content-center">
+                        <p class="card-title text-white fw-bold">'.$user->nama_lengkap.'</p>
+                        <p class="card-text text-white">'.$user->level.'</p>
+                    </div>
+                    <div
+                     class="col-2 d-flex align-items-center justify-content-end">
+                        <a href="/user/detailuser?email='.$user->email.'"><button class="btn btn-show-all text-white btn-sm btn-detail me-1"><i class="bx bxs-user-detail"></i></button></a>
+                        <button class="btn btn-suc text-white btn-sm btn-edit me-1" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="'.$user->email.'"><i class="bx bx-edit"></i></button>
+                        <button type="submit" onclick="setDelete('."'$user->email'".')" class="btn btn-dang text-white btn-sm"><i class="bx bx-trash"></i></button>
+                    </div>
+                </div></li>';
         }
     }else{
-        $output .= '<p class="text-center text-white fs-4">User tidak ditemukan!</p>';
+        $output .= '<li class="list-group-item list-user bg-dark"><div class="d-flex justify-content-center align-items-center text-white">Data User Tidak Ditemukan!</div></li>';
     }
         echo $output;
     }

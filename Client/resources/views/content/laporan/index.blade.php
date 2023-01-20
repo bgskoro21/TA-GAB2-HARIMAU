@@ -18,8 +18,8 @@
                     <td class="text-center">{{ $loop->iteration }}</td>
                     <td>{{  \Custom::format_indo($p->waktu_transaksi) }}</td>
                     <td class="text-center">
-                        <a href="/laporan/pdf?tanggal={{ $p->waktu_transaksi }}" class="btn btn-danger btn-sm">PDF</a>
-                        <a href="/laporan/qrcode?tanggal={{ $p->waktu_transaksi }}" class="btn btn-success btn-sm">QR</a>
+                        <a href="/laporan/pdf?tanggal={{ $p->waktu_transaksi }}" class="btn btn-dang btn-sm text-white">PDF</a>
+                        <a href="/laporan/qrcode?tanggal={{ $p->waktu_transaksi }}" class="btn btn-suc btn-sm text-white">QR</a>
                     </td>
                 </tr>
                 @endforeach
@@ -34,8 +34,8 @@
                 <td class="text-center">{{ $loop->iteration }}</td>
                 <td>{{  $p->bulan }}</td>
                 <td class="text-center">
-                    <a href="/laporan/pdf?bulan={{ $p->bulan }}" class="btn btn-danger btn-sm">PDF</a>
-                    <a href="/laporan/qrcode?bulan={{ $p->bulan }}" class="btn btn-success btn-sm">QR</a>
+                    <a href="/laporan/pdf?bulan={{ $p->bulan }}" class="btn btn-dang text-white btn-sm">PDF</a>
+                    <a href="/laporan/qrcode?bulan={{ $p->bulan }}" class="btn btn-suc text-white btn-sm">QR</a>
                 </td>
             </tr>
             @endforeach

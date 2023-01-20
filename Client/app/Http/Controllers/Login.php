@@ -135,9 +135,12 @@ class Login extends Controller
     }
 
     public function logout(Request $request){
-        Http::put(Custom::APILOGIN,['email' => session('email')])->object();
-        $request->session()->flush();
-        return redirect('/login');
+        $email = $request->email;
+        $logout = Http::put(Custom::APILOGIN,['email' => $email])->object();
+        if($logout->status == true){
+            $request->session()->flush();
+            return redirect('/login');
+        }
     }
 
     public function expToken(){
