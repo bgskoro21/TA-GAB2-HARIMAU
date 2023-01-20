@@ -34,7 +34,7 @@ class M_Transaksi extends CI_Model {
     // menampilkan semua Transaksi
     public function getAllTransaksi()
     {
-        $this->db->select('tbl_transaksi.*,user.nama_lengkap');
+        $this->db->select('tbl_transaksi.*,user.email');
         $this->db->from('tbl_transaksi');
         $this->db->join('user','tbl_transaksi.user_id = user.id');
         $query = $this->db->get()->result();
@@ -404,7 +404,7 @@ public function getPengTahun(){
     // pengeluaran
         // buat method untuk tampil data Pengeluaran
         public function getPengeluaran($id=null){
-            $this->db->select('tbl_transaksi.*,user.nama_lengkap');
+            $this->db->select('tbl_transaksi.*,user.email,user.profile_picture');
             $this->db->from('tbl_transaksi');
             $this->db->join('user','tbl_transaksi.user_id = user.id');
             if($id != null){
