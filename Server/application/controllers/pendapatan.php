@@ -43,24 +43,26 @@ class Pendapatan extends Token {
       }
     }
 
-	function service_delete($id){
+    function service_delete(){
         if ($this->authtoken() == 0) {
             return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
         } else {
 
-        $data = $this->delete('selected');
+        $data = $this->delete('selected');    
         $id = $this->delete('id');
+
+        // var_dump($data);die;
 
         if(!empty($data)){
             $hasil = $this->mdl->delete_selected_data(explode(",",$data));
-        }else {
+        }else{
             $hasil = $this->mdl->delete_data($id);
         }
 
         if($hasil == 1){
             $this->response([
                 'status' => true,
-                'message' => 'Data Pendapatan Berhasil Dihapus!',
+                'message' => 'Data Pengeluaran Berhasil Dihapus!',
         ],200);
         }else{
             $this->response([
