@@ -8,7 +8,7 @@ class Pengeluaran extends Token {
 	public function __construct()
 	{
 		parent::__construct();
-		// panggil model Mmahasiswa
+		
 		$this->load->model("M_Transaksi","mdl",TRUE);
 	}
 
@@ -47,7 +47,17 @@ class Pengeluaran extends Token {
         if ($this->authtoken() == 0) {
             return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
         } else {
-        $hasil = $this->mdl->deletePengeluaran($id);
+
+            $hasil = $this->mdl->delete_data($id);
+
+            $data = $this->delete('selected');
+            $id = $this->delete('id');
+    
+            if(!empty($data)){
+                $hasil = $this->mdl->delete_selected_data(explode(",",$data));
+            }else {
+                $hasil = $this->mdl->deletePengeluaran($id);
+            }
 
         if($hasil == 1){
             $this->response([
