@@ -6,7 +6,7 @@ class M_Transaksi extends CI_Model {
 
 	// buat method untuk tampil data
     public function get_data($id=null){
-        $this->db->select('tbl_transaksi.*,user.nama_lengkap');
+        $this->db->select('tbl_transaksi.*,user.email,user.profile_picture');
         $this->db->from('tbl_transaksi');
         $this->db->join('user','tbl_transaksi.user_id = user.id');
         if($id != null){
@@ -90,6 +90,25 @@ class M_Transaksi extends CI_Model {
         return $hasil;
     }
 
+    // menghapus multiple data
+    public function delete_selected_data($data = []){
+        $this->db->select('id');
+        $this->db->form('tbl_transaksi');
+        $this->db->where($id = [0]);
+        $query = $this->db->get()->row_array();
+
+        if($query){
+            for($i = 0; $i < count($data); $i++){
+            $this->db->where('id',$data[$i]);
+            $this->db->delete('tbl_transaksi');
+        }
+            $hasil = 1;
+        } else {
+            $hasil = 0;
+        }
+        return $hasil;
+    }
+
     // Untuk Menambahkan Controller Pendapatan
     public function add_data($user_id, $waktu, $perincian, $pemasukkan){
 
@@ -145,7 +164,7 @@ public function getSaldo(){
     }
     return $hasil;
 }   
-
+// digunakan untuk perbandingan saldo sebelumnya
 public function getSaldoKemarin(){
     $this->db->select('waktu_transaksi');
     $this->db->from('tbl_transaksi');
@@ -163,6 +182,7 @@ public function getSaldoKemarin(){
     return $hasil;
 } 
 
+// digunakan untuk membandingkan saldo bulan kemarin
 public function getSaldoBKemarin(){
     $this->db->select('waktu_transaksi');
     $this->db->from('tbl_transaksi');
@@ -185,6 +205,7 @@ public function getSaldoBKemarin(){
     return $hasil;
 }
 
+// digunakan untuk membandingkan saldo tahun kemarin
 public function getSaldoTKemarin(){
     $this->db->select('waktu_transaksi');
     $this->db->from('tbl_transaksi');
@@ -265,7 +286,7 @@ public function getPendTahun(){
     $query = $this->db->get()->row_array();
     return $query;
 }
-
+// digunakan untuk membandingkan pendapatan kemarin
 public function getPendKemarin(){
     $this->db->select('waktu_transaksi');
     $this->db->from('tbl_transaksi');
@@ -284,7 +305,7 @@ public function getPendKemarin(){
     }
     return $hasil;
 } 
-
+// digunakan untuk membandingkan pendapatan bulan kemarin
 public function getpendBKemarin(){
     $this->db->select('waktu_transaksi');
     $this->db->from('tbl_transaksi');
@@ -308,7 +329,7 @@ public function getpendBKemarin(){
     }
     return $hasil;
 }
-
+// digunakan untuk membandingkan pendaptan tahun kemarin
 public function getPendTKemarin(){
     $this->db->select('waktu_transaksi');
     $this->db->from('tbl_transaksi');
@@ -356,7 +377,7 @@ public function getPengTahun(){
         $query = $this->db->get()->result();
         return $query;
     }
-
+    // digunakan untuk mencari tanggal awal dan akhir pada laporan yang ingin dilihat
     public function getSearch($tanggal_awal,$tanggal_akhir){
         $this->db->from('tbl_transaksi');
         $this->db->where('waktu_transaksi >=',$tanggal_awal);
@@ -463,7 +484,7 @@ public function getPengTahun(){
             }
             return $hasil;
     }
-    
+    // digunakan untuk membandingkan pengeluaran kemarin
     public function getPengKemarin(){
         $this->db->select('waktu_transaksi');
         $this->db->from('tbl_transaksi');
@@ -482,7 +503,7 @@ public function getPengTahun(){
         }
         return $hasil;
     } 
-    
+    // digunakan untuk membandingkan pengelauran bulan kemarin
     public function getpengBKemarin(){
         $this->db->select('waktu_transaksi');
         $this->db->from('tbl_transaksi');
@@ -506,7 +527,7 @@ public function getPengTahun(){
         }
         return $hasil;
     }
-    
+    // digunakan untuk membandingkan pengeluaran tahun kemarin
     public function getPengTKemarin(){
         $this->db->select('waktu_transaksi');
         $this->db->from('tbl_transaksi');
