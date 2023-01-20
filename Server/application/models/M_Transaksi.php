@@ -94,7 +94,7 @@ class M_Transaksi extends CI_Model {
     public function delete_selected_data($data = []){
         $this->db->select('id');
         $this->db->form('tbl_transaksi');
-        $this->db->where($id = [0]);
+        $this->db->where($id[0]);
         $query = $this->db->get()->row_array();
 
         if($query){

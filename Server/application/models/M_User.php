@@ -232,7 +232,7 @@ class M_User extends CI_Model{
         $this->db->where('email',$email);
         $query = $this->db->get()->row_array();
         if($query){
-            $data['profile_picture'] = null;
+            $data['profile_picture'] = 'http://localhost/TA-GAB2-HARIMAU/Server/assets/images/default.png';
             $this->db->where('email',$email);
             $this->db->update('user',$data);
             $hasil = 1;
