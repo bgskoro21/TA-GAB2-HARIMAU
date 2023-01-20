@@ -34,7 +34,7 @@ class M_Transaksi extends CI_Model {
     // menampilkan semua Transaksi
     public function getAllTransaksi()
     {
-        $this->db->select('tbl_transaksi.*,user.nama_lengkap');
+        $this->db->select('tbl_transaksi.*,user.email');
         $this->db->from('tbl_transaksi');
         $this->db->join('user','tbl_transaksi.user_id = user.id');
         $query = $this->db->get()->result();
@@ -93,22 +93,22 @@ class M_Transaksi extends CI_Model {
     // menghapus multiple data
     public function delete_selected_data($data = []){
         $this->db->select('id');
-        $this->db->form('tbl_transaksi');
-        $this->db->where($id[0]);
+        $this->db->from('tbl_transaksi');
+        $this->db->where('id',$data[0]);
         $query = $this->db->get()->row_array();
-
         if($query){
-            for($i = 0; $i < count($data); $i++){
-            $this->db->where('id',$data[$i]);
-            $this->db->delete('tbl_transaksi');
-        }
+            for($i = 0; $i < count($data) ; $i++){
+                $this->db->where('id',$data[$i]);
+                $this->db->delete('tbl_transaksi');
+            }
             $hasil = 1;
-        } else {
+        }else{
             $hasil = 0;
         }
-        return $hasil;
-    }
 
+        return $hasil;
+
+    }
     // Untuk Menambahkan Controller Pendapatan
     public function add_data($user_id, $waktu, $perincian, $pemasukkan){
 
@@ -404,7 +404,7 @@ public function getPengTahun(){
     // pengeluaran
         // buat method untuk tampil data Pengeluaran
         public function getPengeluaran($id=null){
-            $this->db->select('tbl_transaksi.*,user.nama_lengkap');
+            $this->db->select('tbl_transaksi.*,user.email,user.profile_picture');
             $this->db->from('tbl_transaksi');
             $this->db->join('user','tbl_transaksi.user_id = user.id');
             if($id != null){

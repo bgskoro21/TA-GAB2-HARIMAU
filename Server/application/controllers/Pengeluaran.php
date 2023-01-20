@@ -43,37 +43,34 @@ class Pengeluaran extends Token {
       }
     }
 
-	function service_delete($id){
+	function service_delete(){
         if ($this->authtoken() == 0) {
             return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
         } else {
 
-            $hasil = $this->mdl->delete_data($id);
-
             $data = $this->delete('selected');
             $id = $this->delete('id');
     
-            if(!empty($data)){
-                $hasil = $this->mdl->delete_selected_data(explode(",",$data));
-            }else {
-                $hasil = $this->mdl->deletePengeluaran($id);
-            }
+            
+        if(!empty($data)){
+            $hasil = $this->mdl->delete_selected_data(explode(",",$data));
+        }else{
+            $hasil = $this->mdl->deletePengeluaran($id);
+        }
 
         if($hasil == 1){
             $this->response([
                 'status' => true,
-                'message' => 'Data Pengeluaran Berhasil Dihapus',
-                'pengeluaran' => $hasil
+                'message' => 'Data Pengeluaran Berhasil Dihapus!',
         ],200);
         }else{
             $this->response([
                 'status' => false,
-                'message' => 'Data Pengeluaran Gagal Dihapus',
+                'message' => 'Data Pengeluaran Gagal dihapus!',
             ]);
         }
       }
     }
-
 	function service_post(){
         if ($this->authtoken() == 0) {
             return $this->response(array("result" => 0, "error" => "Kode Signature Tidak Sesuai !"), 200);
