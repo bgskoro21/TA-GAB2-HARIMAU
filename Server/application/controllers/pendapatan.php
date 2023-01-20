@@ -62,7 +62,7 @@ class Pendapatan extends Token {
         if($hasil == 1){
             $this->response([
                 'status' => true,
-                'message' => 'Data Pengeluaran Berhasil Dihapus!',
+                'message' => 'Data Pendapatan Berhasil Dihapus!',
         ],200);
         }else{
             $this->response([
