@@ -55,18 +55,18 @@ class Pengeluaran extends Token {
         if(!empty($data)){
             $hasil = $this->mdl->delete_selected_data(explode(",",$data));
         }else{
-            $hasil = $this->mdl->delete_pengeluaran($id);
+            $hasil = $this->mdl->deletePengeluaran($id);
         }
 
         if($hasil == 1){
             $this->response([
                 'status' => true,
-                'message' => 'Data Pendapatan Berhasil Dihapus!',
+                'message' => 'Data Pengeluaran Berhasil Dihapus!',
         ],200);
         }else{
             $this->response([
                 'status' => false,
-                'message' => 'Data Pendapatan Gagal dihapus!',
+                'message' => 'Data Pengeluaran Gagal dihapus!',
             ]);
         }
       }
