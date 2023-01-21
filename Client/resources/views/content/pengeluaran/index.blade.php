@@ -144,10 +144,11 @@
                         data: 'ids='+join_selected_values,
                         success: function (data) {
                             const json = JSON.parse(data)
+                            // console.log(json)
                             if(json.hasOwnProperty('result')){
                                 location.href='/expToken'
                             }else {
-                                location.href='/flash?status='+json.status+'&messages='+json.messages+"&route=pengeluaran"
+                                location.href='/flash?status='+json.status+'&messages='+json.message+"&route=pengeluaran"
                             }
                         },
                         error: function (data) {

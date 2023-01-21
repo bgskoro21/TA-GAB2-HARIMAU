@@ -2,7 +2,7 @@
     <div class="logo-details">
         <img src="../../img/eyzel.png" alt="Eyzel" width="50" >
         <span class="logo_name" style="flex: 1">EyzelKas</span>
-        <i class='bx bx-arrow-back bg-white d-sm-block d-md-none text-dark fs-3 btn-tutup'></i>
+        <i class='bx bx-arrow-back bg-white d-lg-none text-dark fs-3 btn-tutup'></i>
     </div>
     <ul class="nav-links">
         <li class="{{ Request::is('/') ? 'aktif' : '' }}">

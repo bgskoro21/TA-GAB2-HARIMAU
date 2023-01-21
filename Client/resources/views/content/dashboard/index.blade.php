@@ -1,9 +1,5 @@
 @extends('layout.main')
 @section('container')
-{{-- @php
-    var_dump($presentase);die;
-    // echo session('nama_lengkap')
-@endphp --}}
 <section class="mt-3 mx-3">
   <div class="row">
     <div class="col-md-8">
@@ -163,7 +159,7 @@
                         </div><!-- End Sales Card -->
           </div>
       </section>
-      <section class="p-3 mb-2">
+      <section class="p-3 mb-2 d-none d-md-block">
           <div class="row">
               <div class="col-md-12 bg-dark p-3 radius">
                   <canvas id="grafik" style="width: 100%;"></canvas>
@@ -229,7 +225,7 @@
               </div>
             @endif
           </li>
-          @if ($pemasukkan->pendapatan)
+          @if (isset($pemasukkan->pendapatan))
           <li class="list-group-item bg-dark text-white">
             <div class="d-flex align-items-center justify-content-center">
               <a class="btn text-center w-100 btn-show-all text-white btn-semua" href="/pemasukkan">Lihat semua</a>
@@ -287,7 +283,7 @@
     </div>
   </div>
 </section>
-<section class="mx-3 mb-3 bg-dark p-4 overflow-auto radius text-white">
+<section class="mx-3 mb-3 bg-dark p-4 overflow-auto radius text-white d-none d-md-block">
   <h4 class="mb-2">Transaksi Terakhir</h4>
   <table class="table table-bordered table-responsive border text-white" id="table_transaksi">
           <thead>

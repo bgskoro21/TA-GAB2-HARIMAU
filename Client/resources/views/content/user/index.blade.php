@@ -7,14 +7,14 @@
     <div class="row p-2 d-flex justify-content-center">
         <div class="col-md-12 bg-white radius p-0">
             <ul class="list-group list-group-flush radius">
-                <li class="list-group-item title d-flex bg-dark">
-                    <div class="col-md-4 d-flex align-items-center">
+                <li class="list-group-item title d-md-flex d-block bg-dark">
+                    <div class="col-md-4 mb-2 col-sm-12 d-flex align-items-center">
                         <span class="text-white fs-3">Daftar User</span>
                     </div>
-                    <div class="col-md-4 d-flex justify-content-center">
+                    <div class="col-md-4 mb-2 col-sm-12 d-flex justify-content-center">
                         <input type="text" id="keyword" class="form-control me-2 input-search text-white" placeholder="Search by Name or Role" style="border-radius: 30px">
                     </div>
-                    <div class="col-md-4 d-flex justify-content-end align-items-center">
+                    <div class="col-md-4 mb-2 col-sm-12 d-block d-md-flex justify-content-end align-items-center">
                         <button class="btn btn-sm btn-show-all text-white" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btn_tambah"><i class='bx bx-plus-medical'></i> Tambah Data</button>
                     </div>
                 </li>
@@ -22,19 +22,19 @@
                 @foreach ($users->user as $user)
                 <li class="list-group-item list-user bg-dark">
                     <div class="row d-flex">
-                        <div class="col-2 d-flex align-items-center">
+                        <div class="col-2 d-flex align-items-center d-none d-md-block">
                             @if ($user->profile_picture != null)
                             <img src="{{ $user->profile_picture }}" class="img-fluid rounded-circle" alt="Profile Picture" style="width: 80px; height:80px;">
                             @else
                             <img src="https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Clip-Art-Transparent-File.png" class="img-fluid rounded-circle" alt="Profile Picture" style="width: 80px; height:80px;">
                             @endif
                         </div>
-                        <div class="col-8 d-flex flex-column p-0 justify-content-center">
+                        <div class="col-md-8 col-sm-10 d-flex flex-column p-0 justify-content-center">
                             <p class="card-title text-white fw-bold">{{ $user->nama_lengkap }}</p>
                             <p class="card-text text-white">{{ $user->level }}</p>
                         </div>
                         <div
-                         class="col-2 d-flex align-items-center justify-content-end">
+                         class="col-md-2 col-sm-2 d-flex align-items-center justify-content-end">
                             <a href="/user/detailuser?email={{ $user->email }}"><button class="btn btn-show-all btn-tambah text-white btn-sm btn-detail me-1"><i class="bx bxs-user-detail"></i></button></a>
                             <button class="btn btn-suc btn-sm btn-edit me-1" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ $user->email }}"><i class='bx bx-edit text-white'></i></button>
                             <button type="submit" onclick="setDelete('{{ $user->email }}')" class="btn btn-dang btn-sm text-white"><i class='bx bx-trash'></i></button>

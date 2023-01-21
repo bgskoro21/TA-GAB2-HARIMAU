@@ -1,9 +1,9 @@
 @extends('layout.main')
 @section('container')
-    <section class="m-3" style="height: 100vh>
+    <section class="m-3">
         <div class="row">
         <div class="col-lg-12">
-            <div class="card bg-dark radius p-3">
+            <div class="card bg-dark radius p-3 overflow-auto">
                 <h3 class="text-white ms-3">Tambah Data Pemasukkan</h3>
                 <div class="card-body">
                     <form id="form-item" method="post">

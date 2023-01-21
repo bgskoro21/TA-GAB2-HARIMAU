@@ -153,6 +153,7 @@
                         data: 'ids='+join_selected_values,
                         success: function (data) {
                             const json = JSON.parse(data)
+                            // console.log(json)
                             if (json.hasOwnProperty('result')) {
                                 location.href='/expToken'
                             } else {
