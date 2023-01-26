@@ -42,6 +42,7 @@ Class Custom {
     const APITOKEN = Custom::API.'/index.php/token';
     const APIFILTERUSER = Custom::API.'/index.php/searching_nama';
     const APIFILTERTRANSAKSI = Custom::API.'/index.php/searching_laporan';
+    const APIHUTANG = Custom::API.'/index.php/hutang';
     
 
 

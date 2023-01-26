@@ -29,6 +29,17 @@
             </ul>
         </li>
         @endif
+        <li class= "{{Request::is('hutang*') ? 'aktif' : '' }}">
+            <div class="iocn-link">
+                <a href="/hutang">
+                    <i class='bx bx-archive-out'></i>
+                    <span class="name_link">Hutang Piutang</span>
+                </a>
+            </div>
+            <ul class="sub-menu">
+                <li><a href="/hutang">Hutang Piutang</a></li>
+            </ul>
+        </li>
         <li class= "{{Request::is('pemasukkan*') || Request::is('pengeluaran*')  ? 'aktif' : '' }}">
             <div class="iocn-link">
                 <a href="/pemasukkan">

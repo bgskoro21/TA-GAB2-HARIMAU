@@ -8,6 +8,7 @@ use App\Http\Controllers\user;
 use App\Http\Controllers\Login;
 use App\Http\Controllers\Profile;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HutangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,3 +69,8 @@ Route::get('/flash',[Pemasukkan::class, 'set_session']);
 Route::post('/pengeluaran/deleteSelected',[Pengeluaran::class, 'deleteSelectedData'])->middleware('authCustom');
 Route::get('/pemasukkan/tambahdata',[Pemasukkan::class, 'create'])->middleware('authCustom');
 Route::get('/pengeluaran/tambahdata',[Pengeluaran::class, 'create'])->middleware('authCustom');
+Route::get('/hutang',[HutangController::class, 'index'])->middleware('authCustom');
+Route::get('/hutang/hapus_data/{id}',[HutangController::class, 'hapus_data'])->middleware('authCustom');
+Route::get('/hutang/{id}',[HutangController::class, 'getHutangById'])->middleware('authCustom');
+Route::post('/hutang',[HutangController::class, 'store'])->middleware('authCustom');
+Route::post('/hutang/edit_data',[HutangController::class, 'update'])->middleware(('authCustom'));
