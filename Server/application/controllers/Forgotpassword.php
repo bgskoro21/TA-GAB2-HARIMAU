@@ -16,8 +16,8 @@ class Forgotpassword extends Server{
 		$config = [	
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'bagaskara148@gmail.com',
-            'smtp_pass' => 'lmkderyrjjstdigd',
+            'smtp_user' => 'bagaskara_dwi_putra@teknokrat.ac.id',
+            'smtp_pass' => '19312112',
             'smtp_port' => 465,
             'mailtype' => 'html',
             'charset' => 'utf-8',
@@ -26,7 +26,7 @@ class Forgotpassword extends Server{
 
 		$this->load->library('email',$config);
 		$this->email->initialize($config);
-		$this->email->from('bagaskara148@gmail.com','Eyzel');
+		$this->email->from('bagaskara_dwi_putra@teknokrat.ac.i','Eyzel');
 		$this->email->to($this->post('email'));
 		if($type == 'forgot'){
 			$this->email->subject('Reset Password');
