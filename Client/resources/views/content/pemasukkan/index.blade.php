@@ -182,6 +182,9 @@
       url: '/pemasukkan/getPemasukkanById/'+id,
       success: function(data){
         const json = JSON.parse(data)
+        if(json.hasOwnProperty('result')){
+            location.href='/expToken'
+          }
         $('#id').val(id)
         $('#input_pemasukkan').val(json.pemasukan)
         $('#input_perincian').val(json.perincian)

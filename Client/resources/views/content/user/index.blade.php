@@ -96,7 +96,7 @@
      function setDelete(email){
         // console.log(username);
         Swal.fire({
-          title: 'Apakah kamu yakin?',
+          title: 'Apakah kamu yakin menghapus user ini? Data transaksi user ini juga akan hilang',
           showDenyButton: true,
           confirmButtonText: 'Delete',
           denyButtonText: `Cancel`,
@@ -138,6 +138,9 @@
       url: '/user/dataByUsername/'+username,
       success: function(data){
           const json = JSON.parse(data)
+          if(json.hasOwnProperty('result')){
+            location.href='/expToken'
+          }
         //   console.log(json)
         $('#email').val(json.email)
         $('#level').val(json.level)
@@ -157,6 +160,9 @@
     $('#no_hp').val('')
     $('#level').val('')
     $('#password').val('')
+    $('.float-password').show()
+    $('.float-hp').show()
+    $('.float-nama').show()
   })
 
     $('#form_user').validate({

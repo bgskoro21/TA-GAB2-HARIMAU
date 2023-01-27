@@ -61,9 +61,10 @@ class Pemasukkan extends Controller
     public function getPemasukkanById($id){
         $pemasukkan = Http::withToken(session('token'))->get(Custom::APIPEMASUKKAN, ['id' => $id])->object();
         if(isset($pemasukkan->result)){
-            return redirect('/expToken');
+            echo json_encode($pemasukkan);
+        }else{
+            echo json_encode($pemasukkan->pendapatan[0]);
         }
-        echo json_encode($pemasukkan->pendapatan[0]);
     }
 
     public function edit_data(Request $request){

@@ -11,7 +11,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class User extends Controller
 {
-    public function index(Request $request){
+    public function index(){
         if(session('level') != 'Admin'){
             return redirect('/')->with('error','Anda bukan seorang Admin!');
         }
@@ -68,9 +68,10 @@ class User extends Controller
     public function dataByUsername($email){
         $users = Http::withToken(session('token'))->get(Custom::APIUSER,['email' => $email])->object();
         if(isset($users->result)){
-            return redirect('/expToken');
+            echo json_encode($users);
+        }else{
+            echo json_encode($users->user[0]);
         }
-        echo json_encode($users->user[0]);
     }
 
     public function edit_data(Request $request){

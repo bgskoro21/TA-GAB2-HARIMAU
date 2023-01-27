@@ -158,6 +158,9 @@
         url: '/hutang/'+id,
         success: function(data){
             const json = JSON.parse(data)
+            if(json.hasOwnProperty('result')){
+                location.href = '/expToken'
+            }
             $('#id').val(json.kode_hutang)
             $('#input_nama_pelanggan').val(json.nama_pelanggan)
             $('#input_kode_hutang').val(json.kode_hutang)

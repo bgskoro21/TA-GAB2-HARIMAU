@@ -10,6 +10,9 @@ class HutangController extends Controller
 {
     public function index(){
         $hutang = Http::withToken(session('token'))->get(Custom::APIHUTANG)->object();
+        if(isset($hutang->result)){
+            return redirect('/expToken');
+        }
         // var_dump($hutang);die;
         return view('content.hutang.index',[
             'title' => 'Hutang Piutang',
@@ -31,6 +34,9 @@ class HutangController extends Controller
 
 
         $tambah = Http::withToken(session('token'))->post(Custom::APIHUTANG, $data)->object();
+        if(isset($tambah->result)){
+            return redirect('/expToken');
+        }
         if($tambah->status == true){
             return redirect('/hutang')->with('message', $tambah->message);
         }else{
@@ -41,6 +47,9 @@ class HutangController extends Controller
 
     public function hapus_data($id){
         $hapus = Http::withToken(session('token'))->asForm()->delete(Custom::APIHUTANG, ['id' => $id])->object();
+        if(isset($hapus->result)){
+            return redirect('/expToken');
+        }
         if($hapus->status == true){
             return redirect('/hutang')->with('message', $hapus->message);
         }else{
@@ -50,7 +59,11 @@ class HutangController extends Controller
 
     public function getHutangById($id){
         $hutang = Http::withToken(session('token'))->get(Custom::APIHUTANG, ['id' => $id])->object();
-        echo json_encode($hutang->hutang);
+        if(isset($hutang->result)){
+            echo json_encode($hutang);
+        }else{
+            echo json_encode($hutang->hutang);
+        }
     }
 
     public function update(Request $request){
@@ -67,6 +80,9 @@ class HutangController extends Controller
         ];
 
         $edit = Http::withToken(session('token'))->put(Custom::APIHUTANG, $data)->object();
+        if(isset($edit->result)){
+            return redirect('/expToken');
+        }
         if($edit->status == true){
             return redirect('/hutang')->with('message', $edit->message);
         }else{

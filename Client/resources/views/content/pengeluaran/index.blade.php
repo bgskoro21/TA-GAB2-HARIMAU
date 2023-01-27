@@ -174,6 +174,9 @@
       success: function(data){
         // console.log(data)
         const json = JSON.parse(data)
+        if(json.hasOwnProperty('result')){
+            location.href='/expToken'
+          }
         // console.log(json)
         $('#id').val(id)
         $('#input_pengeluaran').val(json.pengeluaran)

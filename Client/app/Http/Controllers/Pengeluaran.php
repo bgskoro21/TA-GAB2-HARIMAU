@@ -62,9 +62,10 @@ class Pengeluaran extends Controller
     public function getPengeluaranById($id){
         $pengeluaran = Http::withToken(session('token'))->get(Custom::APIPENGELUARAN, ['id' => $id])->object();
         if(isset($pengeluaran->result)){
-            return redirect('/expToken');
+            echo json_encode($pengeluaran);
+        }else{
+            echo json_encode($pengeluaran->pengeluaran[0]);
         }
-        echo json_encode($pengeluaran->pengeluaran[0]);
     }
 
     public function edit_data(Request $request){
