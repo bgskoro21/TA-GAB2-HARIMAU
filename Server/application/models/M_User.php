@@ -153,7 +153,7 @@ class M_User extends CI_Model{
     function cekPassword($email){
         $this->db->select('password');
         $this->db->from('user');
-        $this->db->where("email = '$email' AND password = '$password' ");
+        $this->db->where("email = '$email'");
         $query = $this->db->get()->row_array();
         if(!empty($query)){
             $hasil = $query;
