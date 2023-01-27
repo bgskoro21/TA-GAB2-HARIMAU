@@ -88,10 +88,10 @@ class User extends Token {
 		$config = [	
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'bagaskara148@gmail.com',
-            'smtp_pass' => 'lmkderyrjjstdigd',
+            'smtp_user' => 'bagaskara_dwi_putra@teknokrat.ac.id',
+            'smtp_pass' => '19312112',
             'smtp_port' => 465,
-            'mailtype' => 'html',
+            'mailtype' => 'html',	
             'charset' => 'utf-8',
             'newline' => "\r\n"
         ];
