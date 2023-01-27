@@ -26,7 +26,7 @@ class Forgotpassword extends Server{
 
 		$this->load->library('email',$config);
 		$this->email->initialize($config);
-		$this->email->from('bagaskara_dwi_putra@teknokrat.ac.i','Eyzel');
+		$this->email->from('bagaskara_dwi_putra@teknokrat.ac.id','Eyzel');
 		$this->email->to($this->post('email'));
 		if($type == 'forgot'){
 			$this->email->subject('Reset Password');
