@@ -43,6 +43,7 @@ Class Custom {
     const APIFILTERUSER = Custom::API.'/index.php/searching_nama';
     const APIFILTERTRANSAKSI = Custom::API.'/index.php/searching_laporan';
     const APIHUTANG = Custom::API.'/index.php/hutang';
+    const APILUNAS = Custom::API.'/index.php/lunas';
     
 
 

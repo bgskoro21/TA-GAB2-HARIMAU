@@ -74,3 +74,4 @@ Route::get('/hutang/hapus_data/{id}',[HutangController::class, 'hapus_data'])->m
 Route::get('/hutang/{id}',[HutangController::class, 'getHutangById'])->middleware('authCustom');
 Route::post('/hutang',[HutangController::class, 'store'])->middleware('authCustom');
 Route::post('/hutang/edit_data',[HutangController::class, 'update'])->middleware(('authCustom'));
+Route::get('/hutang/lunas/{kode}',[HutangController::class, 'setLunas'])->middleware('authCustom');
